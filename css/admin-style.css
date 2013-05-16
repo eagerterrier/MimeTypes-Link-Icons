@@ -1,0 +1,87 @@
+/* CSS for plugin: MimeTypes Link Icons */
+.settings_page_mimetypes-link-icons .form-table {
+	margin-bottom: 0 !important;
+	width: 100%;
+}
+.settings_page_mimetypes-link-icons .form-table th {
+	font-size: 11px; min-width: 200px;
+}
+.settings_page_mimetypes-link-icons .form-table .largetext {
+	font-size: 12px;
+}
+.settings_page_mimetypes-link-icons .form-table td {
+	max-width: 500px;
+}
+.settings_page_mimetypes-link-icons .form-table tr:last-child {
+	border-bottom: 1px solid #DEDEDE;
+}
+.settings_page_mimetypes-link-icons .form-table tr:last-child td {
+	padding-bottom: 20px;
+}
+.settings_page_mimetypes-link-icons .form-table select {
+	width: 275px;
+}
+
+.settings_page_mimetypes-link-icons fieldset#images strong {
+	color: #111111;
+}
+
+
+
+.settings_page_mimetypes-link-icons fieldset {
+
+}
+.settings_page_mimetypes-link-icons legend {
+	padding-top: 12px;
+	font-weight: bold;
+}
+
+.settings_page_mimetypes-link-icons .advanced-2 .form-table td {
+	vertical-align: top;
+}
+
+.settings_page_mimetypes-link-icons .advanced-1 input[type=checkbox],
+.settings_page_mimetypes-link-icons .advanced-2 input[type=checkbox],
+.settings_page_mimetypes-link-icons .advanced-3 input[type=checkbox] {
+	margin-right: 4px;
+}
+
+.settings_page_mimetypes-link-icons #cache_time,
+.settings_page_mimetypes-link-icons #precision {
+	width: 40px;
+}
+
+.settings_page_mimetypes-link-icons #hidden_classname {
+	width: 500px;
+}
+
+/* Check all/Uncheck all link styles */
+.settings_page_mimetypes-link-icons .check-images {
+	float: right;
+	margin-top: -18px;
+}
+.settings_page_mimetypes-link-icons h3+.check-images {
+	margin-top: -30px;
+}
+.settings_page_mimetypes-link-icons .check-images span {
+	color: #21759B;
+	font-size: 90%;
+	padding: 0 10px;
+}
+.settings_page_mimetypes-link-icons .check-images span:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+
+/*
+.image-table tr:nth-child(2n+1) {
+	background-color: #E8E8E8;
+}
+
+.image-table th {
+	border-left: 1px solid #cccccc;
+}
+table.image-table {
+	border-right: 1px solid #cccccc;
+}*/

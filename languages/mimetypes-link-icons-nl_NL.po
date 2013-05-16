@@ -1,0 +1,360 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MimeTypes Link Icons\n"
+"POT-Creation-Date: 2013-05-16 03:55+0100\n"
+"PO-Revision-Date: 2013-05-16 03:56+0100\n"
+"Last-Translator: EJ Reinders Folmer <poedit_nospam@adviesenzo.nl>\n"
+"Language-Team: Juliette Reinders Folmer\n"
+"Language: Dutch\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: __;_e;_n;_x;_ex;_nx;esc_html__;esc_html_e;esc_html_x;"
+"esc_attr__;esc_attr_e;esc_attr_x;_n_noop;_nx_noop\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../mime_type_link_images.php:380
+msgid "Left"
+msgstr "Links"
+
+#: ../mime_type_link_images.php:381
+msgid "Right"
+msgstr "Rechts"
+
+#: ../mime_type_link_images.php:385
+msgid "General Settings"
+msgstr "Algemene instellingen"
+
+#: ../mime_type_link_images.php:386
+msgid "Image Settings"
+msgstr "Afbeeldingsinstellingen"
+
+#: ../mime_type_link_images.php:387 ../mime_type_link_images.php:670
+msgid "Advanced Settings"
+msgstr "Geadvanceerde instellingen"
+
+#: ../mime_type_link_images.php:391
+msgid "b"
+msgstr "b"
+
+#: ../mime_type_link_images.php:392
+msgid "kB"
+msgstr "kB"
+
+#: ../mime_type_link_images.php:393
+msgid "MB"
+msgstr "MB"
+
+#: ../mime_type_link_images.php:394
+msgid "GB"
+msgstr "GB"
+
+#: ../mime_type_link_images.php:395
+msgid "TB"
+msgstr "TB"
+
+#: ../mime_type_link_images.php:396
+msgid "PB"
+msgstr "PB"
+
+#: ../mime_type_link_images.php:397
+msgid "EB"
+msgstr "EB"
+
+#: ../mime_type_link_images.php:398
+msgid "ZB"
+msgstr "ZB"
+
+#: ../mime_type_link_images.php:399
+msgid "YB"
+msgstr "YB"
+
+#: ../mime_type_link_images.php:489 ../mime_type_link_images.php:664
+#: ../mime_type_link_images.php:1727
+msgid "MimeType Link Icons"
+msgstr "MimeType Link Icons"
+
+#: ../mime_type_link_images.php:490
+msgid "MimeType Icons"
+msgstr "MimeType Icons"
+
+#: ../mime_type_link_images.php:509
+msgid "MimeType Link Icons Settings"
+msgstr "MimeType Link Icons instellingen"
+
+#: ../mime_type_link_images.php:509
+msgid "Settings"
+msgstr "Instellingen"
+
+#: ../mime_type_link_images.php:644
+msgid "Check All"
+msgstr "Alles aanvinken"
+
+#: ../mime_type_link_images.php:644
+msgid "Uncheck All"
+msgstr "Alles uitvinken"
+
+#: ../mime_type_link_images.php:676
+msgid "Extras"
+msgstr "Extras"
+
+#: ../mime_type_link_images.php:713
+#, php-format
+msgid ""
+"The <em><a href=\"%s\">MimeTypes Link Icons</a></em> plugin will "
+"automatically add an icon next to links of the activated file types. If you "
+"like, you can also let the plugin add the file size of the linked file to "
+"the page."
+msgstr ""
+
+#: ../mime_type_link_images.php:714
+msgid ""
+"On this settings page you can specify the icon size, icon type (white matte "
+"gif or transparent png), icon alignment. You can also select the file types "
+"for which this plugin will be enabled."
+msgstr ""
+
+#: ../mime_type_link_images.php:717
+msgid ""
+"In the advanced settings, you can enable <em>\"exclusion classnames\"</em>, "
+"enable the display of the <em>file size</em> of a linked file and/or choose "
+"to use <em>asynchronous replacement</em>."
+msgstr ""
+
+#: ../mime_type_link_images.php:718
+msgid "<strong>\"Exclusion classnames\"</strong> works as follows:"
+msgstr ""
+
+#: ../mime_type_link_images.php:719
+msgid ""
+"The plugin will look for the classname in your document and will remove the "
+"Mimetypes link icons (and file sizes) from all links wrapped within that "
+"class. You can add several classnames, just separate them with a comma."
+msgstr ""
+
+#: ../mime_type_link_images.php:722
+msgid ""
+"There is even some more advanced functionality available: for instance an "
+"<em>output filter</em> for the file size output and a way to add the "
+"plugin's functionality to widgets or other areas of your blog outside of the "
+"main content area."
+msgstr ""
+
+#: ../mime_type_link_images.php:724
+#, php-format
+msgid ""
+"For more information on these tasty extras, have a look at the <a href=\"%s"
+"\">FAQ</a>"
+msgstr ""
+
+#. TRANSLATORS: no need to translate - standard WP core translation will be used
+#: ../mime_type_link_images.php:744
+msgid "For more information:"
+msgstr ""
+
+#: ../mime_type_link_images.php:746
+msgid "Official plugin page"
+msgstr "Officiële plugin pagina"
+
+#: ../mime_type_link_images.php:747
+msgid "FAQ"
+msgstr "FAQ"
+
+#: ../mime_type_link_images.php:748
+msgid "Changelog"
+msgstr "Changelog"
+
+#: ../mime_type_link_images.php:749
+msgid "Support&nbsp;Forum"
+msgstr "Support&nbsp;Forum"
+
+#: ../mime_type_link_images.php:751
+msgid "Github repository"
+msgstr "Github repository"
+
+#: ../mime_type_link_images.php:752
+msgid "Blog post about this plugin"
+msgstr "Blog post over deze plugin"
+
+#: ../mime_type_link_images.php:865
+#, php-format
+msgid ""
+"Version %s of the <em>MimeType Link Icons</em> plugin requires WordPress %s"
+"+. You have WordPress %s installed. The plugin has been de-activated."
+msgstr ""
+"Versie %s van de <em>MimeType Link Icons</em> plugin werkt enkel met "
+"WordPress %s+. Jij hebt WordPress %s. De plugin is gedeactiveerd."
+
+#: ../mime_type_link_images.php:865
+#, php-format
+msgid ""
+"Please upgrade your WordPress installation to %s+. Using the latest version "
+"is always advisable (and not just for security reasons!)."
+msgstr ""
+"Werk WordPress bij naar versie %s of hoger. Het is altijd aan te raden om de "
+"meest actuele versie te gebruiken (en niet enkel voor veiligheidsredenen!)."
+
+#: ../mime_type_link_images.php:874
+#, php-format
+msgid ""
+"Version %s of the <em>MimeType Link Icons</em> plugin requires PHP %s+. Your "
+"WordPress installation is running on PHP %s. The plugin has been de-"
+"activated."
+msgstr ""
+"Versie %s van de <em>MimeType Link Icons</em> plugin heeft PHP %s+ nodig. Je "
+"huidige WordPress installatie draait op PHP %s. De plugin is gedeactiveerd."
+
+#: ../mime_type_link_images.php:874
+#, php-format
+msgid ""
+"Either ask your web host to upgrade PHP or alternatively you could install "
+"an <a %s>older version of this plugin</a>."
+msgstr ""
+"Vraag je webhost om PHP bij te werken naar een actuele versie of "
+"alternatief, kan je een <a %s>oudere versie van deze plugin</a> installeren."
+
+#: ../mime_type_link_images.php:1337
+#, php-format
+msgid ""
+"MimeTypes Link Icons can't resolve the following url, please make sure the "
+"file referred to exists. URL: <strong>%s</strong>"
+msgstr ""
+
+#: ../mime_type_link_images.php:1559
+msgid "Invalid image size received"
+msgstr "Ongeldige afbeeldingsgrootte opgegeven"
+
+#: ../mime_type_link_images.php:1559 ../mime_type_link_images.php:1566
+#: ../mime_type_link_images.php:1573 ../mime_type_link_images.php:1595
+#: ../mime_type_link_images.php:1606 ../mime_type_link_images.php:1620
+msgid "the value has been reset to the default."
+msgstr "de instelling is teruggezet naar de voorkeurswaarde."
+
+#: ../mime_type_link_images.php:1566
+msgid "Invalid image type received"
+msgstr "Ongeldig bestandstype opgegeven"
+
+#: ../mime_type_link_images.php:1573
+msgid "Invalid image placement received"
+msgstr "Ongeldige icoon weergavestijl opgegeven"
+
+#: ../mime_type_link_images.php:1591
+msgid ""
+"One or more invalid classname(s) received, the values have been cleaned - "
+"this may just be the removal of spaces -, please check."
+msgstr ""
+"Eén of meer ongeldige classnamen opgegeven, de waardes zijn geschoond - "
+"graag controleren."
+
+#: ../mime_type_link_images.php:1595
+msgid "No valid classname(s) received"
+msgstr "Geen geldige classnaam/names opgegeven"
+
+#: ../mime_type_link_images.php:1606
+msgid "Invalid rounding precision received"
+msgstr "Ongeldige bestandsgrootte afrondingsprecisie-waarde opgegeven"
+
+#: ../mime_type_link_images.php:1620
+msgid "Invalid cache time received"
+msgstr "Ongeldige cache-tijdsduur opgegeven"
+
+#. TRANSLATORS: no need to translate - standard WP core translation will be used
+#: ../mime_type_link_images.php:1721
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: ../mime_type_link_images.php:1755
+msgid "Image Size"
+msgstr "Icoon formaat"
+
+#: ../mime_type_link_images.php:1772
+msgid "Image Type"
+msgstr "Icoon afbeeldingstype"
+
+#: ../mime_type_link_images.php:1789
+msgid "Display images on left or right"
+msgstr "Geef iconen links of rechts weer"
+
+#: ../mime_type_link_images.php:1839
+#, php-format
+msgid "Add images to <strong>%s</strong> uploads/files"
+msgstr "Voeg icoon toe aan <strong>%s</strong> uploads/bestanden"
+
+#: ../mime_type_link_images.php:1841
+#, php-format
+msgid "%s icon"
+msgstr "%s icoon"
+
+#: ../mime_type_link_images.php:1877
+msgid "Enable/Disable classnames?"
+msgstr ""
+
+#: ../mime_type_link_images.php:1880
+msgid ""
+"Tick this box to have one or more <i>classname(s)</i> that will disable the "
+"mime type links (ie: around an image or caption)."
+msgstr ""
+
+#: ../mime_type_link_images.php:1883
+msgid ""
+"You can change the classname(s) by editing the field below. If you want to "
+"exclude several classnames, separate them with a comma (,)."
+msgstr ""
+
+#: ../mime_type_link_images.php:1892
+msgid "Show File Size?"
+msgstr "Laat bestandsgrootte zien?"
+
+#: ../mime_type_link_images.php:1895
+msgid "Display the <i>file size</i> of the attachment/linked file."
+msgstr ""
+"Geef de <i>bestandsgrootte</i> weer van de bijlage/het gelinkte bestand."
+
+#: ../mime_type_link_images.php:1897
+msgid "File size rounding precision:"
+msgstr "Bestandsgrootte afrondingsprecisie:"
+
+#: ../mime_type_link_images.php:1898
+msgid "decimals"
+msgstr "decimalen"
+
+#: ../mime_type_link_images.php:1903
+msgid ""
+"Retrieving the file sizes of (external) files can be slow. If the file sizes "
+"of the files you link to do not change very often, you may want to cache the "
+"results. This will result in faster page loading for most end-users of your "
+"website."
+msgstr ""
+
+#: ../mime_type_link_images.php:1906
+msgid "Cache retrieved file sizes."
+msgstr "Bewaar opgehaalde bestandsgroottes in cache."
+
+#: ../mime_type_link_images.php:1908
+msgid "Amount of time to cache retrieved file sizes:"
+msgstr "Cache duur:"
+
+#: ../mime_type_link_images.php:1909
+msgid "hours"
+msgstr "uren"
+
+#: ../mime_type_link_images.php:1916
+msgid "Enable Asynchronous Replacement?"
+msgstr ""
+
+#: ../mime_type_link_images.php:1919
+msgid ""
+"Some themes or plugins may conflict with this plugin. If you find you are "
+"having trouble you can switch on asynchronous replacement which (instead of "
+"PHP) uses JavaScript to find your links."
+msgstr ""
+
+#: ../mime_type_link_images.php:1922
+msgid "Tick box to enable <i>asynchronous replacement</i>."
+msgstr "<i>Asynchrone vervanging</i> aanzetten."
+
+#~ msgid "Options saved"
+#~ msgstr "Instellingen opgeslagen"

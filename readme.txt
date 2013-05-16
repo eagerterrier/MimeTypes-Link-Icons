@@ -232,7 +232,7 @@ If you need more information, read this article on [how to translate using a .po
 * [New feature] [Ability to disable this plugin for more than one classname](http://wordpress.org/support/topic/request-disable-for-multiple-classnames)
 * [New feature] Caching of the results of (slow) file size retrievals. This will make page loading a lot faster for pages with lots of file links. Will automatically be turned on, you can turn it off and/or fine tune the cache duration via the settings page. Default cache duration: 1 week.
 * [New feature] Set the [rounding precision]((http://wordpress.org/support/topic/thanks-and-a-simple-suggestion)) (number of digits after the decimal point) for file sizes, small files (b) will always round to 0 decimals.
-* [New feature] [Output filter for filesize string](http://wordpress.org/support/topic/thanks-and-a-simple-suggestion) See the [FAQ](http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/) for more info.
+* [New feature] [Output filter for file size string](http://wordpress.org/support/topic/thanks-and-a-simple-suggestion) See the [FAQ](http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/) for more info.
 * [New feature] [Ability to have mimetype icons for content outside of the loop](http://wordpress.org/support/topic/using-mimetypes-link-icons-outside-loops) See the [FAQ](http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/) for info on how to use this.
 
 * [Usability] Added 'check all'/'uncheck all' togglers for the file types to the settings page
@@ -247,7 +247,7 @@ If you need more information, read this article on [how to translate using a .po
 * [Bug fix] Added epub css styling
 * [Bug fix] File size now complies with the localized number format style
 * [Bug fix] Curl settings error when in safe_mode - thanks [wolkenkrieger for reporting](http://wordpress.org/support/topic/php-error-in-223)
-* [Bug fix] If file size is unknown or filesize retrieval failed completely, no file size indication will be shown (it used to show 'unknownb' or 'b')
+* [Bug fix] If file size is unknown or file size retrieval failed completely, no file size indication will be shown (it used to show 'unknownb' or 'b')
 * [Bug fix] Links are now matched in a case-insensitive manner, so that both document.DOC as well as document.doc will be matched (was only lowercase)
 * [Bug fix] If a link already had a class attribute, a second one used to be added. Most browsers don't handle this well. Fixed so that additional class will be added to the existing class attribute.
 * [Bug fix] If file size showing would be on and the link had the disabled classname set, the icon would not show, but the file size still did - thanks [Leanne for reporting](http://wordpress.org/support/topic/file-size-showing).

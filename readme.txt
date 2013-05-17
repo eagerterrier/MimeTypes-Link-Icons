@@ -1,7 +1,7 @@
 === MimeTypes Link Icons ===
 Contributors: eagerterrier, jrf
 Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
-Tags: mime-type, icons, file icons, ai, air, asf, bib, csv, deb, doc, docx, djvu, dmg, dwg, dwf, eps, epub, flac, gif, gz, indd, ico, iso, jpeg, jpg, log, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, .pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, tar, tex, tgz, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
+Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, doc, docx, djvu, dmg, dwg, dwf, eps, epub, exe, flac, gif, gz, indd, ico, iso, jpeg, jpg, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, .pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
 Requires at least: 1.5.1.3
 Tested up to: 3.6-beta3
 Stable tag: 3.0
@@ -27,9 +27,12 @@ Each icon is available in the following sizes:
 * 128x128px
 
 = Supported File Extensions =
+* .3g2
+* .3gp
 * .ai
 * .air
 * .asf
+* .avi
 * .bib
 * .csv
 * .deb
@@ -41,6 +44,7 @@ Each icon is available in the following sizes:
 * .dwg
 * .eps
 * .epub
+* .exe
 * .flac
 * .gif
 * .gz
@@ -50,6 +54,7 @@ Each icon is available in the following sizes:
 * .jpg
 * .jpeg
 * .log
+* .m4a
 * .m4v
 * .midi
 * .mkv
@@ -84,6 +89,7 @@ Each icon is available in the following sizes:
 * .tar
 * .tex
 * .tgz
+* .tiff
 * .ttf
 * .txt
 * .vob
@@ -231,12 +237,10 @@ If you need more information, read this article on [how to translate using a .po
 
 = 3.0 by jrf =
 
-??????
 * [New file extensions] Added additional file extensions which are within the WP allowed file types list: .jpeg
 .pps, .ppsx, .m4a, .wav, .avi, .3gp, .3g2
 * [New file extensions] Added several additional file extensions based on user requests: [.pub](http://wordpress.org/support/topic/ms-publisher), [.eps](http://wordpress.org/support/topic/eps-support), [.rtf and .exe](http://wordpress.org/support/topic/plugin-mimetypes-link-icons-new-feature-request-self-add-new-mime-types)
 * [New file extensions] And some more: .tiff, .ico, .ttf, .qt, .air
-??????
 
 
 * [New feature] [Ability to disable this plugin for more than one classname](http://wordpress.org/support/topic/request-disable-for-multiple-classnames)

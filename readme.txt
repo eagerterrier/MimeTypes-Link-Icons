@@ -1,7 +1,7 @@
 === MimeTypes Link Icons ===
 Contributors: eagerterrier, jrf
 Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
-Tags: mime-type, icons, file icons, ai, asf, bib, csv, deb, doc, docx, djvu, dmg, dwg, dwf, epub, flac, gif, gz, indd, iso, jpg, log, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, odp, ods, odt, oga, ogg, ogv, pdf, png, ppt, pptx, psd, ra, ram, rm, rpm, rv, skp, spx, tar, tex, tgz, txt, vob, wmv, xls, xlsx, xml, xpi, zip.
+Tags: mime-type, icons, file icons, ai, air, asf, bib, csv, deb, doc, docx, djvu, dmg, dwg, dwf, eps, epub, flac, gif, gz, indd, ico, iso, jpeg, jpg, log, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, .pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, tar, tex, tgz, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
 Requires at least: 1.5.1.3
 Tested up to: 3.6-beta3
 Stable tag: 3.0
@@ -28,6 +28,7 @@ Each icon is available in the following sizes:
 
 = Supported File Extensions =
 * .ai
+* .air
 * .asf
 * .bib
 * .csv
@@ -38,10 +39,12 @@ Each icon is available in the following sizes:
 * .dmg
 * .dwf
 * .dwg
+* .eps
 * .epub
 * .flac
 * .gif
 * .gz
+* .ico
 * .indd
 * .iso
 * .jpg
@@ -63,21 +66,28 @@ Each icon is available in the following sizes:
 * .ogv
 * .pdf
 * .png
+* .pps
+* .ppsx
 * .ppt
 * .pptx
 * .psd
+* .pub
+* .qt
 * .ra
 * .ram
 * .rm
 * .rpm
+* .rtf
 * .rv
 * .skp
 * .spx
 * .tar
 * .tex
 * .tgz
+* .ttf
 * .txt
 * .vob
+* .wav
 * .wmv
 * .xls
 * .xlsx

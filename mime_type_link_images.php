@@ -216,29 +216,30 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 		 * @todo		IMPORTANT: for now on each change, also copy this array to style.php
 		 *				and of course to the readme ;-)
 		 * @todo		File types to be added:
-		 *				WP allowed file list: .pps, .ppsx, .m4a, .wav, .avi, .3gp, .3g2
-		 *				User requests: .pub, .eps, .rtf, .exe
-		 *				Other suggestions: .tiff, .ico, .ttf, .qt . air
+		 *				WP allowed file list: .m4a, .avi, .3gp, .3g2
+		 *				User requests: .exe
+		 *				Other suggestions: .tiff
 		 */
 		var $mime_types = array(
-			'ai', 'asf',
+			'ai', 'air', 'asf',
 			'bib',
 			'csv',
 			'deb', 'doc', 'docx', 'djvu', 'dmg', 'dwf', 'dwg',
 			'eps','epub',
 			'flac',
 			'gif', 'gz',
-			'indd', 'iso',
+			'ico', 'indd', 'iso',
 			'jpg', 'jpeg',
 			'log',
 			'm4v', 'midi', 'mkv', 'mov', 'mp3', 'mp4', 'mpeg', 'mpg',
 			'odp', 'ods', 'odt', 'oga', 'ogg', 'ogv',
-			'pdf', 'png', 'pps', 'ppsx', 'ppt', 'pptx', 'psd',
+			'pdf', 'png', 'pps', 'ppsx', 'ppt', 'pptx', 'psd', 'pub',
+			'qt',
 			'ra', 'ram', 'rm', 'rpm','rtf', 'rv',
 			'skp', 'spx',
-			'tar', 'tex', 'tgz', 'txt',
+			'tar', 'tex', 'tgz', 'ttf', 'txt',
 			'vob',
-			'wmv',
+			'wav', 'wmv',
 			'xls', 'xlsx', 'xml', 'xpi',
 			'zip',
 		);

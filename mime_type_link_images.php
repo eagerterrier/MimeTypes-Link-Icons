@@ -215,8 +215,6 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 		 * @var array	array of mimetypes
 		 * @todo		IMPORTANT: for now on each change, also copy this array to style.php
 		 *				and of course to the readme ;-)
-		 * @todo		File types to be added:
-		 *				Other suggestions: .tiff
 		 */
 		var $mime_types = array(
 			'3g2', '3gp',

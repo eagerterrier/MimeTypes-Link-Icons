@@ -102,7 +102,6 @@ Each icon is available in the following sizes:
 * .zip
 
 
-
 = Localization =
 * Dutch - [jrf](http://wordpress.org/support/profile/jrf)
 
@@ -241,7 +240,6 @@ If you need more information, read this article on [how to translate using a .po
 .pps, .ppsx, .m4a, .wav, .avi, .3gp, .3g2
 * [New file extensions] Added several additional file extensions based on user requests: [.pub](http://wordpress.org/support/topic/ms-publisher), [.eps](http://wordpress.org/support/topic/eps-support), [.rtf and .exe](http://wordpress.org/support/topic/plugin-mimetypes-link-icons-new-feature-request-self-add-new-mime-types)
 * [New file extensions] And some more: .tiff, .ico, .ttf, .qt, .air
-
 
 * [New feature] [Ability to disable this plugin for more than one classname](http://wordpress.org/support/topic/request-disable-for-multiple-classnames)
 * [New feature] Caching of the results of (slow) file size retrievals. This will make page loading a lot faster for pages with lots of file links. Will automatically be turned on, you can turn it off and/or fine tune the cache duration via the settings page. Default cache duration: 1 week.

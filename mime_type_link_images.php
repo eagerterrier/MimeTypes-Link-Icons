@@ -215,27 +215,25 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 		 * @var array	array of mimetypes
 		 * @todo		IMPORTANT: for now on each change, also copy this array to style.php
 		 *				and of course to the readme ;-)
-		 * @todo		File types to be added:
-		 *				Other suggestions: .tiff
 		 */
 		var $mime_types = array(
 			'3g2', '3gp',
 			'ai', 'air', 'asf', 'avi',
 			'bib',
 			'csv',
-			'deb', 'doc', 'docx', 'djvu', 'dmg', 'dwf', 'dwg',
-			'eps','epub', 'exe',
-			'flac',
+			'deb', 'djvu', 'dmg', 'doc', 'docx', 'dwf', 'dwg',
+			'eps', 'epub', 'exe',
+			'flac', 'flv',
 			'gif', 'gz',
 			'ico', 'indd', 'iso',
 			'jpg', 'jpeg',
 			'log',
-			'm4a', 'm4v', 'midi', 'mkv', 'mov', 'mp3', 'mp4', 'mpeg', 'mpg',
+			'm4a', 'm4v', 'midi', 'mkv', 'mov', 'mp3', 'mp4', 'mpeg', 'mpg', 'msi',
 			'odp', 'ods', 'odt', 'oga', 'ogg', 'ogv',
 			'pdf', 'png', 'pps', 'ppsx', 'ppt', 'pptx', 'psd', 'pub',
 			'qt',
-			'ra', 'ram', 'rm', 'rpm','rtf', 'rv',
-			'skp', 'spx',
+			'ra', 'ram', 'rm', 'rpm', 'rtf', 'rv',
+			'skp', 'spx', 'sql',
 			'tar', 'tex', 'tgz', 'tiff', 'ttf', 'txt',
 			'vob',
 			'wav', 'wmv',

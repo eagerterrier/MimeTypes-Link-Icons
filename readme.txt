@@ -1,7 +1,7 @@
 === MimeTypes Link Icons ===
 Contributors: eagerterrier, jrf
 Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
-Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, doc, docx, djvu, dmg, dwg, dwf, eps, epub, exe, flac, gif, gz, indd, ico, iso, jpeg, jpg, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, .pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
+Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, djvu, dmg, doc, docx, dwf, dwg, eps, epub, exe, flac, flv, gif, gz, ico, indd, iso, jpg, jpeg, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, msi, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, sql, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
 Requires at least: 1.5.1.3
 Tested up to: 3.6-beta3
 Stable tag: 3.0
@@ -36,16 +36,17 @@ Each icon is available in the following sizes:
 * .bib
 * .csv
 * .deb
-* .doc
-* .docx
 * .djvu
 * .dmg
+* .doc
+* .docx
 * .dwf
 * .dwg
 * .eps
 * .epub
 * .exe
 * .flac
+* .flv
 * .gif
 * .gz
 * .ico
@@ -63,6 +64,7 @@ Each icon is available in the following sizes:
 * .mp4
 * .mpeg
 * .mpg
+* .msi
 * .odp
 * .ods
 * .odt
@@ -86,6 +88,7 @@ Each icon is available in the following sizes:
 * .rv
 * .skp
 * .spx
+* .sql
 * .tar
 * .tex
 * .tgz
@@ -100,7 +103,6 @@ Each icon is available in the following sizes:
 * .xml
 * .xpi
 * .zip
-
 
 
 = Localization =
@@ -240,8 +242,7 @@ If you need more information, read this article on [how to translate using a .po
 * [New file extensions] Added additional file extensions which are within the WP allowed file types list: .jpeg
 .pps, .ppsx, .m4a, .wav, .avi, .3gp, .3g2
 * [New file extensions] Added several additional file extensions based on user requests: [.pub](http://wordpress.org/support/topic/ms-publisher), [.eps](http://wordpress.org/support/topic/eps-support), [.rtf and .exe](http://wordpress.org/support/topic/plugin-mimetypes-link-icons-new-feature-request-self-add-new-mime-types)
-* [New file extensions] And some more: .tiff, .ico, .ttf, .qt, .air
-
+* [New file extensions] And some more: .tiff, .ico, .ttf, .qt, .air, .msi, .sql, .flv
 
 * [New feature] [Ability to disable this plugin for more than one classname](http://wordpress.org/support/topic/request-disable-for-multiple-classnames)
 * [New feature] Caching of the results of (slow) file size retrievals. This will make page loading a lot faster for pages with lots of file links. Will automatically be turned on, you can turn it off and/or fine tune the cache duration via the settings page. Default cache duration: 1 week.

@@ -1896,7 +1896,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 						<td>
 							<label for="precision">' . esc_html__( 'File size rounding precision:', self::$name ) . '
 							<input type="text" name="' . esc_attr( self::SETTINGS_OPTION . '[precision]' ) . '" id="precision" value="' . esc_attr( $this->settings['precision'] ) . '" /> ' . esc_html__( 'decimals', self::$name ) . '</label><br />
-							<small><em>sizes in \'b\' will always have 0 decimals</em></small>
+							<small><em>sizes less than 1kB will always have 0 decimals</em></small>
 						</td>
 					</tr>
 					<tr>

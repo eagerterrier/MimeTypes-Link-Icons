@@ -425,7 +425,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 
 				/* Register the_content filter */
 				if( false === $this->settings['enable_async'] || true === $this->settings['show_file_size'] ) {
-					add_filter( 'the_content', array( &$this, 'mimetype_to_icon' ) );
+					add_filter( 'the_content', array( &$this, 'mimetype_to_icon' ), 15 );
 				}
 				/* Add js and css files */
 				add_action( 'wp_enqueue_scripts', array( &$this, 'wp_enqueue_scripts' ) );

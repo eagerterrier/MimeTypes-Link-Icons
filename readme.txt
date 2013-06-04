@@ -194,6 +194,29 @@ Yup! Just uncheck the 'cache file sizes' checkbox, save your settings and then c
 
 This is outside of the scope of this plugin, but you should probably read [this explanation](http://itswordpress.com/featured/add-additional-file-types-to-wordpress-media-library/) (includes code sample) on how to add more file types to the WordPress allowed list in an upgrade-friendly manner.
 
+You can, however, override the classnames and mimetype extensions using one or both of the filter hooks available for your use.
+
+To use the filters add a snippet like the following to your (child-)theme's functions.php file:
+`
+function my_classnameFunction( $classnames_string ) {
+	// do your thing
+	return $classnames_string;
+}
+add_filter( 'mtli_classnames', 'my_classnameFunction' );
+
+and for the mime types
+
+function changemimetypes( $currentmimetypes ) {
+	// do your thing to the array 
+	//
+	// ie $currentmimetypes[] = 'mp6';
+	//
+	// or $currentmimetypes = array('mp4','pdf','zzz'); - don't forget to add your own css to your stylesheet in the format .mtli_[extension_without_dots] {background-image:url('/path/to/your/icon')}
+	return $currentmimetypes;
+}
+add_filter( 'mtli_active_mimetypes', 'changemimetypes' );
+
+
 
 = I'm a plugin/theme developer and the MimeTypes Link Icons plugin is conflicting with my plugin... =
 You can temporarily suspend this plugin by using the pause_mtli() and unpause_mtli() functions.
@@ -236,6 +259,11 @@ If you need more information, read this article on [how to translate using a .po
 
 
 == Changelog ==
+
+= 3.1 =
+* [New feature] Added extensibility to classnames and filetypes, meaning that users can add a filter hook to edit/add their own styles
+* [New feature] Added debug mode to async replacement
+* [Bug fix] async replacement was balking at <a name> nodes
 
 = 3.0 by jrf =
 
@@ -402,6 +430,10 @@ Fixed an IE8 bug found by @quartney
 
 
 == Upgrade Notice ==
+
+
+= 3.1 =
+New features for advanced users and one minor bug fix for async users.
 
 = 3.0 by jrf =
 Several new features, new file extensions, complete plugin rewrite to comply with the current WP standards. Upgrade highly recommended. Please refer to the [changelog](http://wordpress.org/extend/plugins/mimetypes-link-icons/changelog/) for detailed information on all the changes.

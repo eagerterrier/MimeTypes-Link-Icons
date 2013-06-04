@@ -3,7 +3,7 @@
 Plugin Name: MimeTypes Link Icons
 Plugin URI: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Description: This will add file type icons next to links automatically. Change options in the <a href="options-general.php?page=mime_type_link_images.php">settings page</a>
-Version: 3.0
+Version: 3.1
 Author: Toby Cox, Juliette Reinders Folmer
 Author URI: https://github.com/eagerterrier/MimeTypes-Link-Icons
 Author: Toby Cox
@@ -56,7 +56,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 
 	/**
 	 * @package WordPress\Plugins\MimeTypes Link Icons
-	 * @version 3.0
+	 * @version 3.1
 	 * @link http://wordpress.org/extend/plugins/mimetypes-link-icons/ MimeTypes Link Icons WordPress plugin
 	 *
 	 * @copyright 2010 - 2013 Toby Cox, Juliette Reinders Folmer
@@ -71,37 +71,37 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 		 * @const string	Plugin version number
 		 * @usedby upgrade_options(), __construct()
 		 */
-		const VERSION = '3.0.1';
+		const VERSION = '3.1.0';
 
 		/**
 		 * @const string	Version in which the front-end styles where last changed
 		 * @usedby	wp_enqueue_scripts()
 		 */
-		const STYLES_VERSION = '3.0';
+		const STYLES_VERSION = '3.1';
 
 		/**
 		 * @const string	Version in which the front-end scripts where last changed
 		 * @usedby	wp_enqueue_scripts()
 		 */
-		const SCRIPTS_VERSION = '3.0';
+		const SCRIPTS_VERSION = '3.1';
 
 		/**
 		 * @const string	Version in which the admin styles where last changed
 		 * @usedby	admin_enqueue_scripts()
 		 */
-		const ADMIN_STYLES_VERSION = '3.0';
+		const ADMIN_STYLES_VERSION = '3.1';
 
 		/**
 		 * @const string	Version in which the admin scripts where last changed
 		 * @usedby	admin_enqueue_scripts()
 		 */
-		const ADMIN_SCRIPTS_VERSION = '3.0';
+		const ADMIN_SCRIPTS_VERSION = '3.1';
 
 		/**
 		 * @const string	Plugin version in which the DB options structure was last changed
 		 * @usedby upgrade_options()
 		 */
-		const DB_LASTCHANGE = '3.0';
+		const DB_LASTCHANGE = '3.1';
 
 
 		/**
@@ -263,6 +263,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 			'use_cache'				=> true,
 			'cache_time'			=> 604800, // seconds: 1 hour = 3600, 1 day = 86400, 1 week = 604800
 			'enable_async'			=> false,
+			'enable_async_debug'	=> false,
 			'enable_hidden_class'	=> true,
 			'hidden_classname'		=> array( 'wp-caption', ),
 			'version'				=> null,
@@ -575,8 +576,9 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 		 */
 		function get_javascript_i18n() {
 			$strings = array(
-				'hidethings'	=> ( ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && 0 < count( $this->settings['hidden_classname'] ) ) ) ? true : false ),
-				'enable_async'	=> ( ( true === $this->settings['enable_async'] && ( is_array( $this->active_mimetypes ) && 0 < count( $this->active_mimetypes ) ) ) ? true : false ),
+				'hidethings'			=> ( ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && 0 < count( $this->settings['hidden_classname'] ) ) ) ? true : false ),
+				'enable_async'			=> ( ( true === $this->settings['enable_async'] && ( is_array( $this->active_mimetypes ) && 0 < count( $this->active_mimetypes ) ) ) ? true : false ),
+				'enable_async_debug'	=> ( ( true === $this->settings['enable_async_debug'] && ( is_array( $this->active_mimetypes ) && 0 < count( $this->active_mimetypes ) ) ) ? true : false ),
 			);
 
 			/* Add jQuery class selector string if hidden classes are used */
@@ -930,6 +932,9 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 				}
 			}
 			unset( $mime_type );
+			
+			/* Set filter hook for active mime types */
+			$this->active_mimetypes = apply_filters( 'mtli_active_mimetypes', $this->active_mimetypes );
 
             return;
 		}
@@ -1124,6 +1129,9 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 							else {
 								$new_classnames = $classnames . ' ' . $mtli_classes;
 							}
+							
+							/* Add filter hook for classnames */
+							$new_classnames = apply_filters( 'mtli_classnames', $new_classnames );
 
 							if( is_null( $class_string ) ) { // no previous class string found
 								$replace = str_replace( $match[3], $match[3] . ' class="' . $new_classnames . '"', $replace );
@@ -1622,6 +1630,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 
 
 			$clean['enable_async'] = ( ( isset( $received['enable_async'] ) && 'true' === $received['enable_async'] ) ? true : false );
+			$clean['enable_async_debug'] = ( ( isset( $received['enable_async_debug'] ) && 'true' === $received['enable_async_debug'] ) ? true : false );
 
 
 			/* Always update the version to current ?*/
@@ -1916,10 +1925,11 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 				<legend>' . esc_html__( 'Enable Asynchronous Replacement?', self::$name ) . '</legend>
 				<table width="100%" cellspacing="2" cellpadding="5" class="editform form-table">
 					<tr>
-						<td>' . esc_html__( 'Some themes or plugins may conflict with this plugin. If you find you are having trouble you can switch on asynchronous replacement which (instead of PHP) uses JavaScript to find your links.', self::$name ) . '</td>
+						<td colspan="2">' . esc_html__( 'Some themes or plugins may conflict with this plugin. If you find you are having trouble you can switch on asynchronous replacement which (instead of PHP) uses JavaScript to find your links.', self::$name ) .'<br /><br />'.esc_html__( 'Turn on asynchronous debug mode for console logs.', self::$name ). '</td>
 					</tr>
 					<tr>
 						<td><label for="enable_async"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_async]' ) . '" id="enable_async" value="true" ' . checked( $this->settings['enable_async'], true, false ) . ' /> ' . __( 'Tick box to enable <i>asynchronous replacement</i>.', self::$name ) . '</label></td>
+						<td><label for="enable_async_debug"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_async_debug]' ) . '" id="enable_async_debug" value="true" ' . checked( $this->settings['enable_async_debug'], true, false ) . ' /> ' . __( 'Tick box to enable <i>asynchronous debug mode</i>.', self::$name ) . '</label></td>
 					</tr>
 				</table>
 			</fieldset>';

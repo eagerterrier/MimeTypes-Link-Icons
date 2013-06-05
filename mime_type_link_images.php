@@ -77,7 +77,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 		 * @const string	Version in which the front-end styles where last changed
 		 * @usedby	wp_enqueue_scripts()
 		 */
-		const STYLES_VERSION = '3.1';
+		const STYLES_VERSION = '3.0';
 
 		/**
 		 * @const string	Version in which the front-end scripts where last changed
@@ -89,19 +89,19 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 		 * @const string	Version in which the admin styles where last changed
 		 * @usedby	admin_enqueue_scripts()
 		 */
-		const ADMIN_STYLES_VERSION = '3.1';
+		const ADMIN_STYLES_VERSION = '3.0';
 
 		/**
 		 * @const string	Version in which the admin scripts where last changed
 		 * @usedby	admin_enqueue_scripts()
 		 */
-		const ADMIN_SCRIPTS_VERSION = '3.1';
+		const ADMIN_SCRIPTS_VERSION = '3.0';
 
 		/**
 		 * @const string	Plugin version in which the DB options structure was last changed
 		 * @usedby upgrade_options()
 		 */
-		const DB_LASTCHANGE = '3.1';
+		const DB_LASTCHANGE = '3.0';
 
 
 		/**

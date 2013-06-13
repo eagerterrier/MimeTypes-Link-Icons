@@ -264,6 +264,7 @@ If you need more information, read this article on [how to translate using a .po
 * [New feature] Added extensibility to classnames and filetypes, meaning that users can add a filter hook to edit/add their own styles
 * [New feature] Added debug mode to async replacement
 * [Bug fix] async replacement was balking at <a name> nodes
+* [Bug fix] settings links on plugin page didn't work, thanks [sndu for reporting](http://wordpress.org/support/topic/500-server-error-on-settings-icons-not-displaying)
 
 = 3.0 by jrf =
 

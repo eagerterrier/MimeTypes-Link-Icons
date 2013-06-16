@@ -3,7 +3,7 @@
 Plugin Name: MimeTypes Link Icons
 Plugin URI: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Description: This will add file type icons next to links automatically. Change options in the <a href="options-general.php?page=mimetypes-link-icons">settings page</a>
-Version: 3.1
+Version: 3.1.0
 Author: Toby Cox, Juliette Reinders Folmer
 Author URI: https://github.com/eagerterrier/MimeTypes-Link-Icons
 Author: Toby Cox
@@ -83,7 +83,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 		 * @const string	Version in which the front-end scripts where last changed
 		 * @usedby	wp_enqueue_scripts()
 		 */
-		const SCRIPTS_VERSION = '3.1';
+		const SCRIPTS_VERSION = '3.1.0';
 
 		/**
 		 * @const string	Version in which the admin styles where last changed
@@ -141,6 +141,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 		 * @const   int     Number of columns to put the image settings in on the options page
 		 */
 		const NR_OF_COLUMNS = 2;
+		
 
 
 
@@ -319,7 +320,10 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 		 */
 		var $curl;
 
-
+		/**
+		 * @var	bool	Debug setting to enable extra debugging for the plugin
+		 */
+		var $debug = false;
 
 
 		/* *** PLUGIN INITIALIZATION METHODS *** */
@@ -341,7 +345,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 
 
 			/* Check if we have any activation or upgrade actions to do */
-			if( !isset( $this->settings['version'] ) || self::DB_LASTCHANGE > $this->settings['version'] ) {
+			if( !isset( $this->settings['version'] ) || version_compare( self::DB_LASTCHANGE, $this->settings['version'], '>' ) ) {
 				add_action( 'init', array( &$this, 'upgrade_options' ), 8 );
 			}
 			// Make sure that an upgrade check is done on (re-)activation as well.
@@ -540,7 +544,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 					base64_encode( 'mtli_height=' . $this->settings['image_size'] . '&mtli_image_type=' . $this->settings['image_type'] . '&mtli_leftorright=' . $this->settings['leftorright'] ),
 					self::$url . '/css/style.php'
 				), // url
-				false, // not used
+				array(), // not used
 				self::STYLES_VERSION, // version
 				'all'
 			);
@@ -624,7 +628,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 				wp_enqueue_style(
 					self::$name, // id
 					self::$url . 'css/admin-style' . self::$suffix . '.css', // url
-					false, // not used
+					array(), // not used
 					self::ADMIN_STYLES_VERSION, // version
 					'all'
 				);
@@ -829,13 +833,21 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 			 * (Re-)Determine the site's domain on activation and on each upgrade
 			 */
 			$home_url = home_url();
-			$start = ( strpos( $home_url, '://' ) + 3 );
-			$this->settings['internal_domains'][] = $domain = substr( $home_url, $start, ( strpos( $home_url, '/', $start ) - $start ) );
+			if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::internal_domains: home_url = ' . $home_url ); }
+
+			$start = ( ( strpos( $home_url, '://' ) !== false ) ? ( strpos( $home_url, '://' ) + 3 ) : 0 );
+			if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::internal_domains: start = ' . $start ); }
+
+			$this->settings['internal_domains'][] = $domain = substr( $home_url, $start, ( strpos( $home_url, '/', $start ) - 1 ) );
+			if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::internal_domains: domain = ' . $domain ); }
+
 			if( stripos( $domain, 'www.' ) === 0 ) {
 				$this->settings['internal_domains'][] = str_ireplace( 'www.', '', $domain );
+				if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::internal_domains: domain2 = ' . str_ireplace( 'www.', '', $domain ) ); }
 			}
 			$this->settings['internal_domains'] = array_unique( $this->settings['internal_domains'] );
 			unset( $home_url, $domain, $start );
+
 
 
 			/* Update the settings */
@@ -1236,22 +1248,33 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 			/* Fill the statics - only run first time this method is called */
 			if( ( is_null( $home_path ) && is_null( $site_path ) ) && is_null( $wp_upload ) ) {
 				$home_url = home_url();
+				if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::set statics: home_url = ' . $home_url ); }
+
 				$site_url = site_url();
+				if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::set statics: site_url = ' . $site_url ); }
+
 				$wp_upload = wp_upload_dir();
 				$home_path = $site_path = $this->sync_dir_sep( ABSPATH );
+				if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::set statics: home_path = site_path = ' . $site_path ); }
+
 				if( $home_url !== $site_url ) {
 					$diff = str_replace( $home_url, '', $site_url );
 					$home_path = str_replace( $this->sync_dir_sep( $diff ), '', $site_path );
+					if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::set statics: home_path = ' . $home_path ); }
 					unset( $diff );
 				}
 				$parsed_url = parse_url( $home_url );
 				if( $parsed_url !== false && ( isset( $parsed_url['path'] ) && $parsed_url['path'] !== '' ) ) {
 					$path_to_home = $parsed_url['path'];
+					if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::set statics: path_to_home = ' . $path_to_home ); }
+
 					$site_root = str_replace( $this->sync_dir_sep( $path_to_home ), '', $site_path );
+					if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::set statics: site_root = ' . $site_root ); }
 				}
 				$parsed_url = parse_url( $wp_upload['baseurl'] );
 				if( $parsed_url !== false && ( isset( $parsed_url['path'] ) && $parsed_url['path'] !== '' ) ) {
 					$path_to_upload = str_replace( $path_to_home, '', $parsed_url['path'] );
+					if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::set statics: path_to_upload = ' . $path_to_upload ); }
 				}
 				unset( $home_url, $site_url, $parsed_url );
 			}
@@ -1264,13 +1287,18 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 			/* Is this a relative url starting with / \ or . ? */
 			if( true === in_array( substr( $url, 0, 1 ), array( '/', '\\', '.' ) ) ) {
 				$rel_url = $this->resolve_relative_url( $url );
+				if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::local vs remote: ==Branch 1== rel_url = ' . $rel_url ); }
+
 				$local = true;
 			}
 			else if( false !== $this->is_own_domain( $url ) ) {
 				$rel_url = $this->is_own_domain( $url );
+				if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::local vs remote: ==Branch 2== rel_url = ' . $rel_url ); }
+
 				if( !is_null( $path_to_home ) ) {
 					$pos = stripos( $rel_url, $path_to_home );
 					$rel_url = substr( $rel_url, ( $pos + strlen( $path_to_home ) ) );
+					if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::local vs remote: ==Branch 2a== rel_url = ' . $rel_url ); }
 				}
 				$local = true;
 			}
@@ -1281,6 +1309,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 				/* Most likely external url, but could in rare situations be local: think 'favicon.ico' */
 				else {
 					$rel_url = $this->resolve_relative_url( $url );
+					if( $this->debug === true ) { trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::local vs remote: ==Branch 3b== rel_url = ' . $rel_url ); }
 					$local = true;
 
 					$url = 'http://' . $url;
@@ -1307,19 +1336,13 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 						return filesize( $site_path . $rel_url );
 
 					case ( !is_null( $path_to_upload ) && file_exists( $this->sync_dir_sep( $wp_upload['basedir'] ) . substr( $rel_url, ( stripos( $rel_url, $path_to_upload ) + strlen( $path_to_upload ) ) ) ) ):
-						return filesize( $this->sync_dir_sep( $wp_upload['basedir'] ) . $rel_url );
+						return filesize( $this->sync_dir_sep( $wp_upload['basedir'] ) . substr( $rel_url, ( stripos( $rel_url, $path_to_upload ) + strlen( $path_to_upload ) ) ) );
 
 					case ( !is_null( $site_root ) && file_exists( $site_root . $rel_url ) ):
 						return filesize( $site_root . $rel_url );
 
 					case file_exists( $rel_url ):
 						return filesize( $rel_url );
-
-					case file_exists( $url ):
-						return filesize( $url );
-
-					case file_exists( $url ):
-						return filesize( $url );
 
 					case file_exists( $url ):
 						return filesize( $url );

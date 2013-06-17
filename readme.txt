@@ -4,7 +4,7 @@ Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a
 Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, djvu, dmg, doc, docx, dwf, dwg, eps, epub, exe, flac, flv, gif, gz, ico, indd, iso, jpg, jpeg, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, msi, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, sql, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
 Requires at least: 1.5.1.3
 Tested up to: 3.6-beta3
-Stable tag: 3.0
+Stable tag: 3.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Adds icons automatically to any uploads and/or file links inserted into your blo
 
 MimeTypes Link Icons is a plugin that looks for links to files and uploads in your blogs posts and adds a nice icon next to it. Optionally add the file's file size next to the link.
 
-**Important note on v3.0**: This version partially breaks backwards compatibility: the plugin now requires PHP5.1+ and WP 3.1+. Please have a look at the [changelog](http://wordpress.org/extend/plugins/mimetypes-link-icons/changelog/) for more information about the changes.
+**Important note on v3.0 and up**: This version partially breaks backwards compatibility: the plugin now requires PHP5.1+ and WP 3.1+. Please have a look at the [changelog](http://wordpress.org/extend/plugins/mimetypes-link-icons/changelog/) for more information about the changes.
 
 The icons are configurable. You can choose to display a PNG with transparent background or GIF with white matte, display the icon to the left or the right of the link and choose the icon size.
 
@@ -170,6 +170,10 @@ add_filter( 'mtli_filesize', 'my_function' );
 Please note: be aware that the file size string will be added to the page via CSS, so the output of your function should be usable in a CSS string!
 
 
+= Is there a way to clear the file size cache ? =
+Yup! Just uncheck the 'cache file sizes' checkbox, save your settings and then check the checkbox again. The file size cache has now been cleared.
+
+
 = I want to have the mimetype icons for a content area which is outside of the loop (a sidebar for instance). Can I? =
 Yes you can.
 
@@ -179,43 +183,47 @@ to
 `echo mimetypes_to_icons( $my_content );`
 
 or even better, if the content you want to change supplies you with an output filter - add the following to your (child-)theme's functions.php file:
-`add_filter( 'name_of_output_filter', 'mimetypes_to_icons' );`
+`add_filter( 'name_of_output_filter', 'mimetypes_to_icons', 15 );`
 for instance:
-`add_filter( 'widget_text', 'mimetypes_to_icons' );`
+`add_filter( 'widget_text', 'mimetypes_to_icons', 15 );`
 
 Please note: the icons generated for that specific content area, will be generated in non-async mode. All other settings will be respected.
 
 
-= Is there a way to clear the file size cache ? =
-Yup! Just uncheck the 'cache file sizes' checkbox, save your settings and then check the checkbox again. The file size cache has now been cleared.
+= I want to change the classes used by this plugin =
+You can ;-)
 
+There's an output filter available for the attachment link classes.
+Mind: the `$classnames_string` variables holds all the classes - not just the MTLI classes - which the attachment link, i.e. the `<a>` tag, has.
 
-= I want to be able to upload more file types to my WordPress blog! =
-
-This is outside of the scope of this plugin, but you should probably read [this explanation](http://itswordpress.com/featured/add-additional-file-types-to-wordpress-media-library/) (includes code sample) on how to add more file types to the WordPress allowed list in an upgrade-friendly manner.
-
-You can, however, override the classnames and mimetype extensions using one or both of the filter hooks available for your use.
-
-To use the filters add a snippet like the following to your (child-)theme's functions.php file:
+To use the filter add a snippet like the following to your (child-)theme's functions.php file:
 `
 function my_classnameFunction( $classnames_string ) {
 	// do your thing
 	return $classnames_string;
 }
 add_filter( 'mtli_classnames', 'my_classnameFunction' );
+`
 
-and for the mime types
 
-function changemimetypes( $currentmimetypes ) {
-	// do your thing to the array 
+= I want to be able to upload more file types to my WordPress blog! =
+
+This is outside of the scope of this plugin, but you should probably read [this explanation](http://itswordpress.com/featured/add-additional-file-types-to-wordpress-media-library/) (includes code sample) on how to add more file types to the WordPress allowed list in an upgrade-friendly manner.
+
+However, if you *do* add extra file types to your blog and these file types would not (yet) be included in this plugin, you *can* add the mimetype extensions to the list this plugin uses, by using the filter hook we provided for this purpose.
+
+To use the filter add a snippet like the following to your (child-)theme's functions.php file:
+`
+function change_mimetypes( $current_mimetypes ) {
+	// do your thing to the array
 	//
-	// ie $currentmimetypes[] = 'mp6';
+	// ie $current_mimetypes[] = 'mp6';
 	//
-	// or $currentmimetypes = array('mp4','pdf','zzz'); - don't forget to add your own css to your stylesheet in the format .mtli_[extension_without_dots] {background-image:url('/path/to/your/icon')}
-	return $currentmimetypes;
+	// or $current_mimetypes = array('mp4','pdf','zzz'); - don't forget to add your own css to your stylesheet in the format .mtli_[extension_without_dots] {background-image:url('/path/to/your/icon')}
+	return $current_mimetypes;
 }
-add_filter( 'mtli_active_mimetypes', 'changemimetypes' );
-
+add_filter( 'mtli_active_mimetypes', 'change_mimetypes' );
+`
 
 
 = I'm a plugin/theme developer and the MimeTypes Link Icons plugin is conflicting with my plugin... =
@@ -250,21 +258,62 @@ To get your translation included in the next release of this plugin:
 If you need more information, read this article on [how to translate using a .po file](http://codex.wordpress.org/Translating_WordPress).
 
 
+== Error Reporting ==
+
+= The plugin is causing errors/not working the way it should! =
+
+First thing to check is whether you are using the latest version, if not, please upgrade and check again.
+
+If the error persists, please report any errors you are getting in the [WP forum](http://wordpress.org/support/plugin/mimetypes-link-icons) or on [GitHub](https://github.com/eagerterrier/MimeTypes-Link-Icons). Error reporting is much appreciated as it will improve the plugin for everyone!
+
+We'll need at least the following information:
+
+* the complete error message if there is any
+* a description of the problem
+* the version number of the plugin you are using
+* preferably a link to a page where we can see the error
+* depending on the error: the WP version you are using and the PHP version WP is running on
+
+Sometimes we may need information on the settings you are using. If you have [`WP_DEBUG`](http://codex.wordpress.org/WP_DEBUG) set to `true`, you will see a list of the plugin settings at the bottom of the MimeType Link Icons settings page.
+
+
+On rare occasions, like with problems with the filesize functions, we may need even more information. We will then ask you to turn on a plugin-specific debugging option.
+
+To do so, please add the following to your (child-)theme's functions.php file:
+`
+$GLOBALS['mimetypes_link_icons']->debug = true;
+`
+You may want to wrap this snippet in an `if( WP_DEBUG === true ) {}` and you can remove it once you've send us the output.
+
+Alternatively, you can (temporarily) change the variable in the plugin file, search for the following code snippet and change `false` to `true`:
+`
+/**
+ * @var	bool	Debug setting to enable extra debugging for the plugin
+ */
+var $debug = false;
+`
+
+
+
+
 == Screenshots ==
 
 1. Screenshot of the administration screen
-2. Screenshot of plugin in action.
-3. MimeTypes Link Icons adds icons automatically to your inline attachments.
-4. Now you can get MimeTypes Link Icons to add the file size of your attachment, too.
+2. Screenshot of the administration screen - advanced settings
+3. Screenshot of plugin in action.
+4. MimeTypes Link Icons adds icons automatically to your inline attachments.
+5. Now you can get MimeTypes Link Icons to add the file size of your attachment, too.
 
 
 == Changelog ==
 
-= 3.1 =
-* [New feature] Added extensibility to classnames and filetypes, meaning that users can add a filter hook to edit/add their own styles
+= 3.1.0 =
+* [New feature] Added extensibility to classnames and file types, meaning that users can add a filter hook to edit/add their own styles
 * [New feature] Added debug mode to async replacement
-* [Bug fix] async replacement was balking at <a name> nodes
-* [Bug fix] settings links on plugin page didn't work, thanks [sndu for reporting](http://wordpress.org/support/topic/500-server-error-on-settings-icons-not-displaying)
+* [Bug fix] Async replacement was balking at <a name> nodes
+* [Bug fix] Settings links on plugin page didn't work, thanks [sndu for reporting](http://wordpress.org/support/topic/500-server-error-on-settings-icons-not-displaying)
+* [Bug fix] Error in filesize retrieval if internal domain was not set correctly, thanks [PsychicSmurf for reporting](http://wordpress.org/support/topic/warning-filesize-functionfilesize-stat-failed)
+* [Misc] Added internal debugging variable and some debugging code to help determine problems with filesizes and paths. See the Error reporting section in the readme file for info on how and when to use this.
 
 = 3.0 by jrf =
 
@@ -433,8 +482,8 @@ Fixed an IE8 bug found by @quartney
 == Upgrade Notice ==
 
 
-= 3.1 =
-New features for advanced users and one minor bug fix for async users.
+= 3.1.0 =
+New features for advanced users and some minor bug fixes.
 
 = 3.0 by jrf =
 Several new features, new file extensions, complete plugin rewrite to comply with the current WP standards. Upgrade highly recommended. Please refer to the [changelog](http://wordpress.org/extend/plugins/mimetypes-link-icons/changelog/) for detailed information on all the changes.
@@ -479,7 +528,7 @@ Fixed a typo found by @pdecaux. Recommended to users of the filesize option.
 * Removing a couple of short php open tags
 
 = 2.1.2 =
-* Adding 3 new mime types (openoffice)
+* Adding 3 new mime types (Open Office)
 
 = 2.1.1 =
 * Adding 14 new mime types (mostly video)

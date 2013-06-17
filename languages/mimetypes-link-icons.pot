@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MimeTypes Link Icons\n"
-"POT-Creation-Date: 2013-06-16 21:45+0100\n"
-"PO-Revision-Date: 2013-06-16 21:45+0100\n"
+"POT-Creation-Date: 2013-06-17 01:51+0100\n"
+"PO-Revision-Date: 2013-06-17 01:51+0100\n"
 "Last-Translator: EJ Reinders Folmer <poedit_nospam@adviesenzo.nl>\n"
 "Language-Team: \n"
 "Language: English\n"
@@ -284,8 +284,8 @@ msgstr ""
 
 #: ../mime_type_link_images.php:1912
 msgid ""
-"Tick this box to have one or more <i>classname(s)</i> that will disable the "
-"mime type links (ie: around an image or caption)."
+"Tick this box to have one or more <em>classname(s)</em> that will disable "
+"the mime type links (ie: around an image or caption)."
 msgstr ""
 
 #: ../mime_type_link_images.php:1915
@@ -299,7 +299,7 @@ msgid "Show File Size?"
 msgstr ""
 
 #: ../mime_type_link_images.php:1927
-msgid "Display the <i>file size</i> of the attachment/linked file."
+msgid "Display the <em>file size</em> of the attachment/linked file."
 msgstr ""
 
 #: ../mime_type_link_images.php:1929
@@ -346,9 +346,9 @@ msgid "Turn on asynchronous debug mode for console logs."
 msgstr ""
 
 #: ../mime_type_link_images.php:1954
-msgid "Tick box to enable <i>asynchronous replacement</i>."
+msgid "Tick box to enable <em>asynchronous replacement</em>."
 msgstr ""
 
 #: ../mime_type_link_images.php:1955
-msgid "Tick box to enable <i>asynchronous debug mode</i>."
+msgid "Tick box to enable <em>asynchronous debug mode</em>."
 msgstr ""

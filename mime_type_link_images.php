@@ -1533,7 +1533,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 
 		/**
 		 * Creates a human readable file size string
-		 * - Returns <i>false</i> is the passed parameter is not an integer or a numeric string
+		 * - Returns <i>false</i> if the passed parameter is not an integer or a numeric string
 		 *
 		 * @uses 	$this->byte_suffixes		for the byte suffixes
 		 * @param	int				$filesize	filesize in bytes
@@ -1909,7 +1909,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 				<legend>' . __( 'Enable/Disable classnames?', self::$name ) . '</legend>
 				<table width="100%" cellspacing="2" cellpadding="5" class="editform form-table">
 					<tr>
-						<td><label for="enable_hidden_class"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_hidden_class]' ) . '" id="enable_hidden_class" value="true" ' . checked( $this->settings['enable_hidden_class'], true, false ) . ' /> ' . __( 'Tick this box to have one or more <i>classname(s)</i> that will disable the mime type links (ie: around an image or caption).', self::$name ) . '</label></td>
+						<td><label for="enable_hidden_class"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_hidden_class]' ) . '" id="enable_hidden_class" value="true" ' . checked( $this->settings['enable_hidden_class'], true, false ) . ' /> ' . __( 'Tick this box to have one or more <em>classname(s)</em> that will disable the mime type links (ie: around an image or caption).', self::$name ) . '</label></td>
 					</tr>
 					<tr>
 						<td><label for="hidden_classname">' . esc_html__( 'You can change the classname(s) by editing the field below. If you want to exclude several classnames, separate them with a comma (,).', self::$name ) . '</label></td>
@@ -1924,7 +1924,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 				<legend>' . esc_html__( 'Show File Size?', self::$name ) . '</legend>
 				<table width="100%" cellspacing="2" cellpadding="5" class="editform form-table">
 					<tr>
-						<td><label for="show_file_size"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[show_file_size]' ) . '" id="show_file_size" value="true" ' . checked( $this->settings['show_file_size'], true, false ) . ' /> ' . __( 'Display the <i>file size</i> of the attachment/linked file.', self::$name ) . '</label></td>
+						<td><label for="show_file_size"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[show_file_size]' ) . '" id="show_file_size" value="true" ' . checked( $this->settings['show_file_size'], true, false ) . ' /> ' . __( 'Display the <em>file size</em> of the attachment/linked file.', self::$name ) . '</label></td>
 						<td>
 							<label for="precision">' . esc_html__( 'File size rounding precision:', self::$name ) . '
 							<input type="text" name="' . esc_attr( self::SETTINGS_OPTION . '[precision]' ) . '" id="precision" value="' . esc_attr( $this->settings['precision'] ) . '" /> ' . esc_html__( 'decimals', self::$name ) . '</label><br />
@@ -1951,8 +1951,8 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 						<td colspan="2">' . esc_html__( 'Some themes or plugins may conflict with this plugin. If you find you are having trouble you can switch on asynchronous replacement which (instead of PHP) uses JavaScript to find your links.', self::$name ) .'<br /><br />'.esc_html__( 'Turn on asynchronous debug mode for console logs.', self::$name ). '</td>
 					</tr>
 					<tr>
-						<td><label for="enable_async"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_async]' ) . '" id="enable_async" value="true" ' . checked( $this->settings['enable_async'], true, false ) . ' /> ' . __( 'Tick box to enable <i>asynchronous replacement</i>.', self::$name ) . '</label></td>
-						<td><label for="enable_async_debug"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_async_debug]' ) . '" id="enable_async_debug" value="true" ' . checked( $this->settings['enable_async_debug'], true, false ) . ' /> ' . __( 'Tick box to enable <i>asynchronous debug mode</i>.', self::$name ) . '</label></td>
+						<td><label for="enable_async"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_async]' ) . '" id="enable_async" value="true" ' . checked( $this->settings['enable_async'], true, false ) . ' /> ' . __( 'Tick box to enable <em>asynchronous replacement</em>.', self::$name ) . '</label></td>
+						<td><label for="enable_async_debug"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_async_debug]' ) . '" id="enable_async_debug" value="true" ' . checked( $this->settings['enable_async_debug'], true, false ) . ' /> ' . __( 'Tick box to enable <em>asynchronous debug mode</em>.', self::$name ) . '</label></td>
 					</tr>
 				</table>
 			</fieldset>';

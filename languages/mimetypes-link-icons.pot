@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MimeTypes Link Icons\n"
-"POT-Creation-Date: 2013-06-17 01:51+0100\n"
-"PO-Revision-Date: 2013-06-17 01:51+0100\n"
+"POT-Creation-Date: 2013-06-17 02:09+0100\n"
+"PO-Revision-Date: 2013-06-17 02:09+0100\n"
 "Last-Translator: EJ Reinders Folmer <poedit_nospam@adviesenzo.nl>\n"
 "Language-Team: \n"
 "Language: English\n"
@@ -308,6 +308,10 @@ msgstr ""
 
 #: ../mime_type_link_images.php:1930
 msgid "decimals"
+msgstr ""
+
+#: ../mime_type_link_images.php:1931
+msgid "sizes less than 1kB will always have 0 decimals"
 msgstr ""
 
 #: ../mime_type_link_images.php:1935

@@ -1928,7 +1928,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 						<td>
 							<label for="precision">' . esc_html__( 'File size rounding precision:', self::$name ) . '
 							<input type="text" name="' . esc_attr( self::SETTINGS_OPTION . '[precision]' ) . '" id="precision" value="' . esc_attr( $this->settings['precision'] ) . '" /> ' . esc_html__( 'decimals', self::$name ) . '</label><br />
-							<small><em>sizes less than 1kB will always have 0 decimals</em></small>
+							<small><em>' . __( 'sizes less than 1kB will always have 0 decimals', self::$name ) . '</em></small>
 						</td>
 					</tr>
 					<tr>
@@ -1948,7 +1948,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 				<legend>' . esc_html__( 'Enable Asynchronous Replacement?', self::$name ) . '</legend>
 				<table width="100%" cellspacing="2" cellpadding="5" class="editform form-table">
 					<tr>
-						<td colspan="2">' . esc_html__( 'Some themes or plugins may conflict with this plugin. If you find you are having trouble you can switch on asynchronous replacement which (instead of PHP) uses JavaScript to find your links.', self::$name ) .'<br /><br />'.esc_html__( 'Turn on asynchronous debug mode for console logs.', self::$name ). '</td>
+						<td colspan="2">' . esc_html__( 'Some themes or plugins may conflict with this plugin. If you find you are having trouble you can switch on asynchronous replacement which (instead of PHP) uses JavaScript to find your links.', self::$name ) . '</td>
 					</tr>
 					<tr>
 						<td><label for="enable_async"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_async]' ) . '" id="enable_async" value="true" ' . checked( $this->settings['enable_async'], true, false ) . ' /> ' . __( 'Tick box to enable <em>asynchronous replacement</em>.', self::$name ) . '</label></td>

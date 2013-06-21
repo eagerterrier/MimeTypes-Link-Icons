@@ -1154,7 +1154,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 
 							/* Validate/sanitize filtered classes */
 							$new_classnames = explode( ' ', $new_classnames );
-							$new_classnames = array_map( 'sanitize html class', $new_classnames );
+							$new_classnames = array_map( 'sanitize_html_class', $new_classnames );
 							$new_classnames = implode( ' ', $new_classnames );
 
 

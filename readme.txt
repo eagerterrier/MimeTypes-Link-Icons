@@ -4,7 +4,7 @@ Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a
 Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, djvu, dmg, doc, docx, dwf, dwg, eps, epub, exe, flac, flv, gif, gz, ico, indd, iso, jpg, jpeg, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, msi, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, sql, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
 Requires at least: 1.5.1.3
 Tested up to: 3.6-beta3
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -307,6 +307,9 @@ var $debug = false;
 
 == Changelog ==
 
+= 3.1.2
+* [Bug fix] zip packages for tags weren't working properly
+
 = 3.1.1 =
 * [Bug fix] The new mimetype filter hook was called before the theme (and therefore the functions.php file) was loaded.
 * [Security] Added some extra security measures
@@ -485,6 +488,11 @@ Fixed an IE8 bug found by @quartney
 
 == Upgrade Notice ==
 
+= 3.1.2
+Minor bug fix
+
+= 3.1.1 =
+Bug fix and security measures
 
 = 3.1.0 =
 New features for advanced users and some minor bug fixes.

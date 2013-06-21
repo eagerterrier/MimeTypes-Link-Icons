@@ -3,7 +3,7 @@
 Plugin Name: MimeTypes Link Icons
 Plugin URI: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Description: This will add file type icons next to links automatically. Change options in the <a href="options-general.php?page=mimetypes-link-icons">settings page</a>
-Version: 3.1.0
+Version: 3.1.1
 Author: Toby Cox, Juliette Reinders Folmer
 Author URI: https://github.com/eagerterrier/MimeTypes-Link-Icons
 Author: Toby Cox
@@ -71,7 +71,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 		 * @const string	Plugin version number
 		 * @usedby upgrade_options(), __construct()
 		 */
-		const VERSION = '3.1.0';
+		const VERSION = '3.1.1';
 
 		/**
 		 * @const string	Version in which the front-end styles where last changed
@@ -424,6 +424,14 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 		 * Add the actions for the front end functionality
 		 */
 		public function init() {
+
+			/* Set filter hook for active mime types */
+			$this->active_mimetypes = apply_filters( 'mtli_active_mimetypes', $this->active_mimetypes );
+
+			/* Validate/sanitize the active mime types array */
+			$this->active_mimetypes = array_filter( $this->active_mimetypes, 'is_string' );
+			$this->active_mimetypes = array_map( 'strtolower', $this->active_mimetypes );
+			$this->active_mimetypes = preg_grep( '`^[a-z0-9]{2,8}$`', $this->active_mimetypes );
 
 			// Don't do anything if no active_mimetypes or if we're not on the frontend
 			if( false === is_admin() && 0 < count( $this->active_mimetypes ) ) {
@@ -944,9 +952,6 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 				}
 			}
 			unset( $mime_type );
-			
-			/* Set filter hook for active mime types */
-			$this->active_mimetypes = apply_filters( 'mtli_active_mimetypes', $this->active_mimetypes );
 
             return;
 		}
@@ -1125,6 +1130,8 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 
 								/* Add the css rule */
 								$css_filesize_string = apply_filters( 'mtli_filesize', '(' . $filesize . ')' );
+								// Make sure anything evil is stripped out of the filtered string
+								$css_filesize_string = sanitize_text_field( $css_filesize_string );
 								$this->filesize_styles[] = 'a[rel~="mtli_filesize' . str_replace( array( '.', ' ' ), '', $filesize ) . '"]:after {content:" ' . $css_filesize_string . '"}';
 							}
 							unset( $filesize, $css_filesize_string );
@@ -1144,6 +1151,12 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 							
 							/* Add filter hook for classnames */
 							$new_classnames = apply_filters( 'mtli_classnames', $new_classnames );
+
+							/* Validate/sanitize filtered classes */
+							$new_classnames = explode( ' ', $new_classnames );
+							$new_classnames = array_map( 'sanitize html class', $new_classnames );
+							$new_classnames = implode( ' ', $new_classnames );
+
 
 							if( is_null( $class_string ) ) { // no previous class string found
 								$replace = str_replace( $match[3], $match[3] . ' class="' . $new_classnames . '"', $replace );

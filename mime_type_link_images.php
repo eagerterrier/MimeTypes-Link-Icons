@@ -1,9 +1,13 @@
 <?php
+/**
+ * @package MimeTypeLinkImages
+ * @version 3.1.2
+ */
 /*
 Plugin Name: MimeTypes Link Icons
 Plugin URI: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Description: This will add file type icons next to links automatically. Change options in the <a href="options-general.php?page=mimetypes-link-icons">settings page</a>
-Version: 3.1.1
+Version: 3.1.2
 Author: Toby Cox, Juliette Reinders Folmer
 Author URI: https://github.com/eagerterrier/MimeTypes-Link-Icons
 Author: Toby Cox
@@ -71,7 +75,7 @@ if ( !class_exists( 'mimetypes_link_icons' ) ) {
 		 * @const string	Plugin version number
 		 * @usedby upgrade_options(), __construct()
 		 */
-		const VERSION = '3.1.1';
+		const VERSION = '3.1.2';
 
 		/**
 		 * @const string	Version in which the front-end styles where last changed

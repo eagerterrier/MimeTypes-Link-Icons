@@ -1,17 +1,17 @@
 <?php
-header('Content-type: text/css');
+header( 'Content-type: text/css' );
 
 $getvars = explode( '&', base64_decode( $_GET['cssvars'] ) );
-foreach( $getvars as $v ) {
-	$data = explode( '=', $v );
+foreach ( $getvars as $v ) {
+	$data     = explode( '=', $v );
 	$$data[0] = $data[1];
 }
 unset( $getvars, $v );
 
 /* Input validation of $_GET variables */
-$mtli_height = ( in_array( intval( $mtli_height ), array( 16, 24, 48, 64, 128 ) ) ? intval( $mtli_height ) : 16 );
+$mtli_height      = ( in_array( intval( $mtli_height ), array( 16, 24, 48, 64, 128 ) ) ? intval( $mtli_height ) : 16 );
 $mtli_leftorright = ( in_array( $mtli_leftorright, array( 'left', 'right' ) ) ? $mtli_leftorright : 'left' );
-$mtli_image_type = ( in_array( $mtli_image_type, array( 'gif', 'png' ) ) ? $mtli_image_type : 'png' );
+$mtli_image_type  = ( in_array( $mtli_image_type, array( 'gif', 'png' ) ) ? $mtli_image_type : 'png' );
 
 
 echo '
@@ -50,7 +50,7 @@ $mtli_available_mime_types = array(
 );
 
 // @todo Only generate for the enabled mime-types ?
-foreach( $mtli_available_mime_types as $type ) {
+foreach ( $mtli_available_mime_types as $type ) {
 	echo '
 .mtli_' . $type . ' {
 	background-image: url(../images/' . $type . '-icon-' . $mtli_height . 'x' . $mtli_height . '.' . $mtli_image_type . '); }';

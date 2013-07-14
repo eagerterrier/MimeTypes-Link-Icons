@@ -1,10 +1,2 @@
-#ignore thumbnails created by windows
-Thumbs.db
-*.log
-*.bak
-.idea/
-backup/
-backups/
-___*
 languages/mimetypes-link-icons.mo
 assets/banner-772x250.png.pspimage

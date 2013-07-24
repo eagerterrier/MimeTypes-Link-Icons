@@ -2006,9 +2006,6 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 	} /* End of class */
 
 
-	/* Initialize the static variables */
-	mimetypes_link_icons::init_statics();
-
 	/* Instantiate our class */
 	add_action( 'plugins_loaded', 'mimetypes_link_icons_init' );
 
@@ -2019,6 +2016,9 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 		 * @return void
 		 */
 		function mimetypes_link_icons_init() {
+			/* Initialize the static variables */
+			mimetypes_link_icons::init_statics();
+
 			$GLOBALS['mimetypes_link_icons'] = new MimeTypesLinkIcons();
 		}
 	}

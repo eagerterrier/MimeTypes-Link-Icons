@@ -2,7 +2,7 @@
 Contributors: eagerterrier, jrf
 Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, djvu, dmg, doc, docx, dwf, dwg, eps, epub, exe, flac, flv, gif, gz, ico, indd, iso, jpg, jpeg, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, msi, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, sql, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
-Requires at least: 1.5.1.3
+Requires at least: 3.1
 Tested up to: 3.6-beta3
 Stable tag: 3.1.3
 License: GPLv2 or later

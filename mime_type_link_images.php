@@ -1,13 +1,13 @@
 <?php
 /**
  * @package MimeTypeLinkImages
- * @version 3.1.3
+ * @version 3.1.4
  */
 /*
 Plugin Name: MimeTypes Link Icons
 Plugin URI: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Description: This will add file type icons next to links automatically. Change options in the <a href="options-general.php?page=mimetypes-link-icons">settings page</a>
-Version: 3.1.3
+Version: 3.1.4
 Author: Toby Cox, Juliette Reinders Folmer
 Author URI: https://github.com/eagerterrier/MimeTypes-Link-Icons
 Author: Toby Cox
@@ -59,7 +59,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 	/**
 	 * @package WordPress\Plugins\MimeTypes Link Icons
-	 * @version 3.1
+	 * @version 3.1.4
 	 * @link http://wordpress.org/extend/plugins/mimetypes-link-icons/ MimeTypes Link Icons WordPress plugin
 	 * @link https://github.com/eagerterrier/MimeTypes-Link-Icons GitHub development of MimeTypes Link Icons WordPress plugin
 	 *
@@ -75,7 +75,7 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 		 * @const string	Plugin version number
 		 * @usedby upgrade_options(), __construct()
 		 */
-		const VERSION = '3.1.3';
+		const VERSION = '3.1.4';
 
 		/**
 		 * @const string	Version in which the front-end styles where last changed
@@ -105,7 +105,7 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 		 * @const string	Plugin version in which the DB options structure was last changed
 		 * @usedby upgrade_options()
 		 */
-		const DB_LASTCHANGE = '3.0';
+		const DB_LASTCHANGE = '3.1.4';
 
 
 		/**
@@ -843,6 +843,11 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 					$this->settings['internal_domains'] = explode( ',', $this->settings['internal_domains'] );
 				}
 			}
+			/* Settings upgrade for version 3.0
+			   Reset internal domains variable for changed determination */
+			if( !isset( $this->settings['version'] ) || version_compare( $this->settings['version'], '3.1.4', '<' ) ) {
+				unset( $this->settings['internal_domains'] );
+			}
 
 			/**
 			 * (Re-)Determine the site's domain on activation and on each upgrade
@@ -855,7 +860,7 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 			if ( $this->debug === true ) {
 				trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::internal_domains: start = ' . $start );
 			}
-			$this->settings['internal_domains'][] = $domain = substr( $home_url, $start, ( strpos( $home_url, '/', $start ) - 1 ) );
+			$this->settings['internal_domains'][] = $domain = substr( $home_url, $start, ( strpos( $home_url, '/', $start ) - $start ) );
 			if ( $this->debug === true ) {
 				trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::internal_domains: domain = ' . $domain );
 			}

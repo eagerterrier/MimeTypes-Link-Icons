@@ -557,7 +557,7 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 				add_query_arg(
 					'cssvars',
 					base64_encode( 'mtli_height=' . $this->settings['image_size'] . '&mtli_image_type=' . $this->settings['image_type'] . '&mtli_leftorright=' . $this->settings['leftorright'] ),
-					self::$url . '/css/style.php'
+					self::$url . 'css/style.php'
 				), // url
 				array(), // not used
 				self::STYLES_VERSION, // version
@@ -569,7 +569,7 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 			if ( ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && 0 < count( $this->settings['hidden_classname'] ) ) ) || ( true === $this->settings['enable_async'] && ( is_array( $this->active_mimetypes ) && 0 < count( $this->active_mimetypes ) ) ) ) {
 				wp_enqueue_script(
 					self::$name, // id
-					self::$url . '/js/mtli-str-replace' . self::$suffix . '.js', // url
+					self::$url . 'js/mtli-str-replace' . self::$suffix . '.js', // url
 					array( 'jquery' ), // dependants
 					self::SCRIPTS_VERSION, // version
 					true // load in footer

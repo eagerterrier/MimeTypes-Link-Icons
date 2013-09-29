@@ -498,13 +498,13 @@ Fixed an IE8 bug found by @quartney
 
 == Upgrade Notice ==
 
-= 3.1.4
+= 3.1.4 =
 Minor clean up and bug fix
 
-= 3.1.3
+= 3.1.3 =
 Bug fix
 
-= 3.1.2
+= 3.1.2 =
 Minor bug fix
 
 = 3.1.1 =

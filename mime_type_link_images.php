@@ -56,7 +56,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 
-if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
+if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 	/**
 	 * @package WordPress\Plugins\MimeTypes Link Icons
 	 * @version 3.1.4
@@ -66,7 +66,7 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 	 * @copyright 2010 - 2013 Toby Cox, Juliette Reinders Folmer
 	 * @license http://creativecommons.org/licenses/GPL/2.0/ GNU General Public License, version 2
 	 */
-	class MimeTypesLinkIcons {
+	class Mime_Types_Link_Icons {
 
 
 		/* *** DEFINE CLASS CONSTANTS *** */
@@ -350,16 +350,16 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 
 			/* Check if we have any activation or upgrade actions to do */
 			if ( !isset( $this->settings['version'] ) || version_compare( self::DB_LASTCHANGE, $this->settings['version'], '>' ) ) {
-				add_action( 'init', array( &$this, 'upgrade_options' ), 8 );
+				add_action( 'init', array( $this, 'upgrade_options' ), 8 );
 			}
 			// Make sure that an upgrade check is done on (re-)activation as well.
-			register_activation_hook( __FILE__, array( &$this, 'upgrade_options' ) );
+			register_activation_hook( __FILE__, array( $this, 'upgrade_options' ) );
 
 
 			// Register the plugin initialization actions
-			add_action( 'init', array( &$this, 'init' ) );
-			add_action( 'admin_menu', array( &$this, 'add_options_page' ) );
-			add_action( 'admin_init', array( &$this, 'admin_init' ) );
+			add_action( 'init', array( $this, 'init' ) );
+			add_action( 'admin_menu', array( $this, 'add_options_page' ) );
+			add_action( 'admin_init', array( $this, 'admin_init' ) );
 		}
 
 
@@ -446,10 +446,10 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 			if ( false === is_admin() && 0 < count( $this->active_mimetypes ) ) {
 				/* Register the_content filter */
 				if ( false === $this->settings['enable_async'] || true === $this->settings['show_file_size'] ) {
-					add_filter( 'the_content', array( &$this, 'mimetype_to_icon' ), 15 );
+					add_filter( 'the_content', array( $this, 'mimetype_to_icon' ), 15 );
 				}
 				/* Add js and css files */
-				add_action( 'wp_enqueue_scripts', array( &$this, 'wp_enqueue_scripts' ) );
+				add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
 			}
 		}
 
@@ -467,7 +467,7 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 			register_setting(
 				self::SETTINGS_OPTION . '-group',
 				self::SETTINGS_OPTION, // option name
-				array( &$this, 'validate_options' ) // validation callback
+				array( $this, 'validate_options' ) // validation callback
 			);
 
 			/* Register the settings sections and their callbacks */
@@ -475,27 +475,27 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 				add_settings_section(
 					'mtli-' . $section . '-settings', // id
 					$title, // title
-					array( &$this, 'do_settings_section_' . $section ), // callback for this section
+					array( $this, 'do_settings_section_' . $section ), // callback for this section
 					self::$name // page menu_slug
 				);
 			}
 
 			/* Add settings link on plugin page */
-			add_filter( 'plugin_action_links_' . self::$basename , array( &$this, 'add_settings_link' ), 10, 2 );
+			add_filter( 'plugin_action_links_' . self::$basename , array( $this, 'add_settings_link' ), 10, 2 );
 
 
 			/* Add js and css files */
-			add_action( 'admin_enqueue_scripts', array( &$this, 'admin_enqueue_scripts' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
 
 			/* Add contextual help action/filters */
 			if ( true === version_compare( $GLOBALS['wp_version'], '3.3', '>=' ) && method_exists( 'WP_Screen', 'add_help_tab' ) ) {
 				// Add help tab *behind* existing core page help tabs
 				// (reason for using admin_head hook instead of load hook)
-				add_action( 'admin_head', array( &$this, 'add_help_tab' ) );
+				add_action( 'admin_head', array( $this, 'add_help_tab' ) );
 			}
 			else {
-				add_filter( 'contextual_help', array( &$this, 'add_contextual_help' ), 10, 3 );
+				add_filter( 'contextual_help', array( $this, 'add_contextual_help' ), 10, 3 );
 			}
 		}
 
@@ -510,7 +510,7 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 				__( 'MimeType Icons', self::$name ), /* menu title */
 				self::REQUIRED_CAP, /* capability */
 				self::$name, /* menu slug */
-				array( &$this, 'display_options_page' ) /* function for subpanel */
+				array( $this, 'display_options_page' ) /* function for subpanel */
 			);
 		}
 
@@ -682,21 +682,21 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 					array(
 						'id'	  => self::$name . '-main', // This should be unique for the screen.
 						'title'   => __( 'MimeType Link Icons', self::$name ),
-						'callback' => array( &$this, 'get_helptext' ),
+						'callback' => array( $this, 'get_helptext' ),
 					)
 				);
 				$screen->add_help_tab(
 					array(
 						'id'	  => self::$name . '-advanced', // This should be unique for the screen.
 						'title'   => __( 'Advanced Settings', self::$name ),
-						'callback' => array( &$this, 'get_helptext' ),
+						'callback' => array( $this, 'get_helptext' ),
 					)
 				);
 				$screen->add_help_tab(
 					array(
 						'id'	  => self::$name . '-extras', // This should be unique for the screen.
 						'title'   => __( 'Extras', self::$name ),
-						'callback' => array( &$this, 'get_helptext' ),
+						'callback' => array( $this, 'get_helptext' ),
 					)
 				);
 
@@ -797,19 +797,19 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 
 				/* Test if the minimum required WP version is being used */
 				if ( true !== version_compare( $wp_version, self::MIN_WP_VERSION, '>=' ) ) {
-					add_action( 'admin_notices', array( &$this, 'show_upgrade_wp_notice' ) );
+					add_action( 'admin_notices', array( $this, 'show_upgrade_wp_notice' ) );
 					$deactivate = true;
 				}
 
 				/* Test if the minimum required PHP version is being used */
 				if ( true !== version_compare( PHP_VERSION, self::MIN_PHP_VERSION, '>=' ) ) {
-					add_action( 'admin_notices', array( &$this, 'show_upgrade_php_notice' ) );
+					add_action( 'admin_notices', array( $this, 'show_upgrade_php_notice' ) );
 					$deactivate = true;
 				}
 
 				/* De-activate if minimum requirements not met */
 				if ( true === $deactivate ) {
-					add_action( 'admin_init', array( &$this, 'deactivate_me' ), 1 );
+					add_action( 'admin_init', array( $this, 'deactivate_me' ), 1 );
 					return;
 				}
 			}
@@ -843,7 +843,7 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 					$this->settings['internal_domains'] = explode( ',', $this->settings['internal_domains'] );
 				}
 			}
-			/* Settings upgrade for version 3.0
+			/* Settings upgrade for version 3.1.4
 			   Reset internal domains variable for changed determination */
 			if( !isset( $this->settings['version'] ) || version_compare( $this->settings['version'], '3.1.4', '<' ) ) {
 				unset( $this->settings['internal_domains'] );
@@ -2022,9 +2022,9 @@ if ( !class_exists( 'MimeTypesLinkIcons' ) ) {
 		 */
 		function mimetypes_link_icons_init() {
 			/* Initialize the static variables */
-			mimetypes_link_icons::init_statics();
+			Mime_Types_Link_Icons::init_statics();
 
-			$GLOBALS['mimetypes_link_icons'] = new MimeTypesLinkIcons();
+			$GLOBALS['mimetypes_link_icons'] = new Mime_Types_Link_Icons();
 		}
 	}
 

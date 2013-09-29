@@ -936,7 +936,9 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			if ( !is_null( $update ) ) {
 				if ( $update !== $original_settings ) {
 					$updated = update_option( self::SETTINGS_OPTION, $update );
-					$this->settings = $original_settings = $update;
+					if ( $updated === true ) {
+						$this->settings = $original_settings = $update;
+					}
 				}
 				else {
 					$updated = true; // no update necessary

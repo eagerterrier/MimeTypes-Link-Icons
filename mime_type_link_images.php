@@ -1096,7 +1096,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 				$mimetypes = array_map( 'preg_quote' , $this->active_mimetypes, array_fill( 0 , count( $this->active_mimetypes ) , '`' ) );
 				$mimetypes = implode( '|', $mimetypes );
 
-				if ( 0 < preg_match_all( '`<a .*?(class=["\']([^"\']*)["\'])?.*?(href=["\']([^"\'#]+\.(' . $mimetypes . '))(?:#[^\'" ]+["\']|["\'])).*?(class=["\']([^"\']*)["\'])?[^>]*>`i', $content, $matches, PREG_SET_ORDER ) ) {
+				if ( 0 < preg_match_all( '`<a [^>]*?(class=["\']([^"\']*)["\'])?[^>]*?(href=["\']([^"\'#]+\.(' . $mimetypes . '))(?:#[^\'" ]+["\']|["\']))[^>]*?(class=["\']([^"\']*)["\'])?[^>]*>`i', $content, $matches, PREG_SET_ORDER ) ) {
 					/* Returns:
 						[0] full <a ... > tag
 						[1] empty string or class="classnames"
@@ -1819,7 +1819,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			echo '
 		</form>';
 
-			if ( WP_DEBUG ) {
+			if ( WP_DEBUG || $this->debug === true ) {
 				print '<pre>';
 				print_r( $this->settings );
 				print '</pre>';

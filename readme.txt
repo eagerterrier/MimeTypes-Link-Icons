@@ -308,11 +308,12 @@ var $debug = false;
 == Changelog ==
 
 = 3.1.4 =
-* Tested with WP 3.6
+* Tested up to WP 3.6.1
 * Code style validated against WordPress standards
 * Added API documentation
 * Upped minimum WP version in readme file... oops... should have been done in 3.0
 * Upped db last change version number to force update of internal domains option
+* [Bug fix] Small optimization in link matching regex which should prevent an edge case bug. Thanks [ts_sklett for reporting](http://wordpress.org/support/topic/no-icon-when-a-link-and-text-present-repro-steps-included).
 
 = 3.1.3 =
 * [Bug fix] typo in code introduced in 3.1.1, thanks [Nnet and boca jo for reporting](http://wordpress.org/support/topic/2-errors-for-each-link-after-upgrading-to-312)

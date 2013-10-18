@@ -168,11 +168,6 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		public static $name;
 
 		/**
-		 * @staticvar	string	$url		Full url to the plugin directory, has trailing slash
-		 */
-		public static $url;
-
-		/**
 		 * @staticvar	string	$path		Full server path to the plugin directory, has trailing slash
 		 */
 		public static $path;
@@ -374,7 +369,6 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			self::$basename = plugin_basename( __FILE__ );
 			self::$name     = dirname( self::$basename );
-			self::$url      = plugin_dir_url( __FILE__ );
 			self::$path     = plugin_dir_path( __FILE__ );
 			self::$suffix   = ( ( defined( 'SCRIPT_DEBUG' ) && true === SCRIPT_DEBUG ) ? '' : '.min' );
 		}
@@ -557,7 +551,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 				add_query_arg(
 					'cssvars',
 					base64_encode( 'mtli_height=' . $this->settings['image_size'] . '&mtli_image_type=' . $this->settings['image_type'] . '&mtli_leftorright=' . $this->settings['leftorright'] ),
-					self::$url . 'css/style.php'
+					plugins_url( 'css/style.php', __FILE__ )
 				), // url
 				array(), // not used
 				self::STYLES_VERSION, // version
@@ -569,7 +563,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			if ( ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && 0 < count( $this->settings['hidden_classname'] ) ) ) || ( true === $this->settings['enable_async'] && ( is_array( $this->active_mimetypes ) && 0 < count( $this->active_mimetypes ) ) ) ) {
 				wp_enqueue_script(
 					self::$name, // id
-					self::$url . 'js/mtli-str-replace' . self::$suffix . '.js', // url
+					plugins_url( 'js/mtli-str-replace' . self::$suffix . '.js', __FILE__ ), // url
 					array( 'jquery' ), // dependants
 					self::SCRIPTS_VERSION, // version
 					true // load in footer
@@ -634,14 +628,14 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			if ( property_exists( $screen, 'base' ) && $screen->base === $this->hook ) {
 				wp_enqueue_script(
 					self::$name, // id
-					self::$url . 'js/mtli-admin' . self::$suffix . '.js', // url
+					plugins_url( 'js/mtli-admin' . self::$suffix . '.js', __FILE__ ), // url
 					array( 'jquery' ), // dependants
 					self::ADMIN_SCRIPTS_VERSION, // version
 					true // load in footer
 				);
 				wp_enqueue_style(
 					self::$name, // id
-					self::$url . 'css/admin-style' . self::$suffix . '.css', // url
+					plugins_url( 'css/admin-style' . self::$suffix . '.css', __FILE__ ), // url
 					array(), // not used
 					self::ADMIN_STYLES_VERSION, // version
 					'all'
@@ -1921,7 +1915,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 						<th nowrap valign="top" width="33%">
 							<label for="' . esc_attr( 'enable_' . $mime_type ) . '">' . sprintf( __( 'Add images to <strong>%s</strong> uploads/files', self::$name ), $mime_type ) . '</label>
 						</th>
-						<td style="width:24px;"><img src="' . esc_url( self::$url . '/images/' . $mime_type . '-icon-24x24.png' ) . '" alt="' . esc_attr( sprintf( __( '%s icon', self::$name ), $mime_type ) ) . '" /></td>
+						<td style="width:24px;"><img src="' . esc_url( plugins_url( '/images/' . $mime_type . '-icon-24x24.png', __FILE__ ) ) . '" alt="' . esc_attr( sprintf( __( '%s icon', self::$name ), $mime_type ) ) . '" /></td>
 						<td>
 							<input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_' . $mime_type . ']' ) . '" id="' . esc_attr( 'enable_' . $mime_type ) . '" value="true" ' . checked( $this->settings['enable_' . $mime_type], true, false ) . ' />
 						</td>';

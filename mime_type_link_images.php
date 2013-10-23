@@ -7,7 +7,7 @@
 Plugin Name: MimeTypes Link Icons
 Plugin URI: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Description: This will add file type icons next to links automatically. Change options in the <a href="options-general.php?page=mimetypes-link-icons">settings page</a>
-Version: 3.1.4
+Version: 3.2
 Author: Toby Cox, Juliette Reinders Folmer
 Author URI: https://github.com/eagerterrier/MimeTypes-Link-Icons
 Author: Toby Cox
@@ -61,7 +61,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 	/**
 	 * @package WordPress\Plugins\MimeTypes Link Icons
-	 * @version 3.1.4
+	 * @version 3.2
 	 * @link http://wordpress.org/extend/plugins/mimetypes-link-icons/ MimeTypes Link Icons WordPress plugin
 	 * @link https://github.com/eagerterrier/MimeTypes-Link-Icons GitHub development of MimeTypes Link Icons WordPress plugin
 	 *
@@ -77,7 +77,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @const string	Plugin version number
 		 * @usedby upgrade_options(), __construct()
 		 */
-		const VERSION = '3.1.4';
+		const VERSION = '3.2';
 
 		/**
 		 * @const string	Version in which the front-end styles where last changed
@@ -114,13 +114,13 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @const string    Minimum WP version needed for this plugin to work
 		 * @usedby upgrade_options() to auto-deactivate if plugin can't work
 		 */
-		const MIN_WP_VERSION = '3.1.4';
+		const MIN_WP_VERSION = '3.5';
 
 		/**
 		 * @const string    Minimum PHP version needed for this plugin to work
 		 * @usedby upgrade_options() to auto-deactivate if plugin can't work
 		 */
-		const MIN_PHP_VERSION = '5.1';
+		const MIN_PHP_VERSION = '5.2.6';
 
 
 		/**
@@ -189,7 +189,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @var	array	Available file sizes: key = setting, value = field label
 		 * @todo		IMPORTANT: for now on each change, also copy this array to style.php
 		 */
-		var $sizes = array(
+		public $sizes = array(
 			16,
 			24,
 			48,
@@ -201,7 +201,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @var array	Available images types: key = setting, value = field label
 		 * @todo		IMPORTANT: for now on each change, also copy this array to style.php
 		 */
-		var $image_types = array(
+		public $image_types = array(
 			'gif',
 			'png',
 		);
@@ -211,14 +211,14 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 *				Will be set by set_properties() as the field labels need translating
 		 * @todo		IMPORTANT: for now on each change, also copy this array to style.php
 		 */
-		var $alignments;
+		public $alignments;
 
 		/**
 		 * @var array	array of mimetypes
 		 * @todo		IMPORTANT: for now on each change, also copy this array to style.php
 		 *				and of course to the readme ;-)
 		 */
-		var $mime_types = array(
+		public $mime_types = array(
 			'3g2', '3gp',
 			'ai', 'air', 'asf', 'avi',
 			'bib',
@@ -246,7 +246,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		/**
 		 * @var array   array of mimetypes which default to true / 'on' status
 		 */
-		var $default_is_true = array(
+		public $default_is_true = array(
 			'pdf',
 		);
 
@@ -255,7 +255,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @todo		IMPORTANT: For now, on change in default size, type or alignment, also copy
 		 *				the new defaults to style.php
 		 */
-		var $defaults = array(
+		public $defaults = array(
 			'internal_domains'		=> array(),
 			'image_size'			=> 16,
 			'image_type'			=> 'png',
@@ -276,14 +276,14 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 *				Will be set by set_properties() as the section labels need translating
 		 * @usedby display_options_page()
 		 */
-		var $form_sections = array();
+		public $form_sections = array();
 
 		/**
 		 * @var array	array of byte suffixes for creating a human readable file size
 		 *				Will be set by set_properties() as the labels need translating
 		 * @usedby human_readable_filesize()
 		 */
-		var $byte_suffixes = array();
+		public $byte_suffixes = array();
 
 
 
@@ -292,39 +292,39 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		/**
 		 * @var string settings page registration hook suffix
 		 */
-		var $hook;
+		public $hook;
 
 		/**
 		 * @var array Variable holding current settings for this plugin
 		 */
-		var $settings = array();
+		public $settings = array();
 
 		/**
 		 * @var array Efficiency property - array of the mimetype for which the plugin should be active
 		 */
-		var $active_mimetypes = array();
+		public $active_mimetypes = array();
 
 		/**
 		 * @var array	Array holding cached filesize values
 		 *				key = sanitized file path
 		 *				values = array( 'size' => file size, 'time' => time of last filesize retrieval in seconds )
 		 */
-		var $cache = array();
+		public $cache = array();
 
 		/**
 		 * @var array	Array holding the rel / filesize CSS styles to be added to the page
 		 */
-		var $filesize_styles = array();
+		public $filesize_styles = array();
 
 		/**
 		 * @var	resource 	Holds the curl resource if one exists
 		 */
-		var $curl;
+		public $curl;
 
 		/**
 		 * @var	bool	Debug setting to enable extra debugging for the plugin
 		 */
-		var $debug = false;
+		public $debug = false;
 
 
 		/* *** PLUGIN INITIALIZATION METHODS *** */
@@ -332,7 +332,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		/**
 		 * Object constructor for plugin
 		 */
-		function __construct() {
+		public function __construct() {
 
 			/* Load plugin text strings */
 			load_plugin_textdomain( self::$name, false, self::$name . '/languages/' );
@@ -340,9 +340,8 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			/* Translate a number of strings */
 			$this->set_properties();
 
-			/* Initialize/enrich settings properties */
-			$this->enrich_default_settings();
-			$this->_get_set_settings();
+			/* Initialize our settings option */
+			$this->options_init();
 
 
 			/* Check if we have any activation or upgrade actions to do */
@@ -379,7 +378,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		/**
 		 * Fill some property arrays with translated strings
 		 */
-		function set_properties() {
+		private function set_properties() {
 
 			$this->alignments = array(
 				'left'	   => __( 'Left', self::$name ),
@@ -409,12 +408,244 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		/**
 		 * Enrich the default settings array
 		 */
-		function enrich_default_settings() {
+		private function enrich_default_settings() {
 			foreach ( $this->mime_types as $type ) {
 				$this->defaults['enable_' . $type]	= ( false === in_array( $type, $this->default_is_true ) ? false : true );
 			}
 		}
 
+
+
+		/** ******************* OPTION MANAGEMENT ******************* **/
+
+		/**
+		 * Initialize our settings option and add all relevant actions and filters
+		 *
+		 * @since 3.2
+		 */
+		public function options_init() {
+			
+			/* Enrich the defaults */
+			$this->enrich_default_settings();
+			
+			/* Register our option (and it's validation) as early as possible */
+			add_action( 'admin_init', array( $this, 'register_setting' ), 1 );
+
+
+			/* Add filter which get applied to get_options() results */
+			$this->add_default_filter();
+			add_filter( 'option_' . self::SETTINGS_OPTION, array( $this, 'filter_option' ) );
+
+			/* The option validation routines remove the default filters to prevent failing to insert
+			   an option if it's new. Let's add them back afterwards */
+			add_action( 'update_option', array( $this, 'add_default_filter' ) );
+
+
+			/* Refresh the $settings property on option update */
+			add_action( 'add_option_' . self::SETTINGS_OPTION, array( $this, 'on_add_option' ), 10, 2 );
+			add_action( 'update_option_' . self::SETTINGS_OPTION, array( $this, 'on_update_option' ), 10, 2 );
+
+			/* Lastly, we'll be saving our option during the upgrade routine *before* the setting
+			   is registered (and therefore the validation is registered), so make sure that the
+			   option is validated anyway. */
+			add_filter( 'mimetypes_link_icons_save_option_on_upgrade', array( $this, 'validate_options' ) );
+
+			/* Initialize the $settings property */
+			$this->refresh_current();
+			
+
+			/* Refresh the $cache property on option update */
+			add_action( 'add_option_' . self::CACHE_OPTION, array( $this, 'on_add_cache_option' ), 10, 2 );
+			add_action( 'update_option_' . self::CACHE_OPTION, array( $this, 'on_update_cache_option' ), 10, 2 );
+
+		}
+
+
+		/**
+		 * Register our option
+		 *
+		 * @since 3.2 (moved from admin_init to separate method)
+		 */
+		public function register_setting() {
+			register_setting(
+				self::SETTINGS_OPTION . '-group',
+				self::SETTINGS_OPTION, // option name
+				array( $this, 'validate_options' ) // validation callback
+			);
+		}
+
+
+		/**
+		 * Add filtering of the option default values
+		 *
+		 * @since 3.2
+		 */
+		public function add_default_filter() {
+			if ( has_filter( 'default_option_' . self::SETTINGS_OPTION, array( $this, 'filter_option_defaults' ) ) === false ) {
+				add_filter( 'default_option_' . self::SETTINGS_OPTION, array( $this, 'filter_option_defaults' ) );
+			};
+		}
+
+
+		/**
+		 * Remove filtering of the option default values
+		 *
+		 * This is need to allow for inserting of option if it doesn't exist
+		 * Should be called from our validation routine
+		 *
+		 * @since 3.2
+		 */
+		public function remove_default_filter() {
+			remove_filter( 'default_option_' . self::SETTINGS_OPTION, array( $this, 'filter_option_defaults' ) );
+		}
+
+
+		/**
+		 * Filter option defaults
+		 *
+		 * This in effect means that get_option() will not return false if the option is not found,
+		 * but will instead return our defaults. This way we always have all of our option values available.
+		 *
+		 * @since 3.2
+		 */
+		public function filter_option_defaults() {
+			$this->refresh_current( $this->defaults );
+			return $this->defaults;
+		}
+
+
+		/**
+		 * Filter option
+		 *
+		 * This in effect means that get_option() will not just return our option from the database,
+		 * but will instead return that option merged with our defaults.
+		 * This way we always have all of our option values available. Even when we add new option
+		 * values (to the defaults array) when the plugin is upgraded.
+		 *
+		 * @since 3.2
+		 */
+		public function filter_option( $options ) {
+			$options = $this->array_filter_merge( $this->defaults, $options );
+			$this->refresh_current( $options );
+			return $options;
+		}
+
+
+		/**
+		 * Set the $settings property to the value of our option
+		 *
+		 * @since 3.2
+		 */
+		private function refresh_current( $value = null ) {
+			if ( !isset( $value ) ) {
+				$value = get_option( self::SETTINGS_OPTION );
+			}
+			$this->settings = $value;
+			
+			/* Update the active_mimetypes array */
+			$this->active_mimetypes = array();
+			foreach ( $this->mime_types as $mime_type ) {
+				if ( true === $this->settings['enable_' . $mime_type] ) {
+					$this->active_mimetypes[] = $mime_type;
+				}
+			}
+			unset( $mime_type );
+		}
+
+
+		/**
+		 * Refresh the $settings property when our property is added to wp
+		 *
+		 * @since 3.2
+		 */
+		public function on_add_option( $option_name, $value ) {
+			$this->refresh_current( $value );
+		}
+
+
+		/**
+		 * Refresh the $settings property when our property is updated
+		 *
+		 * @since 3.2
+		 */
+		public function on_update_option( $old_value, $value ) {
+			$this->refresh_current( $value );
+		}
+		
+
+		/**
+		 * Set the $cache property to the value of our option
+		 *
+		 * @since 3.2
+		 */
+		private function refresh_cache( $value = null ) {
+			if ( !isset( $value ) ) {
+				$value = get_option( self::CACHE_OPTION );
+			}
+			if( $value === false ) {
+				/* Set the default
+				 - don't hook into WP as no validation is used and it would break when adding the option as new */
+				$value = array();
+			}
+			$this->cache = $value;
+		}
+
+
+		/**
+		 * Refresh the $cache property when our property is added to wp
+		 *
+		 * @since 3.2
+		 */
+		public function on_add_cache_option( $option_name, $value ) {
+			$this->refresh_cache( $value );
+		}
+
+
+		/**
+		 * Refresh the $cache property when our property is updated
+		 *
+		 * @since 3.2
+		 */
+		public function on_update_cache_option( $old_value, $value ) {
+			$this->refresh_cache( $value );
+		}
+		
+		
+		/**
+		 * Update cached filesizes
+		 *
+		 * @since 3.2 - replaces get_set_...() method
+		 *
+		 * @param	array|null		$update				New cache to save to db - make sure the new array
+		 *												is validated first!
+		 * @param	string|null		$key				file key to update the cache for
+		 * @return	bool|void		if an update took place: whether it worked
+		 */
+		private function update_cache( $update, $key = null ) {
+			$updated = null;
+
+			// Is this a complete or a one field update ?
+			if ( !is_null( $key ) ) {
+				$new_cache = $this->cache;
+				$new_cache[$key] = array(
+					'size'	=>	$update, // file size or false if size could not be determined
+					'time'	=>	time(),
+				);
+				$update = $new_cache;
+				unset( $new_cache );
+			}
+			
+			if ( $update !== $this->cache ) {
+				$updated = update_option( self::CACHE_OPTION, $update );
+			}
+			else {
+				$updated = true; // no update necessary
+			}
+			return $updated;
+		}
+
+		
+		
 
 
 		/** ******************* ADMINISTRATIVE METHODS ******************* **/
@@ -453,18 +684,11 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		/**
 		 * Add the actions for the back-end functionality
 		 */
-		function admin_init() {
+		public function admin_init() {
 			/* Don't do anything if user does not have the required capability */
 			if ( false === is_admin() || false === current_user_can( self::REQUIRED_CAP ) ) {
 				return;
 			}
-
-			/* Register our options field */
-			register_setting(
-				self::SETTINGS_OPTION . '-group',
-				self::SETTINGS_OPTION, // option name
-				array( $this, 'validate_options' ) // validation callback
-			);
 
 			/* Register the settings sections and their callbacks */
 			foreach ( $this->form_sections as $section => $title ) {
@@ -485,21 +709,16 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 
 			/* Add contextual help action/filters */
-			if ( true === version_compare( $GLOBALS['wp_version'], '3.3', '>=' ) && method_exists( 'WP_Screen', 'add_help_tab' ) ) {
-				// Add help tab *behind* existing core page help tabs
-				// (reason for using admin_head hook instead of load hook)
-				add_action( 'admin_head', array( $this, 'add_help_tab' ) );
-			}
-			else {
-				add_filter( 'contextual_help', array( $this, 'add_contextual_help' ), 10, 3 );
-			}
+			// Add help tab *behind* existing core page help tabs
+			// (reason for using admin_head hook instead of load hook)
+			add_action( 'admin_head', array( $this, 'add_help_tab' ) );
 		}
 
 
 		/**
 		 * Register the options page for all users that have the required capability
 		 */
-		function add_options_page() {
+		public function add_options_page() {
 
 			$this->hook = add_options_page(
 				__( 'MimeType Link Icons', self::$name ), /* page title */
@@ -520,7 +739,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @param	string	$file	The file for the current plugin
 		 * @return	array
 		 */
-		function add_settings_link( $links, $file ) {
+		public function add_settings_link( $links, $file ) {
 			if ( self::$basename === $file && current_user_can( self::REQUIRED_CAP ) ) {
 				$links[] = '<a href="' . esc_url( $this->plugin_options_url() ) . '" alt="' . esc_attr__( 'MimeType Link Icons Settings', self::$name ) . '">' . esc_html__( 'Settings', self::$name ) . '</a>';
 			}
@@ -534,7 +753,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 *
 		 * @return string
 		 */
-		function plugin_options_url() {
+		private function plugin_options_url() {
 			return add_query_arg( 'page', self::$name, admin_url( self::PARENT_PAGE ) );
 		}
 
@@ -546,7 +765,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @todo:	May be generate a .css file on a settings save to avoid having to generate the .css file on each page load
 		 * @todo:	Also generate a .min.css file
 		 */
-		function wp_enqueue_scripts() {
+		public function wp_enqueue_scripts() {
 
 			wp_register_style(
 				self::$name, // id
@@ -588,7 +807,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 *
 		 * @return	array
 		 */
-		function get_javascript_i18n() {
+		private function get_javascript_i18n() {
 			$strings = array(
 				'hidethings'			=> ( ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && 0 < count( $this->settings['hidden_classname'] ) ) ) ? true : false ),
 				'enable_async'			=> ( ( true === $this->settings['enable_async'] && ( is_array( $this->active_mimetypes ) && 0 < count( $this->active_mimetypes ) ) ) ? true : false ),
@@ -623,7 +842,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		/**
 		 * Adds necessary javascript and css files for the back-end on the appropriate screen
 		 */
-		function admin_enqueue_scripts() {
+		public function admin_enqueue_scripts() {
 
 			$screen = get_current_screen();
 
@@ -655,7 +874,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 *
 		 * @return	array
 		 */
-		function get_admin_javascript_i18n() {
+		private function get_admin_javascript_i18n() {
 			$strings = array(
 				'togglebox'     => '<div class="check-images"><span class="check-all">' . __( 'Check All', self::$name ) . '</span>|<span class="uncheck-all">' . __( 'Uncheck All', self::$name ) . '</span></div>',
 			);
@@ -669,7 +888,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 *
 		 * @since 3.0
 		 */
-		function add_help_tab() {
+		public function add_help_tab() {
 
 			$screen = get_current_screen();
 
@@ -702,30 +921,15 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 
 		/**
-		 * Adds contextual help text to the plugin page
-		 * Backwards compatibility for WP < 3.3.
-		 *
-		 * @since 3.0
-		 */
-		function add_contextual_help( $contextual_help, $screen_id, $screen ) {
-			if ( $screen_id === $this->hook ) {
-				return $this->get_helptext( $screen, null, false );
-			}
-			return false;
-		}
-
-
-		/**
 		 * Function containing the helptext string
 		 *
 		 * @since 3.0
 		 *
 		 * @param 	object	$screen
 		 * @param 			$tab
-		 * @param   bool    $echo    whether to echo or return the string
 		 * @return  string  help text
 		 */
-		function get_helptext( $screen, $tab, $echo = true ) {
+		public function get_helptext( $screen, $tab ) {
 
 			$helptext[self::$name . '-main'] = '
 								<p>' . sprintf( __( 'The <em><a href="%s">MimeTypes Link Icons</a></em> plugin will automatically add an icon next to links of the activated file types. If you like, you can also let the plugin add the file size of the linked file to the page.', self::$name ), 'http://wordpress.org/extend/plugins/mimetypes-link-icons/" target="_blank" class="ext-link' ) . '</p>
@@ -741,15 +945,8 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 								<p>' . sprintf( __( 'For more information on these tasty extras, have a look at the <a href="%s">FAQ</a>', self::$name ), 'http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/" target="_blank" class="ext-link' ) . '</p>';
 
-			if ( $echo === true ) {
-				echo $helptext[$tab['id']];
-				return false;
-			}
-			else {
-				// WP < 3.3
-				// Return all help texts at once and add sidebar links to help text
-				return implode( '', $helptext ) . $this->get_help_sidebar();
-			}
+
+			echo $helptext[$tab['id']];
 		}
 
 		/**
@@ -757,7 +954,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 *
 		 * @return string
 		 */
-		function get_help_sidebar() {
+		private function get_help_sidebar() {
 			return '
 				   <p><strong>' . /* TRANSLATORS: no need to translate - standard WP core translation will be used */ __( 'For more information:' ) . '</strong></p>
 				   <p>
@@ -776,7 +973,8 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		
 		
 		/**
-		 *
+		 * Activate our plugin
+		 * @static
 		 * @return void
 		 */
 		public static function activate() {
@@ -799,7 +997,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 *
 		 * @since 3.0
 		 */
-		function upgrade_options() {
+		public function upgrade_options() {
 			global $wp_version;
 
 			/**
@@ -829,7 +1027,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			}
 
 
-//			$upgraded_settings = false;
+			$options = $this->settings;
 
 			/**
 			 * Upgrades for any version of this plugin lower than x.x
@@ -837,30 +1035,29 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			 * upgrade routines for various versions
 			 */
 			/* Settings upgrade for version 3.0 */
-			if ( !isset( $this->settings['version'] ) || version_compare( $this->settings['version'], '3.0', '<' ) ) {
+			if ( !isset( $options['version'] ) || version_compare( $options['version'], '3.0', '<' ) ) {
 				/* Change 'hidden_classname' from string to array to allow for more classnames
 				   and validate the value */
-				if ( isset( $this->settings['hidden_classname'] ) && is_string( $this->settings['hidden_classname'] ) ) {
-					$classnames = $this->validate_classnames( $this->settings['hidden_classname'] );
+				if ( isset( $options['hidden_classname'] ) && is_string( $options['hidden_classname'] ) ) {
+					$classnames = $this->validate_classnames( $options['hidden_classname'] );
 					if ( false !== $classnames ) {
-						$this->settings['hidden_classname'] = $classnames;
+						$options['hidden_classname'] = $classnames;
 					}
 					else {
-						unset( $this->settings['hidden_classname'] );
+						unset( $options['hidden_classname'] );
 					}
 					unset( $classnames );
-//					$upgraded_settings = true;
 				}
 
 				/* Change 'internal_domains' from string to array */
-				if ( isset( $this->settings['internal_domains'] ) && ( is_string( $this->settings['internal_domains'] ) && $this->settings['internal_domains'] !== '' ) ) {
-					$this->settings['internal_domains'] = explode( ',', $this->settings['internal_domains'] );
+				if ( isset( $options['internal_domains'] ) && ( is_string( $options['internal_domains'] ) && $options['internal_domains'] !== '' ) ) {
+					$options['internal_domains'] = explode( ',', $options['internal_domains'] );
 				}
 			}
 			/* Settings upgrade for version 3.1.4
 			   Reset internal domains variable for changed determination */
-			if( !isset( $this->settings['version'] ) || version_compare( $this->settings['version'], '3.1.4', '<' ) ) {
-				unset( $this->settings['internal_domains'] );
+			if( !isset( $options['version'] ) || version_compare( $options['version'], '3.1.4', '<' ) ) {
+				unset( $options['internal_domains'] );
 			}
 
 			/**
@@ -874,24 +1071,26 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			if ( $this->debug === true ) {
 				trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::internal_domains: start = ' . $start );
 			}
-			$this->settings['internal_domains'][] = $domain = substr( $home_url, $start, ( strpos( $home_url, '/', $start ) - $start ) );
+			$options['internal_domains'][] = $domain = substr( $home_url, $start, ( strpos( $home_url, '/', $start ) - $start ) );
 			if ( $this->debug === true ) {
 				trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::internal_domains: domain = ' . $domain );
 			}
 			if ( stripos( $domain, 'www.' ) === 0 ) {
-				$this->settings['internal_domains'][] = str_ireplace( 'www.', '', $domain );
+				$options['internal_domains'][] = str_ireplace( 'www.', '', $domain );
 				if ( $this->debug === true ) {
 					trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::internal_domains: domain2 = ' . str_ireplace( 'www.', '', $domain ) );
 				}
 			}
-			$this->settings['internal_domains'] = array_unique( $this->settings['internal_domains'] );
+			$options['internal_domains'] = array_unique( $options['internal_domains'] );
 			unset( $home_url, $domain, $start );
 
 
+			/* Always update the version number */
+			$options['version'] = self::VERSION;
 
-			/* Update the settings */
-			$this->settings['version'] = self::VERSION;
-			$this->_get_set_settings( $this->settings );
+			/* Update the settings and refresh our $settings property */
+			update_option( self::SETTINGS_OPTION, apply_filters( 'mimetypes_link_icons_save_option_on_upgrade', $options ) );
+
 			return;
 		}
 
@@ -901,7 +1100,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 *
 		 * @return void
 		 */
-		function deactivate_me() {
+		public function deactivate_me() {
 			deactivate_plugins( plugin_basename( __FILE__ ) );
 			if ( isset( $_GET['activate'] ) ) {
 				unset( $_GET['activate'] );
@@ -913,7 +1112,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 *
 		 * @since 3.0
 		 */
-		function show_upgrade_wp_notice() {
+		public function show_upgrade_wp_notice() {
 			global $wp_version;
 			echo '<div class=\"error\"><p>' . sprintf( __( 'Version %s of the <em>MimeType Link Icons</em> plugin requires WordPress %s+. You have WordPress %s installed. The plugin has been de-activated.', self::$name ), self::VERSION, self::MIN_WP_VERSION, $wp_version ) . '</p><p>' . sprintf( __( 'Please upgrade your WordPress installation to %s+. Using the latest version is always advisable (and not just for security reasons!).', self::$name ), self::MIN_WP_VERSION ) . '</p></div>';
 		}
@@ -923,7 +1122,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 *
 		 * @since 3.0
 		 */
-		function show_upgrade_php_notice() {
+		public function show_upgrade_php_notice() {
 			echo '<div class=\"error\"><p>' . sprintf( __( 'Version %s of the <em>MimeType Link Icons</em> plugin requires PHP %s+. Your WordPress installation is running on PHP %s. The plugin has been de-activated.', self::$name ), self::VERSION, self::MIN_PHP_VERSION, PHP_VERSION ) . '</p><p>' . sprintf( __( 'Either ask your web host to upgrade PHP or alternatively you could install an <a %s>older version of this plugin</a>.', self::$name ), 'href="http://wordpress.org/extend/plugins/' . self::$name . '/developers/" target="_blank"' ) . '</p></div>';
 		}
 
@@ -931,116 +1130,25 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 		/* *** HELPER METHODS *** */
 
-
 		/**
-		 * Intelligently set/get the plugin settings
+		 * Helper method - Combines a fixed array of default values with an options array
+		 * while filtering out any keys which are not in the defaults array.
 		 *
-		 * @since 3.0
-		 *
-		 * @static	bool|array	$original_settings	remember originally retrieved settings array for reference
-		 * @param	array|null	$update				New settings to save to db - make sure the
-		 *											new array is validated first!
-		 * @return	void|bool	if an update took place: whether it worked
+		 * @param	array	$defaults	Entire list of supported defaults.
+		 * @param	array	$options	Current options.
+		 * @return	array	Combined and filtered options array.
 		 */
-		function _get_set_settings( $update = null ) {
-			static $original_settings = false;
-			$updated = null;
-
-			/* Do we have something to update ? */
-			if ( !is_null( $update ) ) {
-				if ( $update !== $original_settings ) {
-					$updated = update_option( self::SETTINGS_OPTION, $update );
-					if ( $updated === true ) {
-						$this->settings = $original_settings = $update;
-					}
-				}
-				else {
-					$updated = true; // no update necessary
-				}
-				return $updated;
+		private function array_filter_merge( $defaults, $options ) {
+			$options = (array) $options;
+			$return  = array();
+		
+			foreach ( $defaults as $name => $default ) {
+				if ( array_key_exists( $name, $options ) )
+					$return[$name] = $options[$name];
+				else
+					$return[$name] = $default;
 			}
-
-			/* No update received or update failed -> get the option from db */
-			if ( ( is_null( $this->settings ) || false === $this->settings ) || ( false === is_array( $this->settings ) || 0 === count( $this->settings ) ) ) {
-				// returns either the option array or false if option not found
-				$option = get_option( self::SETTINGS_OPTION );
-
-				if ( $option === false ) {
-					// Option was not found, set settings to the defaults
-					$option = $this->defaults;
-				}
-				else {
-					// Otherwise merge with the defaults array to ensure all options are always set
-					$option = wp_parse_args( $option, $this->defaults );
-				}
-				$this->settings = $original_settings = $option;
-				unset( $option );
-			}
-
-			/* Update the active_mimetypes array */
-			$this->active_mimetypes = array();
-			foreach ( $this->mime_types as $mime_type ) {
-				if ( true === $this->settings['enable_' . $mime_type] ) {
-					$this->active_mimetypes[] = $mime_type;
-				}
-			}
-			unset( $mime_type );
-
-			return;
-		}
-
-
-		/**
-		 * Intelligently set/get the cached filesizes
-		 *
-		 * @since 3.0
-		 *
-		 * @static	bool|array		$original_settings	remember originally retrieved filesizes array
-		 *												for reference
-		 * @param	array|null		$update				New cache to save to db - make sure the new array
-		 *												is validated first!
-		 * @param	string|null		$key				file key to update the cache for
-		 * @return	bool|void		if an update took place: whether it worked
-		 */
-		function _get_set_filesize_cache( $update = null, $key = null ) {
-			static $original_cache = false;
-			$updated = null;
-
-			/* Do we have something to update ? */
-			if ( !is_null( $update ) ) {
-				// Is this a complete or a one field update ?
-				if ( !is_null( $key ) ) {
-					$new_cache = $this->cache;
-					$new_cache[$key] = array(
-						'size'	=>	$update, // file size or false if size could not be determined
-						'time'	=>	time(),
-					);
-					$update = $new_cache;
-					unset( $new_cache );
-				}
-				if ( $update !== $original_cache ) {
-					$updated     = update_option( self::CACHE_OPTION, $update );
-					$this->cache = $original_cache = $update;
-				}
-				else {
-					$updated = true; // no update necessary
-				}
-				return $updated;
-			}
-
-			/* No update received or update failed -> get the option from db */
-			if ( ( is_null( $this->cache ) || false === $this->cache ) || ( false === is_array( $this->cache ) || 0 === count( $this->cache ) ) ) {
-				// returns either the option array or false if option not found
-				$cache = get_option( self::CACHE_OPTION );
-				// Default to an empty array rather than to false
-				if ( $cache === false ) {
-					$cache = array();
-				}
-				$this->cache = $original_cache = $cache;
-				unset( $cache );
-			}
-
-			return;
+			return $return;
 		}
 
 
@@ -1051,7 +1159,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @param string	$a	key of the value you want to get
 		 * @return bool
 		 */
-		function ini_get_bool( $a ) {
+		private function ini_get_bool( $a ) {
 			$b = ini_get( $a );
 
 			switch ( strtolower( $b ) ) {
@@ -1074,7 +1182,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @var		string 	$url	relative url
 		 * @return	string
 		 */
-		function resolve_relative_url( $url ) {
+		private function resolve_relative_url( $url ) {
 			return preg_replace( '`\w+/\.\./`', '', $url );
 		}
 
@@ -1086,7 +1194,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @var		string 	$url
 		 * @return	string
 		 */
-		function sync_dir_sep( $url ) {
+		private function sync_dir_sep( $url ) {
 			return str_replace( array( '/', '\\' ), DIRECTORY_SEPARATOR, $url );
 		}
 
@@ -1104,7 +1212,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @param $content
 		 * @return string
 		 */
-		function mimetype_to_icon( $content ) {
+		public function mimetype_to_icon( $content ) {
 
 			if ( 0 < count( $this->active_mimetypes ) ) {
 				$mimetypes = array_map( 'preg_quote' , $this->active_mimetypes, array_fill( 0 , count( $this->active_mimetypes ) , '`' ) );
@@ -1241,12 +1349,12 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @param   string  $url
 		 * @return  bool|string filesize string or false if no filesize could be determined
 		 */
-		function get_filesize( $url ) {
+		private function get_filesize( $url ) {
 			static $has_cache = false;
 
 			// Efficiency - only retrieve the cache once
 			if ( true === $this->settings['use_cache'] && false === $has_cache ) {
-				$this->_get_set_filesize_cache();
+				$this->refresh_cache();
 				$has_cache = true;
 			}
 
@@ -1268,7 +1376,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 				/* Maybe cache the retrieved value */
 				if ( true === $this->settings['use_cache'] ) {
-					$this->_get_set_filesize_cache( $filesize, $cache_key );
+					$this->update_cache( $filesize, $cache_key );
 				}
 			}
 			unset( $cache_key );
@@ -1284,7 +1392,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @param   string  $url
 		 * @return  bool|string
 		 */
-		function retrieve_filesize( $url ) {
+		private function retrieve_filesize( $url ) {
 			static $home_path      = null; // has trailing slash
 			static $site_path      = null; // has trailing slash
 			static $wp_upload      = null;
@@ -1449,7 +1557,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @param     string        $url
 		 * @return    string|bool    relative local url or false if not local
 		 */
-		function is_own_domain( $url ) {
+		private function is_own_domain( $url ) {
 			static $results; // remember results for re-use
 
 			if ( isset( $results[$url] ) ) {
@@ -1488,7 +1596,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @param $url
 		 * @return bool|int|mixed
 		 */
-		function get_remote_filesize_via_curl( $url ) {
+		private function get_remote_filesize_via_curl( $url ) {
 
 			/* Efficiency - only initialize once and keep the resource for re-use */
 			if ( false === is_resource( $this->curl ) ) {
@@ -1546,7 +1654,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 		/*
 		@todo maybe change the stream context ? if so, add new property $stream_default with null value, set
-		the $default from the function and reverse at the end of $this->mimetype_to_icons(), just like curl resource closing
+		the $default from the function and reverse at the end of $this->mimetype_to_icon(), just like curl resource closing
 
 		// By default get_headers uses a GET request to fetch the headers. If you
 		// want to send a HEAD request instead, you can do so using a stream context:
@@ -1569,7 +1677,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @param $url
 		 * @return bool
 		 */
-		function get_remote_filesize_via_headers( $url ) {
+		private function get_remote_filesize_via_headers( $url ) {
 
 			$filesize = false;
 			$head     = @get_headers( $url, true );
@@ -1603,7 +1711,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @return	string|bool 	human readable filesize string
 		 * 							or false if the passed variable was not an integer
 		 **/
-		function human_readable_filesize( $filesize ) {
+		public function human_readable_filesize( $filesize ) {
 			static $count;
 
 			// Will only run once per execution
@@ -1642,7 +1750,17 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @param  array    $received     Our $_POST variables
 		 * @return array    Cleaned settings to be saved to the db
 		 */
-		function validate_options( $received ) {
+		public function validate_options( $received ) {
+			
+			$this->remove_default_filter();
+
+			/* Don't change anything if user does not have the required capability */
+			if ( false === is_admin() || false === current_user_can( self::REQUIRED_CAP ) ) {
+				return $this->settings;
+			}
+
+
+			/* Start off with the current settings and where applicable, replace values with valid received values */
 			$clean = $this->settings;
 
 			/* General settings */
@@ -1738,7 +1856,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @param string $classnames
 		 * @return array|bool
 		 */
-		function validate_classnames( $classnames = '' ) {
+		public function validate_classnames( $classnames = '' ) {
 			$return = false;
 
 			if ( is_string( $classnames ) && '' !== $classnames ) {
@@ -1813,7 +1931,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * media: id="icon-upload"
 		 * links: id="icon-link-manager"
 		 */
-		function display_options_page() {
+		public function display_options_page() {
 
 			if ( !current_user_can( self::REQUIRED_CAP ) ) {
 				/* TRANSLATORS: no need to translate - standard WP core translation will be used */
@@ -1834,9 +1952,9 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		</form>';
 
 			if ( WP_DEBUG || $this->debug === true ) {
-				print '<pre>';
+				echo '<pre>';
 				var_dump( $this->settings );
-				print '</pre>';
+				echo '</pre>';
 			}
 		}
 
@@ -1844,7 +1962,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		/**
 		 * Display the General Settings section of our options page
 		 */
-		function do_settings_section_general() {
+		public function do_settings_section_general() {
 
 			echo '
 			<fieldset class="options" name="general">
@@ -1908,7 +2026,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		/**
 		 * Display the Image Settings section of our options page
 		 */
-		function do_settings_section_images() {
+		public function do_settings_section_images() {
 
 			echo '
 			<fieldset class="options" name="images" id="images">
@@ -1967,7 +2085,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		/**
 		 * Display the Advanced Settings section of our options page
 		 */
-		function do_settings_section_advanced() {
+		public function do_settings_section_advanced() {
 
 			echo '
 			<fieldset class="options advanced-1" name="advanced-1">
@@ -2045,7 +2163,6 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 	}
 
 
-
 	if ( !function_exists( 'mimetypes_to_icons' ) ) {
 		/**
 		 * Function to invoke the mimetypes_to_icons functionality for content
@@ -2080,8 +2197,8 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		function pause_mtli() {
 			global $mimetypes_link_icons;
 
-			if ( has_filter( 'the_content', array( &$mimetypes_link_icons, 'mimetype_to_icon' ) ) ) {
-				remove_filter( 'the_content', array( &$mimetypes_link_icons, 'mimetype_to_icon' ) );
+			if ( has_filter( 'the_content', array( $mimetypes_link_icons, 'mimetype_to_icon' ) ) ) {
+				remove_filter( 'the_content', array( $mimetypes_link_icons, 'mimetype_to_icon' ) );
 			}
 		}
 	}
@@ -2100,8 +2217,8 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		function unpause_mtli() {
 			global $mimetypes_link_icons;
 
-			if ( ( false === $mimetypes_link_icons->settings['enable_async'] || true === $mimetypes_link_icons->settings['show_file_size'] ) && false === has_filter( 'the_content', array( &$mimetypes_link_icons, 'mimetype_to_icon' ) ) ) {
-				add_filter( 'the_content', array( &$mimetypes_link_icons, 'mimetype_to_icon' ) );
+			if ( ( false === $mimetypes_link_icons->settings['enable_async'] || true === $mimetypes_link_icons->settings['show_file_size'] ) && false === has_filter( 'the_content', array( $mimetypes_link_icons, 'mimetype_to_icon' ) ) ) {
+				add_filter( 'the_content', array( $mimetypes_link_icons, 'mimetype_to_icon' ) );
 			}
 		}
 	}

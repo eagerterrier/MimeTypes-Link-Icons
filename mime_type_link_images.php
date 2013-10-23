@@ -43,6 +43,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 /**
  * @todo: test with safe_mode on and allow_url_fopen off ?
  *
+ * @todo - add options API filters and actions and remove get_set_settings, see demo quotes for example
+ *
  * POTENTIAL ROAD MAP:
  * @todo look into issue: http://wordpress.org/support/topic/async-replacement-causing-jquery-problems
  * @todo look into issue: http://wordpress.org/support/topic/problem-with-images-13
@@ -347,8 +349,8 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			if ( !isset( $this->settings['version'] ) || version_compare( self::DB_LASTCHANGE, $this->settings['version'], '>' ) ) {
 				add_action( 'init', array( $this, 'upgrade_options' ), 8 );
 			}
-			// Make sure that an upgrade check is done on (re-)activation as well.
-			register_activation_hook( __FILE__, array( $this, 'upgrade_options' ) );
+			// Make sure that the upgrade actions are run on (re-)activation as well.
+			add_action( 'mimetype_link_icons_plugin_activate', array( $this, 'upgrade_options' ) );
 
 
 			// Register the plugin initialization actions
@@ -771,6 +773,24 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 
 		/* *** PLUGIN ACTIVATION AND UPGRADING *** */
+		
+		
+		/**
+		 *
+		 * @return void
+		 */
+		public static function activate() {
+			/* Security check */
+			if ( ! current_user_can( 'activate_plugins' ) ) {
+				return;
+			}
+			$plugin = ( isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '' );
+			check_admin_referer( 'activate-plugin_' . $plugin );
+
+			/* Execute any actions registered */
+			do_action( 'mimetype_link_icons_plugin_activate' );
+		}
+		
 
 		/**
 		 * Function used when activating and/or upgrading the plugin
@@ -1804,7 +1824,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		<div class="wrap">
 		<div class="icon32" id="icon-options-general"></div>
 		<h2>' . __( 'MimeType Link Icons', self::$name ) . '</h2>
-		<form action="options.php" method="post"' . ( ( defined( 'DB_CHARSET' ) && DB_CHARSET === 'utf8' ) ? ' accept-charset="utf-8"' : '' ) . '>';
+		<form action="options.php" method="post" accept-charset="' . get_bloginfo( 'charset' ) . '">';
 
 			settings_fields( self::SETTINGS_OPTION . '-group' );
 			do_settings_sections( self::$name );
@@ -1815,7 +1835,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			if ( WP_DEBUG || $this->debug === true ) {
 				print '<pre>';
-				print_r( $this->settings );
+				var_dump( $this->settings );
 				print '</pre>';
 			}
 		}
@@ -2085,4 +2105,8 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			}
 		}
 	}
+	
+	/* Set up the (de-)activation actions */
+	register_activation_hook( __FILE__, array( 'Mime_Types_Link_Icons', 'activate' ) );
+
 } /* End of class-exists wrapper */

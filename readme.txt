@@ -315,6 +315,8 @@ var $debug = false;
 * Upped db last change version number to force update of internal domains option
 * [Bug fix] Small optimization in link matching regex which should prevent an edge case bug. Thanks [ts_sklett for reporting](http://wordpress.org/support/topic/no-icon-when-a-link-and-text-present-repro-steps-included).
 * Improved use of plugins_url()
+* Fix for upgrade routine not running on (re-)activation of the plugin
+* Improved charset support for settings page
 
 = 3.1.3 =
 * [Bug fix] typo in code introduced in 3.1.1, thanks [Nnet and boca jo for reporting](http://wordpress.org/support/topic/2-errors-for-each-link-after-upgrading-to-312)

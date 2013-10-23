@@ -313,11 +313,14 @@ var $debug = false;
 * Tested up to WP 3.6.1
 * Code style validated against WordPress standards
 * Added API documentation
-* Upped db last change version number to force update of internal domains option
-* [Bug fix] Small optimization in link matching regex which should prevent an edge case bug. Thanks [ts_sklett for reporting](http://wordpress.org/support/topic/no-icon-when-a-link-and-text-present-repro-steps-included).
-* Improved use of plugins_url()
-* Fix for upgrade routine not running on (re-)activation of the plugin
+* One time only force update of internal domains option
 * Improved charset support for settings page
+* Small improvements in validation
+
+* [Bug fix] filters on plugins_url() could not be applied, fixed
+* [Bug fix] for upgrade routine not running on (re-)activation of the plugin
+* [Bug fix] Small optimization in link matching regex which should prevent an edge case bug. Thanks [ts_sklett for reporting](http://wordpress.org/support/topic/no-icon-when-a-link-and-text-present-repro-steps-included).
+* [Bug fix] Fix icon spacing issue as reported by [blitz fahrradmanufaktur](http://wordpress.org/support/topic/plugin-produces-space-above-linked-images)
 
 = 3.1.3 =
 * [Bug fix] typo in code introduced in 3.1.1, thanks [Nnet and boca jo for reporting](http://wordpress.org/support/topic/2-errors-for-each-link-after-upgrading-to-312)
@@ -502,6 +505,9 @@ Fixed an IE8 bug found by @quartney
 
 
 == Upgrade Notice ==
+
+= 3.2.0 =
+Some bug fixes and WP best practices implementations
 
 = 3.1.4 =
 Minor clean up and bug fix

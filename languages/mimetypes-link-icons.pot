@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MimeTypes Link Icons\n"
-"POT-Creation-Date: 2013-06-17 02:09+0100\n"
-"PO-Revision-Date: 2013-06-17 02:09+0100\n"
+"POT-Creation-Date: 2013-10-23 12:55+0100\n"
+"PO-Revision-Date: 2013-10-23 12:56+0100\n"
 "Last-Translator: EJ Reinders Folmer <poedit_nospam@adviesenzo.nl>\n"
 "Language-Team: \n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-KeywordsList: __;_e;_n;_x;_ex;_nx;esc_html__;esc_html_e;esc_html_x;"
 "esc_attr__;esc_attr_e;esc_attr_x;_n_noop;_nx_noop\n"
 "X-Poedit-Basepath: .\n"
@@ -32,7 +32,7 @@ msgstr ""
 msgid "Image Settings"
 msgstr ""
 
-#: ../mime_type_link_images.php:392 ../mime_type_link_images.php:676
+#: ../mime_type_link_images.php:392 ../mime_type_link_images.php:928
 msgid "Advanced Settings"
 msgstr ""
 
@@ -72,36 +72,36 @@ msgstr ""
 msgid "YB"
 msgstr ""
 
-#: ../mime_type_link_images.php:494 ../mime_type_link_images.php:670
-#: ../mime_type_link_images.php:1759
+#: ../mime_type_link_images.php:746 ../mime_type_link_images.php:921
+#: ../mime_type_link_images.php:2015
 msgid "MimeType Link Icons"
 msgstr ""
 
-#: ../mime_type_link_images.php:495
+#: ../mime_type_link_images.php:747
 msgid "MimeType Icons"
 msgstr ""
 
-#: ../mime_type_link_images.php:514
+#: ../mime_type_link_images.php:766
 msgid "MimeType Link Icons Settings"
 msgstr ""
 
-#: ../mime_type_link_images.php:514
+#: ../mime_type_link_images.php:766
 msgid "Settings"
 msgstr ""
 
-#: ../mime_type_link_images.php:650
+#: ../mime_type_link_images.php:901
 msgid "Check All"
 msgstr ""
 
-#: ../mime_type_link_images.php:650
+#: ../mime_type_link_images.php:901
 msgid "Uncheck All"
 msgstr ""
 
-#: ../mime_type_link_images.php:682
+#: ../mime_type_link_images.php:935
 msgid "Extras"
 msgstr ""
 
-#: ../mime_type_link_images.php:719
+#: ../mime_type_link_images.php:957
 #, php-format
 msgid ""
 "The <em><a href=\"%s\">MimeTypes Link Icons</a></em> plugin will "
@@ -110,32 +110,32 @@ msgid ""
 "the page."
 msgstr ""
 
-#: ../mime_type_link_images.php:720
+#: ../mime_type_link_images.php:958
 msgid ""
 "On this settings page you can specify the icon size, icon type (white matte "
 "gif or transparent png), icon alignment. You can also select the file types "
 "for which this plugin will be enabled."
 msgstr ""
 
-#: ../mime_type_link_images.php:723
+#: ../mime_type_link_images.php:961
 msgid ""
 "In the advanced settings, you can enable <em>\"exclusion classnames\"</em>, "
 "enable the display of the <em>file size</em> of a linked file and/or choose "
 "to use <em>asynchronous replacement</em>."
 msgstr ""
 
-#: ../mime_type_link_images.php:724
+#: ../mime_type_link_images.php:962
 msgid "<strong>\"Exclusion classnames\"</strong> works as follows:"
 msgstr ""
 
-#: ../mime_type_link_images.php:725
+#: ../mime_type_link_images.php:963
 msgid ""
 "The plugin will look for the classname in your document and will remove the "
 "Mimetypes link icons (and file sizes) from all links wrapped within that "
 "class. You can add several classnames, just separate them with a comma."
 msgstr ""
 
-#: ../mime_type_link_images.php:728
+#: ../mime_type_link_images.php:966
 msgid ""
 "There is even some more advanced functionality available: for instance an "
 "<em>output filter</em> for the file size output and a way to add the "
@@ -143,7 +143,7 @@ msgid ""
 "main content area."
 msgstr ""
 
-#: ../mime_type_link_images.php:730
+#: ../mime_type_link_images.php:968
 #, php-format
 msgid ""
 "For more information on these tasty extras, have a look at the <a href=\"%s"
@@ -151,49 +151,49 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: no need to translate - standard WP core translation will be used
-#: ../mime_type_link_images.php:750
+#: ../mime_type_link_images.php:981
 msgid "For more information:"
 msgstr ""
 
-#: ../mime_type_link_images.php:752
+#: ../mime_type_link_images.php:983
 msgid "Official plugin page"
 msgstr ""
 
-#: ../mime_type_link_images.php:753
+#: ../mime_type_link_images.php:984
 msgid "FAQ"
 msgstr ""
 
-#: ../mime_type_link_images.php:754
+#: ../mime_type_link_images.php:985
 msgid "Changelog"
 msgstr ""
 
-#: ../mime_type_link_images.php:755
+#: ../mime_type_link_images.php:986
 msgid "Support&nbsp;Forum"
 msgstr ""
 
-#: ../mime_type_link_images.php:757
+#: ../mime_type_link_images.php:988
 msgid "Github repository"
 msgstr ""
 
-#: ../mime_type_link_images.php:758
+#: ../mime_type_link_images.php:989
 msgid "Blog post about this plugin"
 msgstr ""
 
-#: ../mime_type_link_images.php:879
+#: ../mime_type_link_images.php:1140
 #, php-format
 msgid ""
 "Version %s of the <em>MimeType Link Icons</em> plugin requires WordPress %s"
 "+. You have WordPress %s installed. The plugin has been de-activated."
 msgstr ""
 
-#: ../mime_type_link_images.php:879
+#: ../mime_type_link_images.php:1140
 #, php-format
 msgid ""
 "Please upgrade your WordPress installation to %s+. Using the latest version "
 "is always advisable (and not just for security reasons!)."
 msgstr ""
 
-#: ../mime_type_link_images.php:888
+#: ../mime_type_link_images.php:1149
 #, php-format
 msgid ""
 "Version %s of the <em>MimeType Link Icons</em> plugin requires PHP %s+. Your "
@@ -201,120 +201,121 @@ msgid ""
 "activated."
 msgstr ""
 
-#: ../mime_type_link_images.php:888
+#: ../mime_type_link_images.php:1149
 #, php-format
 msgid ""
 "Either ask your web host to upgrade PHP or alternatively you could install "
 "an <a %s>older version of this plugin</a>."
 msgstr ""
 
-#: ../mime_type_link_images.php:1368
+#: ../mime_type_link_images.php:1566
 #, php-format
 msgid ""
 "MimeTypes Link Icons can't resolve the following url, please make sure the "
 "file referred to exists. URL: <strong>%s</strong>"
 msgstr ""
 
-#: ../mime_type_link_images.php:1590
+#: ../mime_type_link_images.php:1795
 msgid "Invalid image size received"
 msgstr ""
 
-#: ../mime_type_link_images.php:1590 ../mime_type_link_images.php:1597
-#: ../mime_type_link_images.php:1604 ../mime_type_link_images.php:1626
-#: ../mime_type_link_images.php:1637 ../mime_type_link_images.php:1651
-msgid "the value has been reset to the default."
+#: ../mime_type_link_images.php:1795 ../mime_type_link_images.php:1803
+#: ../mime_type_link_images.php:1811 ../mime_type_link_images.php:1835
+#: ../mime_type_link_images.php:1848 ../mime_type_link_images.php:1870
+#: ../mime_type_link_images.php:1879
+msgid "the setting has not been changed."
 msgstr ""
 
-#: ../mime_type_link_images.php:1597
+#: ../mime_type_link_images.php:1803
 msgid "Invalid image type received"
 msgstr ""
 
-#: ../mime_type_link_images.php:1604
+#: ../mime_type_link_images.php:1811
 msgid "Invalid image placement received"
 msgstr ""
 
-#: ../mime_type_link_images.php:1622
+#: ../mime_type_link_images.php:1830
 msgid ""
 "One or more invalid classname(s) received, the values have been cleaned - "
 "this may just be the removal of spaces -, please check."
 msgstr ""
 
-#: ../mime_type_link_images.php:1626
+#: ../mime_type_link_images.php:1835
 msgid "No valid classname(s) received"
 msgstr ""
 
-#: ../mime_type_link_images.php:1637
+#: ../mime_type_link_images.php:1848
 msgid "Invalid rounding precision received"
 msgstr ""
 
-#: ../mime_type_link_images.php:1651
+#: ../mime_type_link_images.php:1870 ../mime_type_link_images.php:1879
 msgid "Invalid cache time received"
 msgstr ""
 
 #. TRANSLATORS: no need to translate - standard WP core translation will be used
-#: ../mime_type_link_images.php:1753
+#: ../mime_type_link_images.php:2009
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: ../mime_type_link_images.php:1787
+#: ../mime_type_link_images.php:2043
 msgid "Image Size"
 msgstr ""
 
-#: ../mime_type_link_images.php:1804
+#: ../mime_type_link_images.php:2060
 msgid "Image Type"
 msgstr ""
 
-#: ../mime_type_link_images.php:1821
+#: ../mime_type_link_images.php:2077
 msgid "Display images on left or right"
 msgstr ""
 
-#: ../mime_type_link_images.php:1871
+#: ../mime_type_link_images.php:2125
 #, php-format
 msgid "Add images to <strong>%s</strong> uploads/files"
 msgstr ""
 
-#: ../mime_type_link_images.php:1873
+#: ../mime_type_link_images.php:2127
 #, php-format
 msgid "%s icon"
 msgstr ""
 
-#: ../mime_type_link_images.php:1909
+#: ../mime_type_link_images.php:2163
 msgid "Enable/Disable classnames?"
 msgstr ""
 
-#: ../mime_type_link_images.php:1912
+#: ../mime_type_link_images.php:2166
 msgid ""
 "Tick this box to have one or more <em>classname(s)</em> that will disable "
 "the mime type links (ie: around an image or caption)."
 msgstr ""
 
-#: ../mime_type_link_images.php:1915
+#: ../mime_type_link_images.php:2169
 msgid ""
 "You can change the classname(s) by editing the field below. If you want to "
 "exclude several classnames, separate them with a comma (,)."
 msgstr ""
 
-#: ../mime_type_link_images.php:1924
+#: ../mime_type_link_images.php:2178
 msgid "Show File Size?"
 msgstr ""
 
-#: ../mime_type_link_images.php:1927
+#: ../mime_type_link_images.php:2181
 msgid "Display the <em>file size</em> of the attachment/linked file."
 msgstr ""
 
-#: ../mime_type_link_images.php:1929
+#: ../mime_type_link_images.php:2183
 msgid "File size rounding precision:"
 msgstr ""
 
-#: ../mime_type_link_images.php:1930
+#: ../mime_type_link_images.php:2184
 msgid "decimals"
 msgstr ""
 
-#: ../mime_type_link_images.php:1931
+#: ../mime_type_link_images.php:2185
 msgid "sizes less than 1kB will always have 0 decimals"
 msgstr ""
 
-#: ../mime_type_link_images.php:1935
+#: ../mime_type_link_images.php:2189
 msgid ""
 "Retrieving the file sizes of (external) files can be slow. If the file sizes "
 "of the files you link to do not change very often, you may want to cache the "
@@ -322,37 +323,33 @@ msgid ""
 "website."
 msgstr ""
 
-#: ../mime_type_link_images.php:1938
+#: ../mime_type_link_images.php:2192
 msgid "Cache retrieved file sizes."
 msgstr ""
 
-#: ../mime_type_link_images.php:1940
+#: ../mime_type_link_images.php:2194
 msgid "Amount of time to cache retrieved file sizes:"
 msgstr ""
 
-#: ../mime_type_link_images.php:1941
+#: ../mime_type_link_images.php:2195
 msgid "hours"
 msgstr ""
 
-#: ../mime_type_link_images.php:1948
+#: ../mime_type_link_images.php:2202
 msgid "Enable Asynchronous Replacement?"
 msgstr ""
 
-#: ../mime_type_link_images.php:1951
+#: ../mime_type_link_images.php:2205
 msgid ""
 "Some themes or plugins may conflict with this plugin. If you find you are "
 "having trouble you can switch on asynchronous replacement which (instead of "
 "PHP) uses JavaScript to find your links."
 msgstr ""
 
-#: ../mime_type_link_images.php:1951
-msgid "Turn on asynchronous debug mode for console logs."
-msgstr ""
-
-#: ../mime_type_link_images.php:1954
+#: ../mime_type_link_images.php:2208
 msgid "Tick box to enable <em>asynchronous replacement</em>."
 msgstr ""
 
-#: ../mime_type_link_images.php:1955
+#: ../mime_type_link_images.php:2209
 msgid "Tick box to enable <em>asynchronous debug mode</em>."
 msgstr ""

@@ -17,7 +17,8 @@ $mtli_image_type  = ( in_array( $mtli_image_type, array( 'gif', 'png' ) ) ? $mtl
 echo '
 .mtli_attachment {
 	display:inline-block;
-	height:' . $mtli_height . 'px;
+	height: auto;
+	min-height:' . $mtli_height . 'px;
 	background-position: top ' . $mtli_leftorright . ';
 	background-attachment: scroll;
 	background-repeat: no-repeat;

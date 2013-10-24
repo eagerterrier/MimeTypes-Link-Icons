@@ -449,7 +449,13 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			/* The option validation routines remove the default filters to prevent failing to insert
 			   an option if it's new. Let's add them back afterwards */
-			add_action( 'update_option', array( $this, 'add_default_filter' ) );
+			add_action( 'add_option', array( $this, 'add_default_filter' ) );
+			// @todo - figure out a way to add our filters back if the database update failed - false is returned without an action hook - not a problem with add_option
+			// Actually, the better fix would be to make the change in core as it is now inconsistent
+			//add_action( 'update_option', array( $this, 'add_default_filter' ) );
+			// Current solution - abuse a filter:
+			add_filter( 'pre_update_option_' . self::SETTINGS_OPTION, array( $this, 'pre_update_option' ) );
+
 
 
 			/* Refresh the $settings property on option update */
@@ -468,7 +474,6 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			/* Refresh the $cache property on option update */
 			add_action( 'add_option_' . self::CACHE_OPTION, array( $this, 'on_add_cache_option' ), 10, 2 );
 			add_action( 'update_option_' . self::CACHE_OPTION, array( $this, 'on_update_cache_option' ), 10, 2 );
-
 		}
 
 
@@ -495,6 +500,12 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			if ( has_filter( 'default_option_' . self::SETTINGS_OPTION, array( $this, 'filter_option_defaults' ) ) === false ) {
 				add_filter( 'default_option_' . self::SETTINGS_OPTION, array( $this, 'filter_option_defaults' ) );
 			};
+		}
+		
+
+		public function pre_update_option( $new_value ) {
+			$this->add_default_filter();
+			return $new_value;
 		}
 
 
@@ -1785,6 +1796,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			/* Start off with the current settings and where applicable, replace values with valid received values */
 			$clean = $this->settings;
+
 
 			/* General settings */
 			if ( isset( $received['image_size'] ) && true === in_array( $received['image_size'], $this->sizes ) ) {

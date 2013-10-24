@@ -335,12 +335,6 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 */
 		public function __construct() {
 
-			/* Load plugin text strings */
-			load_plugin_textdomain( self::$name, false, self::$name . '/languages/' );
-
-			/* Translate a number of strings */
-			$this->set_properties();
-
 			/* Initialize our settings option */
 			$this->options_init();
 
@@ -435,7 +429,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @since 3.2
 		 */
 		public function options_init() {
-			
+
 			/* Enrich the defaults */
 			$this->enrich_default_settings();
 			
@@ -555,7 +549,6 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 		/**
 		 * Set the $settings property to the value of our option
-		 *
 		 * @since 3.2
 		 */
 		private function refresh_current( $value = null ) {
@@ -577,7 +570,6 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 		/**
 		 * Refresh the $settings property when our property is added to wp
-		 *
 		 * @since 3.2
 		 */
 		public function on_add_option( $option_name, $value ) {
@@ -587,7 +579,6 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 		/**
 		 * Refresh the $settings property when our property is updated
-		 *
 		 * @since 3.2
 		 */
 		public function on_update_option( $old_value, $value ) {
@@ -686,6 +677,13 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 */
 		public function init() {
 			
+			/* Load plugin text strings */
+			load_plugin_textdomain( self::$name, false, self::$name . '/languages/' );
+
+			/* Translate a number of strings */
+			$this->set_properties();
+
+
 			/* Allow filtering of our plugin name */
 			self::filter_statics();
 

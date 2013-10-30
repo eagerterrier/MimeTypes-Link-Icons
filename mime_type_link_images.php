@@ -444,11 +444,14 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			/* The option validation routines remove the default filters to prevent failing to insert
 			   an option if it's new. Let's add them back afterwards */
 			add_action( 'add_option', array( $this, 'add_default_filter' ) );
-			// @todo - figure out a way to add our filters back if the database update failed - false is returned without an action hook - not a problem with add_option
-			// Actually, the better fix would be to make the change in core as it is now inconsistent
-			//add_action( 'update_option', array( $this, 'add_default_filter' ) );
-			// Current solution - abuse a filter:
-			add_filter( 'pre_update_option_' . self::SETTINGS_OPTION, array( $this, 'pre_update_option' ) );
+
+			if( version_compare( $GLOBALS['wp_version'], '3.7', '!=' ) ) {
+				add_action( 'update_option', array( $this, 'add_default_filter' ) );
+			}
+			else {
+				// Abuse a filter for WP 3.7 where the update_option filter is placed in the wrong location
+				add_filter( 'pre_update_option_' . self::SETTINGS_OPTION, array( $this, 'pre_update_option' ) );
+			}
 
 
 

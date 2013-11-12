@@ -468,7 +468,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			$this->refresh_current();
 			
 
-			/* Refresh the $cache property on option update */
+			/* Refresh the $cache property on cache option update */
 			add_action( 'add_option_' . self::CACHE_OPTION, array( $this, 'on_add_cache_option' ), 10, 2 );
 			add_action( 'update_option_' . self::CACHE_OPTION, array( $this, 'on_update_cache_option' ), 10, 2 );
 		}
@@ -1063,11 +1063,13 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			$options = $this->settings;
 
+
 			/**
 			 * Upgrades for any version of this plugin lower than x.x
 			 * N.B.: Version nr has to be hard coded to be future-proof, i.e. facilitate
 			 * upgrade routines for various versions
 			 */
+
 			/* Settings upgrade for version 3.0 */
 			if ( !isset( $options['version'] ) || version_compare( $options['version'], '3.0', '<' ) ) {
 				/* Change 'hidden_classname' from string to array to allow for more classnames

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package MimeTypeLinkImages
- * @version 3.1.4
+ * @version 3.2
  */
 /*
 Plugin Name: MimeTypes Link Icons
@@ -43,8 +43,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 /**
  * @todo: test with safe_mode on and allow_url_fopen off ?
  *
- * @todo - add options API filters and actions and remove get_set_settings, see demo quotes for example
- *
  * POTENTIAL ROAD MAP:
  * @todo look into issue: http://wordpress.org/support/topic/async-replacement-causing-jquery-problems
  * @todo look into issue: http://wordpress.org/support/topic/problem-with-images-13
@@ -58,7 +56,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 
-if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
+if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 	/**
 	 * @package WordPress\Plugins\MimeTypes Link Icons
 	 * @version 3.2
@@ -107,20 +105,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @const string	Plugin version in which the DB options structure was last changed
 		 * @usedby upgrade_options()
 		 */
-		const DB_LASTCHANGE = '3.1.4';
-
-
-		/**
-		 * @const string    Minimum WP version needed for this plugin to work
-		 * @usedby upgrade_options() to auto-deactivate if plugin can't work
-		 */
-		const MIN_WP_VERSION = '3.5';
-
-		/**
-		 * @const string    Minimum PHP version needed for this plugin to work
-		 * @usedby upgrade_options() to auto-deactivate if plugin can't work
-		 */
-		const MIN_PHP_VERSION = '5.2.6';
+		const DB_LASTCHANGE = '3.2';
 
 
 		/**
@@ -186,7 +171,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		/* *** Semi Static Properties *** */
 
 		/**
-		 * @var	array	Available file sizes: key = setting, value = field label
+		 * @var	array	Available file sizes
 		 * @todo		IMPORTANT: for now on each change, also copy this array to style.php
 		 */
 		public $sizes = array(
@@ -198,7 +183,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		);
 
 		/**
-		 * @var array	Available images types: key = setting, value = field label
+		 * @var array	Available images types
 		 * @todo		IMPORTANT: for now on each change, also copy this array to style.php
 		 */
 		public $image_types = array(
@@ -340,7 +325,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 
 			/* Check if we have any activation or upgrade actions to do */
-			if ( !isset( $this->settings['version'] ) || version_compare( self::DB_LASTCHANGE, $this->settings['version'], '>' ) ) {
+			if ( ! isset( $this->settings['version'] ) || version_compare( self::DB_LASTCHANGE, $this->settings['version'], '>' ) ) {
 				add_action( 'init', array( $this, 'upgrade_options' ), 8 );
 			}
 			// Make sure that the upgrade actions are run on (re-)activation as well.
@@ -445,7 +430,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			   an option if it's new. Let's add them back afterwards */
 			add_action( 'add_option', array( $this, 'add_default_filter' ) );
 
-			if( version_compare( $GLOBALS['wp_version'], '3.7', '!=' ) ) {
+			if ( version_compare( $GLOBALS['wp_version'], '3.7', '!=' ) ) {
 				add_action( 'update_option', array( $this, 'add_default_filter' ) );
 			}
 			else {
@@ -555,7 +540,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @since 3.2
 		 */
 		private function refresh_current( $value = null ) {
-			if ( !isset( $value ) ) {
+			if ( ! isset( $value ) ) {
 				$value = get_option( self::SETTINGS_OPTION );
 			}
 			$this->settings = $value;
@@ -595,7 +580,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @since 3.2
 		 */
 		private function refresh_cache( $value = null ) {
-			if ( !isset( $value ) ) {
+			if ( ! isset( $value ) ) {
 				$value = get_option( self::CACHE_OPTION );
 			}
 			if ( $value === false ) {
@@ -649,7 +634,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			$updated = null;
 
 			// Is this a complete or a one field update ?
-			if ( !is_null( $key ) ) {
+			if ( ! is_null( $key ) ) {
 				$new_cache = $this->cache;
 				$new_cache[$key] = array(
 					'size'	=>	$update, // file size or false if size could not be determined
@@ -691,7 +676,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 
 			/**
-			 * @api Set filter hook for active mime types
+			 * @api Filter hook for active mime types list
 			 * @api array	Allows a developer to filter (add/remove) mimetypes from the array of mimetypes
 			 *				for which the plugin should be active as selected by the admin on the settings
 			 *				page
@@ -742,10 +727,8 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
 
-			/* Add contextual help action/filters */
-			// Add help tab *behind* existing core page help tabs
-			// (reason for using admin_head hook instead of load hook)
-			add_action( 'admin_head', array( $this, 'add_help_tab' ) );
+			/* Add help tabs for our settings page */
+			add_action( 'load-' . $this->hook, array( $this, 'add_help_tab' ) );
 		}
 
 
@@ -824,10 +807,6 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 					true // load in footer
 				);
 			}
-			// is this really necessary ?
-			/*			else if ( $this->settings['show_file_size'] === true ) {
-							wp_enqueue_script( 'jquery' );
-						}*/
 
 			wp_localize_script( self::$name, 'i18n_mtli', $this->get_javascript_i18n() );
 		}
@@ -859,14 +838,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			/* Add array of active mimetypes if in async mode*/
 			if ( true === $this->settings['enable_async'] && ( is_array( $this->active_mimetypes ) && 0 < count( $this->active_mimetypes ) ) ) {
-				if ( true === version_compare( $GLOBALS['wp_version'], '3.3', '>=' ) ) {
-					$strings['mime_array'] = $this->active_mimetypes;
-				}
-				else {
-					// backwards compatibility
-					$strings['oldwp'] = true;
-					$strings['mime_array'] = implode( ',', $this->active_mimetypes );
-				}
+				$strings['mime_array'] = $this->active_mimetypes;
 			}
 
 			return $strings;
@@ -1034,35 +1006,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		public function upgrade_options() {
 			global $wp_version;
 
-			/**
-			 * Bail out early if the plugin can't be used... auto-deactivates plugin if requirements aren't met
-			 * This switch will normally only run on activation.
-			 */
-			if ( is_admin() && current_user_can( 'activate_plugins' ) ) {
-				$deactivate = false;
-
-				/* Test if the minimum required WP version is being used */
-				if ( true !== version_compare( $wp_version, self::MIN_WP_VERSION, '>=' ) ) {
-					add_action( 'admin_notices', array( $this, 'show_upgrade_wp_notice' ) );
-					$deactivate = true;
-				}
-
-				/* Test if the minimum required PHP version is being used */
-				if ( true !== version_compare( PHP_VERSION, self::MIN_PHP_VERSION, '>=' ) ) {
-					add_action( 'admin_notices', array( $this, 'show_upgrade_php_notice' ) );
-					$deactivate = true;
-				}
-
-				/* De-activate if minimum requirements not met */
-				if ( true === $deactivate ) {
-					add_action( 'admin_init', array( $this, 'deactivate_me' ), 1 );
-					return;
-				}
-			}
-
-
 			$options = $this->settings;
-
 
 			/**
 			 * Upgrades for any version of this plugin lower than x.x
@@ -1071,7 +1015,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			 */
 
 			/* Settings upgrade for version 3.0 */
-			if ( !isset( $options['version'] ) || version_compare( $options['version'], '3.0', '<' ) ) {
+			if ( ! isset( $options['version'] ) || version_compare( $options['version'], '3.0', '<' ) ) {
 				/* Change 'hidden_classname' from string to array to allow for more classnames
 				   and validate the value */
 				if ( isset( $options['hidden_classname'] ) && is_string( $options['hidden_classname'] ) ) {
@@ -1092,7 +1036,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			}
 			/* Settings upgrade for version 3.1.4
 			   Reset internal domains variable for changed determination */
-			if ( !isset( $options['version'] ) || version_compare( $options['version'], '3.1.4', '<' ) ) {
+			if ( ! isset( $options['version'] ) || version_compare( $options['version'], '3.1.4', '<' ) ) {
 				unset( $options['internal_domains'] );
 			}
 
@@ -1129,38 +1073,6 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			update_option( self::SETTINGS_OPTION, apply_filters( 'mimetypes_link_icons_save_option_on_upgrade', $options ) );
 
 			return;
-		}
-
-
-		/**
-		 * Deactivate this plugin - does not work in all WP versions, but it's a start
-		 *
-		 * @return void
-		 */
-		public function deactivate_me() {
-			deactivate_plugins( plugin_basename( __FILE__ ) );
-			if ( isset( $_GET['activate'] ) ) {
-				unset( $_GET['activate'] );
-			}
-		}
-
-		/**
-		 * Show upgrade WP notice if WP version is too low for this plugin to run
-		 *
-		 * @since 3.0
-		 */
-		public function show_upgrade_wp_notice() {
-			global $wp_version;
-			echo '<div class=\"error\"><p>' . sprintf( __( 'Version %s of the <em>MimeType Link Icons</em> plugin requires WordPress %s+. You have WordPress %s installed. The plugin has been de-activated.', self::$name ), self::VERSION, self::MIN_WP_VERSION, $wp_version ) . '</p><p>' . sprintf( __( 'Please upgrade your WordPress installation to %s+. Using the latest version is always advisable (and not just for security reasons!).', self::$name ), self::MIN_WP_VERSION ) . '</p></div>';
-		}
-
-		/**
-		 * Show upgrade PHP notice if PHP version is too low for this plugin to run
-		 *
-		 * @since 3.0
-		 */
-		public function show_upgrade_php_notice() {
-			echo '<div class=\"error\"><p>' . sprintf( __( 'Version %s of the <em>MimeType Link Icons</em> plugin requires PHP %s+. Your WordPress installation is running on PHP %s. The plugin has been de-activated.', self::$name ), self::VERSION, self::MIN_PHP_VERSION, PHP_VERSION ) . '</p><p>' . sprintf( __( 'Either ask your web host to upgrade PHP or alternatively you could install an <a %s>older version of this plugin</a>.', self::$name ), 'href="http://wordpress.org/extend/plugins/' . self::$name . '/developers/" target="_blank"' ) . '</p></div>';
 		}
 
 
@@ -1282,7 +1194,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 						}
 
 						/* Test for 'hidden classes' */
-						if ( ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && 0 < count( $this->settings['hidden_classname'] ) ) ) && ( !is_null( $classnames ) && '' !== $classnames ) ) {
+						if ( ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && 0 < count( $this->settings['hidden_classname'] ) ) ) && ( ! is_null( $classnames ) && '' !== $classnames ) ) {
 							// We have existing classnames on the anchor
 							$classes = explode( ' ', $classnames );
 							foreach ( $classes as $class ) {
@@ -1395,7 +1307,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 				$has_cache = true;
 			}
 
-			if ( !is_string( $url ) || $url === '' ) {
+			if ( ! is_string( $url ) || $url === '' ) {
 				return false;
 			}
 
@@ -1505,7 +1417,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 					trigger_error( 'MTLI DEBUG INFO - ' . __METHOD__ . '::local vs remote: ==Branch 2== rel_url = ' . $rel_url );
 				}
 
-				if ( !is_null( $path_to_home ) ) {
+				if ( ! is_null( $path_to_home ) ) {
 					$pos     = stripos( $rel_url, $path_to_home );
 					$rel_url = substr( $rel_url, ( $pos + strlen( $path_to_home ) ) );
 					if ( $this->debug === true ) {
@@ -1547,10 +1459,10 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 					case file_exists( $site_path . $rel_url ):
 						return filesize( $site_path . $rel_url );
 
-					case ( !is_null( $path_to_upload ) && file_exists( $this->sync_dir_sep( $wp_upload['basedir'] ) . substr( $rel_url, ( stripos( $rel_url, $path_to_upload ) + strlen( $path_to_upload ) ) ) ) ):
+					case ( ! is_null( $path_to_upload ) && file_exists( $this->sync_dir_sep( $wp_upload['basedir'] ) . substr( $rel_url, ( stripos( $rel_url, $path_to_upload ) + strlen( $path_to_upload ) ) ) ) ):
 						return filesize( $this->sync_dir_sep( $wp_upload['basedir'] ) . substr( $rel_url, ( stripos( $rel_url, $path_to_upload ) + strlen( $path_to_upload ) ) ) );
 
-					case ( !is_null( $site_root ) && file_exists( $site_root . $rel_url ) ):
+					case ( ! is_null( $site_root ) && file_exists( $site_root . $rel_url ) ):
 						return filesize( $site_root . $rel_url );
 
 					case file_exists( $rel_url ):
@@ -1655,7 +1567,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 				// Set a time-out
 				curl_setopt( $this->curl, CURLOPT_CONNECTTIMEOUT, 30 );
 				// Stop as soon as an error occurs
-//				curl_setopt( $this->curl, CURLOPT_FAILONERROR, true );
+				//curl_setopt( $this->curl, CURLOPT_FAILONERROR, true );
 			}
 
 			$filesize = false;
@@ -1665,7 +1577,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			$header = curl_exec( $this->curl );
 
 			/* If we didn't get an error, interpret the headers */
-			if ( ( false !== $header && !empty( $header ) ) && ( 0 === curl_errno( $this->curl ) ) ) {
+			if ( ( false !== $header && ! empty( $header ) ) && ( 0 === curl_errno( $this->curl ) ) ) {
 				/* Get the http status */
 				$statuscode = curl_getinfo( $this->curl, CURLINFO_HTTP_CODE );
 				if ( false === $statuscode && preg_match( '/^HTTP\/1\.[01] (\d\d\d)/', $header, $matches ) ) {
@@ -1752,7 +1664,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 			static $count;
 
 			// Will only run once per execution
-			if ( !isset( $count ) ) {
+			if ( ! isset( $count ) ) {
 				$count = count( $this->byte_suffixes );
 			}
 
@@ -1960,56 +1872,6 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 
 
-
-		/*
-		$url = wp_nonce_url('themes.php?page=example','example-theme-options');
-		if (false === ($creds = request_filesystem_credentials($url, '', false, false, null) ) ) {
-			return; // stop processing here
-		}
-
-		The request_filesystem_credentials() call takes five arguments.
-
-			The URL to which the form should be submitted (a nonced URL to a theme page was used in the example above)
-			A method override (normally you should leave this as the empty string: "")
-			An error flag (normally false unless an error is detected, see below)
-			A context directory (false, or a specific directory path that you want to test for access)
-			Form fields (an array of form field names from your previous form that you wish to "pass-through" the resulting credentials form, or null if there are none)
-
-		The request_filesystem_credentials call will test to see if it is capable of writing to the local filesystem directly without credentials first. If this is the case, then it will return true and not do anything. Your code can then proceed to use the WP_Filesystem class.
-
-		The request_filesystem_credentials call also takes into account hardcoded information, such as hostname or username or password, which has been inserted into the wp-config.php file using defines. If these are pre-defined in that file, then this call will return that information instead of displaying a form, bypassing the form for the user.
-
-		If it does need credentials from the user, then it will output the FTP information form and return false. In this case, you should stop processing further, in order to allow the user to input credentials. Any form fields names you specified will be included in the resulting form as hidden inputs, and will be returned when the user resubmits the form, this time with FTP credentials.
-
-		Note: Do not use the reserved names of hostname, username, password, public_key, or private_key for your own inputs. These are used by the credentials form itself. Alternatively, if you do use them, the request_filesystem_credentials function will assume that they are the incoming FTP credentials.
-
-		When the credentials form is submitted, it will look in the incoming POST data for these fields, and if found, it will return them in an array suitable for passing to WP_Filesystem, which is the next step.
-		Initializing WP_Filesystem_Base
-
-		Before the WP_Filesystem can be used, it must be initialized with the proper credentials. This can be done like so:
-
-		if ( ! WP_Filesystem($creds) ) {
-			request_filesystem_credentials($url, '', true, false, null);
-			return;
-		}
-
-		First you call the WP_Filesystem function, passing it the credentials from before. It will then attempt to verify the credentials. If they are good, then it will return true. If not, then it will return false.
-
-		In the case of bad credentials, the above code then makes another call to request_filesystem_credentials(), but this time with the error flag set to true. This forces the function to display the form again, this time with an error message for the user saying that their information was incorrect. The user can then re-enter their information and try again.
-		Using the WP_Filesystem_Base Class
-
-		Once the class has been initialized, then the global $wp_filesystem variable becomes defined and available for you to use. The WP_Filesystem_Base class defines several methods you can use to read and write local files. For example, to write a file, you could do this:
-
-		global $wp_filesystem;
-		$wp_filesystem->put_contents(
-		  '/tmp/example.txt',
-		  'Example contents of a file',
-		  FS_CHMOD_FILE // predefined mode settings for WP files
-		);
-
-		*/
-
-
 		/**
 		 * Display our options page using the Settings API
 		 * @todo Decide which icon next to the title is most appropriate - options, links or media icon ?
@@ -2019,15 +1881,15 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 */
 		public function display_options_page() {
 
-			if ( !current_user_can( self::REQUIRED_CAP ) ) {
+			if ( ! current_user_can( self::REQUIRED_CAP ) ) {
 				/* TRANSLATORS: no need to translate - standard WP core translation will be used */
 				wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 			}
 
 			echo '
 		<div class="wrap">
-		<div class="icon32" id="icon-options-general"></div>
-		<h2>' . __( 'MimeType Link Icons', self::$name ) . '</h2>
+		' . screen_icon() . '
+		<h2>' . get_admin_page_title() . '</h2>
 		<form action="' . admin_url( 'options.php' ) . '" method="post" accept-charset="' . get_bloginfo( 'charset' ) . '">';
 
 			settings_fields( self::SETTINGS_OPTION . '-group' );
@@ -2057,58 +1919,19 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			echo '
 			<fieldset class="options" name="general">
-				<table cellspacing="2" cellpadding="5" class="editform form-table">
-					<tr>
-						<th nowrap valign="top" width="33%">
-							<label for="image_size">' . esc_html__( 'Image Size', self::$name ) . '</label>
-						</th>
-						<td>
-							<select name="' . esc_attr( self::SETTINGS_OPTION . '[image_size]' ) . '" id="image_size">';
+				<table cellspacing="2" cellpadding="5" class="editform form-table">';
 
-			foreach ( $this->sizes as $v ) {
-				echo '
-								<option value="' . esc_attr( $v ) . '" ' . selected( $this->settings['image_size'], $v, false ) . '>' . esc_html( $v . 'x' . $v ) . '</option>';
-			}
-			unset( $v );
+			add_filter( 'mtli_setting_select_box_option_label_image_size', array( $this, 'image_size_option_label' ) );
+
+			$this->do_select_box_row( __( 'Image Size', self::$name ), 'image_size', $this->sizes );
+			
+			/* @todo maybe change this to radio buttons ? */
+			$this->do_select_box_row( __( 'Image Type', self::$name ), 'image_type', $this->image_types );
+			
+			/* @todo maybe change this to radio buttons ? */
+			$this->do_select_box_row( __( 'Display images on left or right', self::$name ), 'leftorright', $this->alignments );
 
 			echo '
-							</select>
-						</td>
-					</tr>
-					<tr>' /* @todo maybe change this to radio buttons ? if so, remove th label */ . '
-						<th nowrap valign="top" width="33%">
-							<label for="image_type">' . esc_html__( 'Image Type', self::$name ) . '</label>
-						</th>
-						<td>
-							<select name="' . esc_attr( self::SETTINGS_OPTION . '[image_type]' ) . '" id="image_type">';
-
-			foreach ( $this->image_types as $v ) {
-				echo '
-									<option value="' . esc_attr( $v ) . '" ' . selected( $this->settings['image_type'], $v, false ) . '>' . esc_html( $v ) . '</option>';
-			}
-			unset( $v );
-
-			echo '
-							</select>
-						</td>
-					</tr>
-					<tr>' /* @todo maybe change this to radio buttons ? if so, remove th label */ . '
-						<th nowrap valign="top" width="33%">
-							<label for="leftorright">' . esc_html__( 'Display images on left or right', self::$name ) . '</label>
-						</th>
-						<td>
-							<select name="' . esc_attr( self::SETTINGS_OPTION . '[leftorright]' ) . '" id="leftorright">';
-
-			foreach ( $this->alignments as $k => $v ) {
-				echo '
-									<option value="' . esc_attr( $k ) . '" ' . selected( $this->settings['leftorright'], $k, false ) . '>' . esc_html( $v ) . '</option>';
-			}
-			unset( $k, $v );
-
-			echo '
-							</select>
-						</td>
-					</tr>
 				</table>
 			</fieldset>';
 		}
@@ -2125,7 +1948,6 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			$count = count( $this->mime_types );
 			$rows  = ceil( $count / self::NR_OF_COLUMNS );
-//			$last_row = $count % self::NR_OF_COLUMNS;
 
 			// Make sure mimetypes are always sorted alphabetically
 			uksort( $this->mime_types, 'strnatcasecmp' );
@@ -2231,6 +2053,50 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 				</table>
 			</fieldset>';
 		}
+		
+		
+		/**
+		 * Create table row for a select box
+		 *
+		 * @param	string	$label
+		 * @param	string	$field_id
+		 * @param	array	$options_array
+		 * @return	void
+		 */
+		private function do_select_box_row( $label, $field_id, $options_array ) {
+
+			echo '
+					<tr>
+						<th nowrap valign="top" width="33%">
+							<label for="' . esc_attr( $field_id ) . '">' . esc_html( $label ) . '</label>
+						</th>
+						<td>
+							<select name="' . esc_attr( self::SETTINGS_OPTION . '[' . esc_attr( $field_id ) . ']' ) . '" id="' . esc_attr( $field_id ) . '">';
+
+			foreach ( $options_array as $k => $v ) {
+				$option_value = ( ( is_string( $k ) && $k !== '' ) ? $k : $v );
+				$option_label = apply_filters( 'mtli_setting_select_box_option_label_' . $field_id, $v );
+
+				echo '
+								<option value="' . esc_attr( $option_value ) . '" ' . selected( $this->settings[$field_id], $option_value, false ) . '>' . esc_html( $option_label ) . '</option>';
+			}
+			unset( $v );
+
+			echo '
+							</select>
+						</td>
+					</tr>';
+		}
+
+
+		/**
+		 * Turns an image size into a usable label
+		 * @param	int		$size
+		 * @param	string
+		 */
+		public function image_size_option_label( $size ) {
+			return ( $size . 'x' . $size );
+		}
 
 
 	} /* End of class */
@@ -2239,7 +2105,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 	/* Instantiate our class */
 	add_action( 'plugins_loaded', 'mimetypes_link_icons_init' );
 
-	if ( !function_exists( 'mimetypes_link__icons_init' ) ) {
+	if ( ! function_exists( 'mimetypes_link__icons_init' ) ) {
 		/**
 		 * Initialize the class
 		 *
@@ -2254,7 +2120,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 	}
 
 
-	if ( !function_exists( 'mimetypes_to_icons' ) ) {
+	if ( ! function_exists( 'mimetypes_to_icons' ) ) {
 		/**
 		 * Function to invoke the mimetypes_to_icons functionality for content
 		 * outside of the loop
@@ -2264,19 +2130,21 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @return	string
 		 */
 		function mimetypes_to_icons( $content ) {
-			$async = $GLOBALS['mimetypes_link_icons']->settings['enable_async'];
-			$GLOBALS['mimetypes_link_icons']->settings['enable_async'] = false;
-
-			$content = $GLOBALS['mimetypes_link_icons']->mimetype_to_icon( $content );
-			$GLOBALS['mimetypes_link_icons']->settings['enable_async'] = $async;
-			unset( $async );
+			if ( isset( $GLOBALS['mimetypes_link_icons'] ) ) {
+				$async = $GLOBALS['mimetypes_link_icons']->settings['enable_async'];
+				$GLOBALS['mimetypes_link_icons']->settings['enable_async'] = false;
+	
+				$content = $GLOBALS['mimetypes_link_icons']->mimetype_to_icon( $content );
+				$GLOBALS['mimetypes_link_icons']->settings['enable_async'] = $async;
+				unset( $async );
+			}
 
 			return $content;
 		}
 	}
 
 
-	if ( !function_exists( 'pause_mtli' ) ) {
+	if ( ! function_exists( 'pause_mtli' ) ) {
 		/**
 		 * Function to temporarily pause the mimetypes link icons plugin
 		 *
@@ -2287,14 +2155,14 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @return void
 		 */
 		function pause_mtli() {
-			if ( has_filter( 'the_content', array( $GLOBALS['mimetypes_link_icons'], 'mimetype_to_icon' ) ) ) {
+			if ( isset( $GLOBALS['mimetypes_link_icons'] ) && has_filter( 'the_content', array( $GLOBALS['mimetypes_link_icons'], 'mimetype_to_icon' ) ) ) {
 				remove_filter( 'the_content', array( $GLOBALS['mimetypes_link_icons'], 'mimetype_to_icon' ) );
 			}
 		}
 	}
 
 
-	if ( !function_exists( 'unpause_mtli' ) ) {
+	if ( ! function_exists( 'unpause_mtli' ) ) {
 		/**
 		 * Function to unpause the mimetypes link icons plugin
 		 *
@@ -2305,7 +2173,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @return void
 		 */
 		function unpause_mtli() {
-			if ( ( false === $GLOBALS['mimetypes_link_icons']->settings['enable_async'] || true === $GLOBALS['mimetypes_link_icons']->settings['show_file_size'] ) && false === has_filter( 'the_content', array( $GLOBALS['mimetypes_link_icons'], 'mimetype_to_icon' ) ) ) {
+			if ( isset( $GLOBALS['mimetypes_link_icons'] ) && ( ( false === $GLOBALS['mimetypes_link_icons']->settings['enable_async'] || true === $GLOBALS['mimetypes_link_icons']->settings['show_file_size'] ) && false === has_filter( 'the_content', array( $GLOBALS['mimetypes_link_icons'], 'mimetype_to_icon' ) ) ) ) {
 				add_filter( 'the_content', array( $GLOBALS['mimetypes_link_icons'], 'mimetype_to_icon' ) );
 			}
 		}

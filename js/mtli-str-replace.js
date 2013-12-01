@@ -1,16 +1,11 @@
 /* Javascript functions for plugin: MimeTypes Link Icons */
 /*
  @todo look into issue: http://wordpress.org/support/topic/problem-with-images-13?replies=5
-
  Let us know how you get on. We can always use a jquery wildcard selector instead of classname in a later version of the plugin, so
-
  jQuery(this).parents('.myexcludedclassname').length)
-
  becomes
-
  jQuery(this).parents('[class^=wp-image-]').length /* matches all images on my theme
  */
-
 /* Using alternative to jQuery(document).ready(function() as WP3.2.1/jQuery1.6.1 does not seem to like it
  */
 (function(){

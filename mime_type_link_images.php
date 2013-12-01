@@ -401,6 +401,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @return void
 		 */
 		public static function filter_statics() {
+			/* @api Allow filtering of the plugin name, Mainly useful for non-standard directory setups
+			   @api	string	$plugin_name	plugin name */
 			self::$name = apply_filters( 'mimetype_link_icons_plugin_name', self::$name );
 		}
 
@@ -992,6 +994,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			check_admin_referer( 'activate-plugin_' . $plugin );
 
 			/* Execute any actions registered */
+			/* @api	Execute registered actions on activation of the plugin */
 			do_action( 'mimetype_link_icons_plugin_activate' );
 		}
 		
@@ -1069,8 +1072,12 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			$options['version']   = self::VERSION;
 			$options['upgrading'] = true; // error prevention for when validation is used before settings API is loaded
 
+			/* @api Internal use only: filter to validate the options after upgrade
+			   @api	array	$options	Options at the end of the upgrade routine */
+			$options = apply_filters( 'mimetypes_link_icons_save_option_on_upgrade', $options );
+
 			/* Update the settings and refresh our $settings property */
-			update_option( self::SETTINGS_OPTION, apply_filters( 'mimetypes_link_icons_save_option_on_upgrade', $options ) );
+			update_option( self::SETTINGS_OPTION, $options );
 
 			return;
 		}
@@ -1217,7 +1224,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 								/* Add the rel attribute to the replacement anchor string */
 								$replace = str_replace( $match[3], $match[3] . ' rel="mtli_filesize' . str_replace( array( '.', ' ' ), '', $filesize ) . '"', $replace );
 
-								// @internal Add the css rule
+								// @api	string	$filesize	Allows filtering of the file size string
 								$css_filesize_string = apply_filters( 'mtli_filesize', '(' . $filesize . ')' );
 								// Make sure anything evil is stripped out of the filtered string
 								$css_filesize_string     = sanitize_text_field( $css_filesize_string );
@@ -1237,7 +1244,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 								$new_classnames = $classnames . ' ' . $mtli_classes;
 							}
 							
-							/* Add filter hook for classnames
+							/* Filter hook for classnames
 							   @api string	$new_classnames Allows a developer to filter the class names string
 							   before it is returned to the class attribute of the link tag */
 							$new_classnames = apply_filters( 'mtli_classnames', $new_classnames );
@@ -2075,6 +2082,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			foreach ( $options_array as $k => $v ) {
 				$option_value = ( ( is_string( $k ) && $k !== '' ) ? $k : $v );
+				/* @api	mixed	$v	Allows for filtering of the option label of a select box on our settings page */
 				$option_label = apply_filters( 'mtli_setting_select_box_option_label_' . $field_id, $v );
 
 				echo '

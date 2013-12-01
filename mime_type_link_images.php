@@ -254,7 +254,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			'enable_hidden_class'	=> true,
 			'hidden_classname'		=> array( 'wp-caption', ),
 			'version'				=> null,
-			'upgrading'				=> false, // will never change, only used to distinguish a call from the upgrade method
+//			'upgrading'				=> false, // will never change, not saved to db, only used to distinguish a call from the upgrade method
 		);
 
 		/**
@@ -313,6 +313,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		public $debug = false;
 
 
+
 		/* *** PLUGIN INITIALIZATION METHODS *** */
 
 		/**
@@ -333,6 +334,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 
 			// Register the plugin initialization actions
+			add_action( 'init', array( $this, 'pre_init' ), 5 );
 			add_action( 'init', array( $this, 'init' ) );
 			add_action( 'admin_menu', array( $this, 'add_options_page' ) );
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
@@ -354,57 +356,6 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			self::$suffix   = ( ( defined( 'SCRIPT_DEBUG' ) && true === SCRIPT_DEBUG ) ? '' : '.min' );
 		}
 
-
-		/**
-		 * Fill some property arrays with translated strings
-		 */
-		private function set_properties() {
-
-			$this->alignments = array(
-				'left'	   => __( 'Left', self::$name ),
-				'right'    => __( 'Right', self::$name ),
-			);
-
-			$this->form_sections = array(
-				'general'	=> __( 'General Settings', self::$name ),
-				'images'	=> __( 'Image Settings', self::$name ),
-				'advanced'	=> __( 'Advanced Settings', self::$name ),
-			);
-
-			$this->byte_suffixes = array(
-				__( 'b', self::$name ),
-				__( 'kB', self::$name ),
-				__( 'MB', self::$name ),
-				__( 'GB', self::$name ),
-				__( 'TB', self::$name ),
-				__( 'PB', self::$name ),
-				__( 'EB', self::$name ),
-				__( 'ZB', self::$name ),
-				__( 'YB', self::$name ),
-			);
-		}
-
-
-		/**
-		 * Enrich the default settings array
-		 */
-		private function enrich_default_settings() {
-			foreach ( $this->mime_types as $type ) {
-				$this->defaults['enable_' . $type]	= ( false === in_array( $type, $this->default_is_true ) ? false : true );
-			}
-		}
-		
-		/**
-		 * Allow filtering of the plugin name
-		 * Mainly useful for non-standard directory setups
-		 *
-		 * @return void
-		 */
-		public static function filter_statics() {
-			/* @api Allow filtering of the plugin name, Mainly useful for non-standard directory setups
-			   @api	string	$plugin_name	plugin name */
-			self::$name = apply_filters( 'mimetype_link_icons_plugin_name', self::$name );
-		}
 
 
 
@@ -458,6 +409,16 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			/* Refresh the $cache property on cache option update */
 			add_action( 'add_option_' . self::CACHE_OPTION, array( $this, 'on_add_cache_option' ), 10, 2 );
 			add_action( 'update_option_' . self::CACHE_OPTION, array( $this, 'on_update_cache_option' ), 10, 2 );
+		}
+
+
+		/**
+		 * Enrich the default settings array
+		 */
+		private function enrich_default_settings() {
+			foreach ( $this->mime_types as $type ) {
+				$this->defaults['enable_' . $type]	= ( false === in_array( $type, $this->default_is_true ) ? false : true );
+			}
 		}
 
 
@@ -661,12 +622,10 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 		/** ******************* ADMINISTRATIVE METHODS ******************* **/
 
-
 		/**
-		 * Add the actions for the front end functionality
+		 * Make sure our text strings and properties are available
 		 */
-		public function init() {
-			
+		public function pre_init() {
 			/* Allow filtering of our plugin name */
 			self::filter_statics();
 
@@ -675,8 +634,56 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			/* Translate a number of strings */
 			$this->set_properties();
+		}
+		
+
+		/**
+		 * Allow filtering of the plugin name
+		 * Mainly useful for non-standard directory setups
+		 *
+		 * @return void
+		 */
+		public static function filter_statics() {
+			/* @api Allow filtering of the plugin name, Mainly useful for non-standard directory setups
+			   @api	string	$plugin_name	plugin name */
+			self::$name = apply_filters( 'mimetype_link_icons_plugin_name', self::$name );
+		}
 
 
+		/**
+		 * Fill some property arrays with translated strings
+		 */
+		private function set_properties() {
+
+			$this->alignments = array(
+				'left'	   => __( 'Left', self::$name ),
+				'right'    => __( 'Right', self::$name ),
+			);
+
+			$this->form_sections = array(
+				'general'	=> __( 'General Settings', self::$name ),
+				'images'	=> __( 'Image Settings', self::$name ),
+				'advanced'	=> __( 'Advanced Settings', self::$name ),
+			);
+
+			$this->byte_suffixes = array(
+				__( 'b', self::$name ),
+				__( 'kB', self::$name ),
+				__( 'MB', self::$name ),
+				__( 'GB', self::$name ),
+				__( 'TB', self::$name ),
+				__( 'PB', self::$name ),
+				__( 'EB', self::$name ),
+				__( 'ZB', self::$name ),
+				__( 'YB', self::$name ),
+			);
+		}
+
+
+		/**
+		 * Add the actions for the front end functionality
+		 */
+		public function init() {
 			/**
 			 * @api Filter hook for active mime types list
 			 * @api array	Allows a developer to filter (add/remove) mimetypes from the array of mimetypes
@@ -1717,124 +1724,152 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 
 			/* Start off with the current settings and where applicable, replace values with valid received values */
-			$clean = $this->settings;
+			$clean     = $this->settings;
+			$upgrading = isset( $received['upgrading'] ) ? $received['upgrading'] : false;
 
 
-			/* General settings */
-			if ( isset( $received['image_size'] ) && true === in_array( $received['image_size'], $this->sizes ) ) {
-				$clean['image_size'] = $received['image_size'];
-			}
-			else if ( $received['upgrading'] !== true ) {
-				// Edge case: should never happen
-				add_settings_error( self::SETTINGS_OPTION, 'image_size', __( 'Invalid image size received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
-			}
-
-			if ( isset( $received['image_type'] ) && true === in_array( $received['image_type'], $this->image_types ) ) {
-				$clean['image_type'] = $received['image_type'];
-			}
-			else if ( $received['upgrading'] !== true ) {
-				// Edge case: should never happen
-				add_settings_error( self::SETTINGS_OPTION, 'image_size', __( 'Invalid image type received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
-			}
-
-			if ( isset( $received['leftorright'] ) && true === array_key_exists( $received['leftorright'], $this->alignments ) ) {
-				$clean['leftorright'] = $received['leftorright'];
-			}
-			else if ( $received['upgrading'] !== true ) {
-				// Edge case: should never happen
-				add_settings_error( self::SETTINGS_OPTION, 'leftorright', __( 'Invalid image placement received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
-			}
-
-
-			/* Images settings */
-			foreach ( $this->mime_types as $mimetype ) {
-				$clean['enable_' . $mimetype] = ( isset( $received['enable_' . $mimetype] ) ? $this->validate_bool( $received['enable_' . $mimetype] ) : false );
-			}
-
-
-			/* Advanced settings */
-			$clean['enable_hidden_class'] = ( isset( $received['enable_hidden_class'] ) ? $this->validate_bool( $received['enable_hidden_class'] ) : false );
-
-
-			if ( isset( $received['hidden_classname'] ) && '' !== $received['hidden_classname'] ) {
-				$classnames = $this->validate_classnames( $received['hidden_classname'] );
-				if ( false !== $classnames ) {
-					$clean['hidden_classname'] = $classnames;
-					if ( ( $received['hidden_classname'] !== implode( ',', $clean['hidden_classname'] ) && $received['hidden_classname'] !== implode( ', ', $clean['hidden_classname'] ) ) &&  $received['upgrading'] !== true ) {
-						add_settings_error( self::SETTINGS_OPTION, 'hidden_classname', __( 'One or more invalid classname(s) received, the values have been cleaned - this may just be the removal of spaces -, please check.', self::$name ), 'updated' );
-					}
+			foreach ( $clean as $key => $value ) {
+				$switch_key = $key;
+				if ( strpos( $key, 'enable_' ) === 0 ) {
+					$switch_key = 'enable_';
 				}
-				else if ( $received['upgrading'] !== true ) {
-					// Edge case: should never happen
-					add_settings_error( self::SETTINGS_OPTION, 'hidden_classname', __( 'No valid classname(s) received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
+
+				switch ( $switch_key ) {
+					/* Always set the version */
+					case 'version':
+						$clean[$key] = self::VERSION;
+						break;
+
+
+					case 'internal_domains':
+						// Only updated in upgrade/activation, otherwise leave as is
+						if ( isset( $received[$key] ) && true === $upgrading ) {
+							$clean[$key] = $received[$key];
+						}
+						break;
+
+
+					case 'image_size':
+						if ( isset( $received[$key] ) && in_array( $received[$key], $this->sizes ) ) {
+							$clean[$key] = $received[$key];
+						}
+						else if ( true !== $upgrading ) {
+							// Edge case: should never happen
+							add_settings_error( self::SETTINGS_OPTION, $key, __( 'Invalid image size received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
+						}
+						break;
+						
+
+					case 'image_type':
+						if ( isset( $received[$key] ) && in_array( $received[$key], $this->image_types ) ) {
+							$clean[$key] = $received[$key];
+						}
+						else if ( true !== $upgrading ) {
+							// Edge case: should never happen
+							add_settings_error( self::SETTINGS_OPTION, $key, __( 'Invalid image type received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
+						}
+						break;
+
+
+					case 'leftorright':
+						if ( isset( $received[$key] ) && isset( $this->alignments[$received[$key]] ) ) {
+							$clean[$key] = $received[$key];
+						}
+						else if ( true !== $upgrading ) {
+							// Edge case: should never happen
+							add_settings_error( self::SETTINGS_OPTION, $key, __( 'Invalid image placement received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
+						}
+						break;
+
+
+					case 'precision':
+						if ( isset( $received[$key] ) && '' !== trim( $received[$key] ) ) {
+							$int = $this->validate_int( $received[$key] );
+							if ( false !== $int ) {
+								$clean[$key] = $int;
+							}
+							else if ( true !== $upgrading ) {
+								add_settings_error( self::SETTINGS_OPTION, $key, __( 'Invalid rounding precision received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
+							}
+							unset( $int );
+						}
+						else {
+							// Empty field, let's assume the user meant no decimals
+							$clean[$key] = 0;
+						}
+						break;
+
+
+					case 'cache_time':
+						// Value received is hours, needs to be converted to seconds before save
+						if ( isset ( $received[$key] ) && ( is_string( $received[$key] ) && '' !== trim( $received[$key] ) ) ) {
+							$int = $this->validate_int( $received[$key] );
+							if ( $int !== false ) {
+								$clean[$key] = ( (int) $int * 60 * 60 );
+							}
+							else if ( true !== $upgrading ) {
+								add_settings_error( self::SETTINGS_OPTION, $key, __( 'Invalid cache time received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
+							}
+							unset( $int );
+						}
+						else if ( ( isset( $received[$key] ) && is_int( $received[$key] ) ) && $upgrading === true ) {
+							// Received an already validated & multiplied value from the upgrade routine
+							$clean[$key] = $received[$key];
+						}
+						else if ( true !== $upgrading ) {
+							add_settings_error( self::SETTINGS_OPTION, $key, __( 'Invalid cache time received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
+						}
+
+						break;
+
+
+					case 'hidden_classname':
+						if ( isset( $received[$key] ) ) {
+							if ( ( is_array( $received[$key] ) && $received[$key] !== array() ) || ( is_string( $received[$key] ) && '' !== trim( $received[$key] ) ) ) {
+								$classnames = $this->validate_classnames( $received[$key] );
+	
+								if ( false !== $classnames ) {
+									$clean[$key] = $classnames;
+
+									if ( ( !is_array( $received[$key] ) && ( $received[$key] !== implode( ',', $clean[$key] ) && $received[$key] !== implode( ', ', $clean[$key] ) ) ) && true !== $upgrading ) {
+										add_settings_error( self::SETTINGS_OPTION, $key, __( 'One or more invalid classname(s) received, the values have been cleaned - this may just be the removal of spaces -, please check.', self::$name ), 'updated' );
+									}
+								}
+								else if ( true !== $upgrading ) {
+									// Edge case: should never happen
+									add_settings_error( self::SETTINGS_OPTION, $key, __( 'No valid classname(s) received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
+								}
+							}
+							else {
+								// Empty field received, so clear out the setting
+								$clean[$key] = array();
+							}
+						}
+						break;
+
+					/* Covers:
+					   'enable_async',
+					   'enable_async_debug',
+					   'enable_hidden_class',
+					   'enable_' . $mimetype */
+					case 'enable_':
+					case 'show_file_size':
+					case 'use_cache':
+					default:
+						$clean[$key] = ( isset( $received[$key] ) ? filter_var( $received[$key], FILTER_VALIDATE_BOOLEAN ) : false );
+						break;
 				}
 			}
 
-
-			$clean['show_file_size'] = ( isset( $received['show_file_size'] ) ? $this->validate_bool( $received['show_file_size'] ) : false );
-
-			if ( isset( $received['precision'] ) && $received['precision'] !== '' ) {
-				$int = $this->validate_int( $received['precision'] );
-				if ( $received['precision'] !== false ) {
-					$clean['precision'] = $int;
-				}
-				else if ( $received['upgrading'] !== true ) {
-					add_settings_error( self::SETTINGS_OPTION, 'precision', __( 'Invalid rounding precision received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
-				}
-				unset( $int );
-			}
-			else {
-				// Empty field, let's assume the user meant no decimals
-				$clean['precision'] = 0;
-			}
-
-			$clean['use_cache'] = ( isset( $received['use_cache'] ) ? $this->validate_bool( $received['use_cache'] ) : false );
-			// Delete the filesize cache if the cache option was unchecked to make sure a fresh cache will be build if and when the cache option would be checked again
+			/* Delete the filesize cache if the cache option was unchecked to make sure a fresh cache
+			   will be build if and when the cache option would be checked again */
 			if ( false === $clean['use_cache'] && $clean['use_cache'] !== $this->settings['use_cache'] ) {
 				delete_option( self::CACHE_OPTION );
 			}
 
-			// Value received is hours, needs to be converted to seconds before save
-			if ( isset ( $received['cache_time'] ) && ( is_string( $received['cache_time'] ) && $received['cache_time'] !== '' ) ) {
-				$int = $this->validate_int( $received['cache_time'] );
-				if ( $received['cache_time'] !== false ) {
-					$clean['cache_time'] = ( (int) $int * 60 * 60 );
-				}
-				else if ( $received['upgrading'] !== true ) {
-					add_settings_error( self::SETTINGS_OPTION, 'cache_time', __( 'Invalid cache time received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
-				}
-				unset( $int );
-			}
-			else if ( ( isset( $received['cache_time'] ) && is_int( $received['cache_time'] ) ) && ( isset( $received['upgrading'] ) && $received['upgrading'] === true ) ) {
-				// Received an already validated & multiplied value from the upgrade routine
-				$clean['cache_time'] = $received['cache_time'];
-			}
-			else if ( $received['upgrading'] !== true ) {
-				add_settings_error( self::SETTINGS_OPTION, 'cache_time', __( 'Invalid cache time received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
-			}
-
-
-			$clean['enable_async'] = ( isset( $received['enable_async'] ) ? $this->validate_bool( $received['enable_async'] ) : false );
-			$clean['enable_async_debug'] = ( isset( $received['enable_async_debug'] ) ? $this->validate_bool( $received['enable_async_debug'] ) : false );
-
-
-			/* Always update the version to current ?*/
-			$clean['version'] = self::VERSION;
-
 			return $clean;
 		}
 
-
-
-		/**
-		 * Validate a value as boolean
-		 *
-		 * @param	mixed	$value
-		 * @return	bool
-		 */
-		private function validate_bool( $value ) {
-			return filter_var( $value, FILTER_VALIDATE_BOOLEAN );
-		}
 
 
 		/**
@@ -1864,7 +1899,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 				return $this->validate_classnames( implode( ',', $classnames ) );
 			}
 
-			if ( is_string( $classnames ) && '' !== $classnames ) {
+			if ( is_string( $classnames ) && '' !== trim( $classnames ) ) {
 				$classnames = sanitize_text_field( $classnames );
 				$classnames = explode( ',', $classnames );
 				$classnames = array_map( 'trim', $classnames );

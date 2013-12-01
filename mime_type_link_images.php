@@ -254,7 +254,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			'enable_hidden_class'	=> true,
 			'hidden_classname'		=> array( 'wp-caption', ),
 			'version'				=> null,
-//			'upgrading'				=> false, // will never change, not saved to db, only used to distinguish a call from the upgrade method
+			//'upgrading'			=> false, // will never change, not saved to db, only used to distinguish a call from the upgrade method
 		);
 
 		/**
@@ -447,7 +447,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			};
 		}
 		
-
+		/* Same as add_default_filter but for WP 3.7 (bug in version) */
 		public function pre_update_option( $new_value ) {
 			$this->add_default_filter();
 			return $new_value;
@@ -624,6 +624,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 		/**
 		 * Make sure our text strings and properties are available
+		 * @since 3.2
 		 */
 		public function pre_init() {
 			/* Allow filtering of our plugin name */
@@ -641,6 +642,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * Allow filtering of the plugin name
 		 * Mainly useful for non-standard directory setups
 		 *
+		 * @since 3.2
+		 *
 		 * @return void
 		 */
 		public static function filter_statics() {
@@ -652,6 +655,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 		/**
 		 * Fill some property arrays with translated strings
+		 * @since 3.0
 		 */
 		private function set_properties() {
 
@@ -989,6 +993,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		
 		/**
 		 * Activate our plugin
+		 *
+		 * @since 3.2
 		 * @static
 		 * @return void
 		 */
@@ -1169,9 +1175,6 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		/**
 		 * Add mimetype icon classes and relevant style rules to content
 		 *
-		 * @api Use the 'mtli_filesize' filter to change the filesize output string
-		 * @api string	Use the 'mtli_filesize' filter to change the filesize output string
-		 *
 		 * @param $content
 		 * @return string
 		 */
@@ -1235,6 +1238,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 								$css_filesize_string = apply_filters( 'mtli_filesize', '(' . $filesize . ')' );
 								// Make sure anything evil is stripped out of the filtered string
 								$css_filesize_string     = sanitize_text_field( $css_filesize_string );
+								
+								/* Add the css rule */
 								$this->filesize_styles[] = 'a[rel~="mtli_filesize' . str_replace( array( '.', ' ' ), '', $filesize ) . '"]:after {content:" ' . $css_filesize_string . '"}';
 							}
 							unset( $filesize, $css_filesize_string );
@@ -1831,7 +1836,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 								if ( false !== $classnames ) {
 									$clean[$key] = $classnames;
 
-									if ( ( !is_array( $received[$key] ) && ( $received[$key] !== implode( ',', $clean[$key] ) && $received[$key] !== implode( ', ', $clean[$key] ) ) ) && true !== $upgrading ) {
+									if ( ( ! is_array( $received[$key] ) && ( $received[$key] !== implode( ',', $clean[$key] ) && $received[$key] !== implode( ', ', $clean[$key] ) ) ) && true !== $upgrading ) {
 										add_settings_error( self::SETTINGS_OPTION, $key, __( 'One or more invalid classname(s) received, the values have been cleaned - this may just be the removal of spaces -, please check.', self::$name ), 'updated' );
 									}
 								}
@@ -1874,6 +1879,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 		/**
 		 * Validate a value as integer
+		 *
+		 * @since 3.2
 		 *
 		 * @param	mixed	$value
 		 * @return	mixed	int or false in case or failure to convert to int
@@ -2099,6 +2106,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		
 		/**
 		 * Create table row for a select box
+		 *
+		 * @since 3.2
 		 *
 		 * @param	string	$label
 		 * @param	string	$field_id

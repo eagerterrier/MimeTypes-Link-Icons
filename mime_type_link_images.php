@@ -1237,7 +1237,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 								// @api	string	$filesize	Allows filtering of the file size string
 								$css_filesize_string = apply_filters( 'mtli_filesize', '(' . $filesize . ')' );
 								// Make sure anything evil is stripped out of the filtered string
-								$css_filesize_string     = sanitize_text_field( $css_filesize_string );
+								$css_filesize_string = sanitize_text_field( $css_filesize_string );
 								
 								/* Add the css rule */
 								$this->filesize_styles[] = 'a[rel~="mtli_filesize' . str_replace( array( '.', ' ' ), '', $filesize ) . '"]:after {content:" ' . $css_filesize_string . '"}';

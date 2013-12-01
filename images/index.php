@@ -1,1 +1,2 @@
-<!-- You shouldn't be here. tsk tsk -->
+<?php
+//Nothing to see here

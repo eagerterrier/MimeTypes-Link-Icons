@@ -680,15 +680,15 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 */
 		public function init() {
 			
+			/* Allow filtering of our plugin name */
+			self::filter_statics();
+
 			/* Load plugin text strings */
 			load_plugin_textdomain( self::$name, false, self::$name . '/languages/' );
 
 			/* Translate a number of strings */
 			$this->set_properties();
 
-
-			/* Allow filtering of our plugin name */
-			self::filter_statics();
 
 			/**
 			 * @api Set filter hook for active mime types
@@ -2028,7 +2028,7 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		<div class="wrap">
 		<div class="icon32" id="icon-options-general"></div>
 		<h2>' . __( 'MimeType Link Icons', self::$name ) . '</h2>
-		<form action="options.php" method="post" accept-charset="' . get_bloginfo( 'charset' ) . '">';
+		<form action="' . admin_url( 'options.php' ) . '" method="post" accept-charset="' . get_bloginfo( 'charset' ) . '">';
 
 			settings_fields( self::SETTINGS_OPTION . '-group' );
 			do_settings_sections( self::$name );
@@ -2038,9 +2038,14 @@ if ( !class_exists( 'Mime_Types_Link_Icons' ) ) {
 		</form>';
 
 			if ( WP_DEBUG || $this->debug === true ) {
-				echo '<pre>';
-				var_dump( $this->settings );
-				echo '</pre>';
+				if ( ! extension_loaded( 'xdebug' ) ) {
+					echo '<pre>';
+					var_dump( $this->settings );
+					echo '</pre>';
+				}
+				else {
+					var_dump( $this->settings );
+				}
 			}
 		}
 

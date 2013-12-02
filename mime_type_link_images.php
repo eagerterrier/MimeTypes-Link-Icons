@@ -1083,7 +1083,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			/* Always update the version number */
 			$options['version']   = self::VERSION;
-			$options['upgrading'] = true; // error prevention for when validation is used before settings API is loaded
+			$options['upgrading'] = true; // indicator to save internal domains and not to multiply cache time
 
 			/* @api Internal use only: filter to validate the options after upgrade
 			   @api	array	$options	Options at the end of the upgrade routine */
@@ -1758,7 +1758,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 						if ( isset( $received[$key] ) && in_array( $received[$key], $this->sizes ) ) {
 							$clean[$key] = $received[$key];
 						}
-						else if ( true !== $upgrading ) {
+						else if ( function_exists( 'add_settings_error' ) ) {
 							// Edge case: should never happen
 							add_settings_error( self::SETTINGS_OPTION, $key, __( 'Invalid image size received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
 						}
@@ -1769,7 +1769,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 						if ( isset( $received[$key] ) && in_array( $received[$key], $this->image_types ) ) {
 							$clean[$key] = $received[$key];
 						}
-						else if ( true !== $upgrading ) {
+						else if ( function_exists( 'add_settings_error' ) ) {
 							// Edge case: should never happen
 							add_settings_error( self::SETTINGS_OPTION, $key, __( 'Invalid image type received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
 						}
@@ -1780,7 +1780,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 						if ( isset( $received[$key] ) && isset( $this->alignments[$received[$key]] ) ) {
 							$clean[$key] = $received[$key];
 						}
-						else if ( true !== $upgrading ) {
+						else if ( function_exists( 'add_settings_error' ) ) {
 							// Edge case: should never happen
 							add_settings_error( self::SETTINGS_OPTION, $key, __( 'Invalid image placement received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
 						}
@@ -1793,7 +1793,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 							if ( false !== $int ) {
 								$clean[$key] = $int;
 							}
-							else if ( true !== $upgrading ) {
+							else if ( function_exists( 'add_settings_error' ) ) {
 								add_settings_error( self::SETTINGS_OPTION, $key, __( 'Invalid rounding precision received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
 							}
 							unset( $int );
@@ -1812,7 +1812,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 							if ( $int !== false ) {
 								$clean[$key] = ( (int) $int * 60 * 60 );
 							}
-							else if ( true !== $upgrading ) {
+							else if ( function_exists( 'add_settings_error' ) ) {
 								add_settings_error( self::SETTINGS_OPTION, $key, __( 'Invalid cache time received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
 							}
 							unset( $int );
@@ -1821,7 +1821,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 							// Received an already validated & multiplied value from the upgrade routine
 							$clean[$key] = $received[$key];
 						}
-						else if ( true !== $upgrading ) {
+						else if ( function_exists( 'add_settings_error' ) ) {
 							add_settings_error( self::SETTINGS_OPTION, $key, __( 'Invalid cache time received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
 						}
 
@@ -1836,11 +1836,11 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 								if ( false !== $classnames ) {
 									$clean[$key] = $classnames;
 
-									if ( ( ! is_array( $received[$key] ) && ( $received[$key] !== implode( ',', $clean[$key] ) && $received[$key] !== implode( ', ', $clean[$key] ) ) ) && true !== $upgrading ) {
+									if ( ( ! is_array( $received[$key] ) && ( $received[$key] !== implode( ',', $clean[$key] ) && $received[$key] !== implode( ', ', $clean[$key] ) ) ) && function_exists( 'add_settings_error' ) ) {
 										add_settings_error( self::SETTINGS_OPTION, $key, __( 'One or more invalid classname(s) received, the values have been cleaned - this may just be the removal of spaces -, please check.', self::$name ), 'updated' );
 									}
 								}
-								else if ( true !== $upgrading ) {
+								else if ( function_exists( 'add_settings_error' ) ) {
 									// Edge case: should never happen
 									add_settings_error( self::SETTINGS_OPTION, $key, __( 'No valid classname(s) received', self::$name ) . ', ' . __( 'the setting has not been changed.', self::$name ), 'error' );
 								}

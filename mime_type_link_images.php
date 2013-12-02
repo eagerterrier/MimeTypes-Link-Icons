@@ -702,7 +702,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			$this->active_mimetypes = preg_grep( '`^[a-z0-9]{2,8}$`', $this->active_mimetypes );
 
 			// Don't do anything if no active_mimetypes or if we're not on the frontend
-			if ( false === is_admin() && 0 < count( $this->active_mimetypes ) ) {
+			if ( false === is_admin() && array() !== $this->active_mimetypes ) {
 				/* Register the_content filter */
 				if ( false === $this->settings['enable_async'] || true === $this->settings['show_file_size'] ) {
 					add_filter( 'the_content', array( $this, 'mimetype_to_icon' ), 15 );
@@ -811,7 +811,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			wp_enqueue_style( self::$name );
 
 
-			if ( ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && 0 < count( $this->settings['hidden_classname'] ) ) ) || ( true === $this->settings['enable_async'] && ( is_array( $this->active_mimetypes ) && 0 < count( $this->active_mimetypes ) ) ) ) {
+			if ( ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && array() !== $this->settings['hidden_classname'] ) ) || ( true === $this->settings['enable_async'] && ( is_array( $this->active_mimetypes ) && array() !== $this->active_mimetypes ) ) ) {
 				wp_enqueue_script(
 					self::$name, // id
 					plugins_url( 'js/mtli-str-replace' . self::$suffix . '.js', __FILE__ ), // url
@@ -835,13 +835,13 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 */
 		private function get_javascript_i18n() {
 			$strings = array(
-				'hidethings'			=> ( ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && 0 < count( $this->settings['hidden_classname'] ) ) ) ? true : false ),
-				'enable_async'			=> ( ( true === $this->settings['enable_async'] && ( is_array( $this->active_mimetypes ) && 0 < count( $this->active_mimetypes ) ) ) ? true : false ),
-				'enable_async_debug'	=> ( ( true === $this->settings['enable_async_debug'] && ( is_array( $this->active_mimetypes ) && 0 < count( $this->active_mimetypes ) ) ) ? true : false ),
+				'hidethings'			=> ( ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && array() !== $this->settings['hidden_classname'] ) ) ? true : false ),
+				'enable_async'			=> ( ( true === $this->settings['enable_async'] && ( is_array( $this->active_mimetypes ) && array() !== $this->active_mimetypes ) ) ? true : false ),
+				'enable_async_debug'	=> ( ( true === $this->settings['enable_async_debug'] && ( is_array( $this->active_mimetypes ) && array() !== $this->active_mimetypes ) ) ? true : false ),
 			);
 
 			/* Add jQuery class selector string if hidden classes are used */
-			if ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && 0 < count( $this->settings['hidden_classname'] ) ) ) {
+			if ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && array() !== $this->settings['hidden_classname'] ) ) {
 				$strings['avoid_selector'] = '';
 				foreach ( $this->settings['hidden_classname'] as $classname ) {
 					$strings['avoid_selector'] .= '.' . $classname . ',';
@@ -850,7 +850,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			}
 
 			/* Add array of active mimetypes if in async mode*/
-			if ( true === $this->settings['enable_async'] && ( is_array( $this->active_mimetypes ) && 0 < count( $this->active_mimetypes ) ) ) {
+			if ( true === $this->settings['enable_async'] && ( is_array( $this->active_mimetypes ) && array() !== $this->active_mimetypes ) ) {
 				$strings['mime_array'] = $this->active_mimetypes;
 			}
 
@@ -1180,7 +1180,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 */
 		public function mimetype_to_icon( $content ) {
 
-			if ( 0 < count( $this->active_mimetypes ) ) {
+			if ( array() !== $this->active_mimetypes ) {
 				$mimetypes = array_map( 'preg_quote' , $this->active_mimetypes, array_fill( 0 , count( $this->active_mimetypes ) , '`' ) );
 				$mimetypes = implode( '|', $mimetypes );
 
@@ -1211,7 +1211,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 						}
 
 						/* Test for 'hidden classes' */
-						if ( ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && 0 < count( $this->settings['hidden_classname'] ) ) ) && ( ! is_null( $classnames ) && '' !== $classnames ) ) {
+						if ( ( true === $this->settings['enable_hidden_class'] && ( is_array( $this->settings['hidden_classname'] ) && array() !== $this->settings['hidden_classname'] ) ) && ( ! is_null( $classnames ) && '' !== $classnames ) ) {
 							// We have existing classnames on the anchor
 							$classes = explode( ' ', $classnames );
 							foreach ( $classes as $class ) {
@@ -1293,7 +1293,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			}
 
 			/* Add filesize CSS rules to the content if we have any */
-			if ( true === $this->settings['show_file_size'] && ( is_array( $this->filesize_styles ) && 0 < count( $this->filesize_styles ) ) ) {
+			if ( true === $this->settings['show_file_size'] && ( is_array( $this->filesize_styles ) && array() !== $this->filesize_styles ) ) {
 				$styles  = array_unique( $this->filesize_styles );
 				$styles  = implode( '', $styles );
 				$content = $content . '<style type="text/css">' . $styles . '</style>';
@@ -1534,7 +1534,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			$results[$url] = false;
 
-			if ( is_array( $this->settings['internal_domains'] ) && 0 < count( $this->settings['internal_domains'] ) ) {
+			if ( is_array( $this->settings['internal_domains'] ) && array() !== $this->settings['internal_domains'] ) {
 				foreach ( $this->settings['internal_domains'] as $domain ) {
 					$pos = stripos( $url, $domain );
 					if ( false !== $pos ) {
@@ -1912,7 +1912,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 				$classnames = array_map( 'trim', $classnames );
 				$classnames = array_map( 'sanitize_html_class', $classnames );
 				$classnames = array_filter( $classnames ); // removes empty strings
-				if ( is_array( $classnames ) && 0 < count( $classnames ) ) {
+				if ( is_array( $classnames ) && array() !== $classnames ) {
 					$return = $classnames;
 				}
 			}

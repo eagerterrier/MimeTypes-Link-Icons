@@ -3,7 +3,7 @@ Contributors: eagerterrier, jrf
 Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, djvu, dmg, doc, docx, dwf, dwg, eps, epub, exe, flac, flv, gif, gz, ico, indd, iso, jpg, jpeg, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, msi, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, sql, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
 Requires at least: 3.5
-Tested up to: 3.8.0-beta
+Tested up to: 3.8
 Stable tag: 3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -34,6 +34,7 @@ Each icon is available in the following sizes:
 * .asf
 * .avi
 * .bib
+* .cls
 * .csv
 * .deb
 * .djvu
@@ -45,6 +46,9 @@ Each icon is available in the following sizes:
 * .eps
 * .epub
 * .exe
+* .f
+* .f77
+* .f90
 * .flac
 * .flv
 * .gif
@@ -79,9 +83,11 @@ Each icon is available in the following sizes:
 * .pptx
 * .psd
 * .pub
+* .py
 * .qt
 * .ra
 * .ram
+* .rar
 * .rm
 * .rpm
 * .rtf
@@ -89,6 +95,7 @@ Each icon is available in the following sizes:
 * .skp
 * .spx
 * .sql
+* .sty
 * .tar
 * .tex
 * .tgz
@@ -312,6 +319,7 @@ var $debug = false;
 * [Bug fix] for upgrade routine not running on (re-)activation of the plugin
 * [Bug fix] Small optimization in link matching regex which should prevent an edge case bug. Thanks [ts_sklett for reporting](http://wordpress.org/support/topic/no-icon-when-a-link-and-text-present-repro-steps-included).
 * [Bug fix] Fix icon spacing issue as reported by [blitz fahrradmanufaktur](http://wordpress.org/support/topic/plugin-produces-space-above-linked-images)
+* [New file extensions] Added support for additional file extensions: .cls, .f, .f77, .f90, .py, .rar, .sty
 
 And further:
 * Fully leveraged the Options API
@@ -324,7 +332,6 @@ And further:
 * Small improvements in validation
 * Removed auto-deactivation if run on old versions (was buggy)
 * Various small code tweaks
-* [New file extensions] Added additional file extensions which are within the WP allowed file types list: .cls, .f, .f77, .f90, .py, .rar, .sty
 
 
 = 3.1.3 =
@@ -512,7 +519,7 @@ Fixed an IE8 bug found by @quartney
 == Upgrade Notice ==
 
 = 3.2.0 =
-Some bug fixes and WP best practices implementations
+Some bug fixes and WP best practices implementations + support for the following new file types: .cls, .f, .f77, .f90, .py, .rar, .sty
 
 = 3.1.3 =
 Bug fix

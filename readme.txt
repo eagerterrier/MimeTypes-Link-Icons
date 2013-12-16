@@ -324,6 +324,8 @@ And further:
 * Small improvements in validation
 * Removed auto-deactivation if run on old versions (was buggy)
 * Various small code tweaks
+* [New file extensions] Added additional file extensions which are within the WP allowed file types list: .cls, .f, .f77, .f90, .py, .rar, .sty
+
 
 = 3.1.3 =
 * [Bug fix] typo in code introduced in 3.1.1, thanks [Nnet and boca jo for reporting](http://wordpress.org/support/topic/2-errors-for-each-link-after-upgrading-to-312)

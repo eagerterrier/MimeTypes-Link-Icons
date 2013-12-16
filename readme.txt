@@ -2,9 +2,9 @@
 Contributors: eagerterrier, jrf
 Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, djvu, dmg, doc, docx, dwf, dwg, eps, epub, exe, flac, flv, gif, gz, ico, indd, iso, jpg, jpeg, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, msi, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, sql, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
-Requires at least: 1.5.1.3
-Tested up to: 3.6-beta3
-Stable tag: 3.1.3
+Requires at least: 3.5
+Tested up to: 3.8.0-beta
+Stable tag: 3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Adds icons automatically to any uploads and/or file links inserted into your blo
 
 MimeTypes Link Icons is a plugin that looks for links to files and uploads in your blogs posts and adds a nice icon next to it. Optionally add the file's file size next to the link.
 
-**Important note on v3.0 and up**: This version partially breaks backwards compatibility: the plugin now requires PHP5.1+ and WP 3.1+. Please have a look at the [changelog](http://wordpress.org/extend/plugins/mimetypes-link-icons/changelog/) for more information about the changes.
+**Important note on v3.0 and up**: This version partially breaks backwards compatibility: the plugin now requires PHP5.1+ and WP 3.5+. Please have a look at the [changelog](http://wordpress.org/extend/plugins/mimetypes-link-icons/changelog/) for more information about the changes.
 
 The icons are configurable. You can choose to display a PNG with transparent background or GIF with white matte, display the icon to the left or the right of the link and choose the icon size.
 
@@ -113,7 +113,7 @@ Please help make this plugin available in more languages by translating it. The 
 
 = Requirements =
 
-Since version 3.0, the plugin now requires PHP5.1+ and WP 3.1+
+Since version 3.0, the plugin now requires PHP5.2+ and WP 3.5+
 
 
 = Need more ? =
@@ -307,10 +307,28 @@ var $debug = false;
 
 == Changelog ==
 
-= 3.1.3
+= 3.2 =
+* [Bug fix] filters on plugins_url() could not be applied, fixed
+* [Bug fix] for upgrade routine not running on (re-)activation of the plugin
+* [Bug fix] Small optimization in link matching regex which should prevent an edge case bug. Thanks [ts_sklett for reporting](http://wordpress.org/support/topic/no-icon-when-a-link-and-text-present-repro-steps-included).
+* [Bug fix] Fix icon spacing issue as reported by [blitz fahrradmanufaktur](http://wordpress.org/support/topic/plugin-produces-space-above-linked-images)
+
+And further:
+* Fully leveraged the Options API
+* Upped the minimum WP level to fully take advantage of new functions and APIs
+* Tested up to WP 3.8-beta
+* Code style validated against WordPress standards
+* Added API documentation
+* One time only force update of internal domains option
+* Improved charset support for settings page
+* Small improvements in validation
+* Removed auto-deactivation if run on old versions (was buggy)
+* Various small code tweaks
+
+= 3.1.3 =
 * [Bug fix] typo in code introduced in 3.1.1, thanks [Nnet and boca jo for reporting](http://wordpress.org/support/topic/2-errors-for-each-link-after-upgrading-to-312)
 
-= 3.1.2
+= 3.1.2 =
 * [Bug fix] zip packages for tags weren't working properly
 
 = 3.1.1 =
@@ -491,10 +509,13 @@ Fixed an IE8 bug found by @quartney
 
 == Upgrade Notice ==
 
-= 3.1.3
+= 3.2.0 =
+Some bug fixes and WP best practices implementations
+
+= 3.1.3 =
 Bug fix
 
-= 3.1.2
+= 3.1.2 =
 Minor bug fix
 
 = 3.1.1 =

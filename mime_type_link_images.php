@@ -397,11 +397,6 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			add_action( 'add_option_' . self::SETTINGS_OPTION, array( $this, 'on_add_option' ), 10, 2 );
 			add_action( 'update_option_' . self::SETTINGS_OPTION, array( $this, 'on_update_option' ), 10, 2 );
 
-			/* Lastly, we'll be saving our option during the upgrade routine *before* the setting
-			   is registered (and therefore the validation is registered), so make sure that the
-			   option is validated anyway. */
-			add_filter( 'mimetypes_link_icons_save_option_on_upgrade', array( $this, 'validate_options' ) );
-
 			/* Initialize the $settings property */
 			$this->refresh_current();
 			
@@ -819,9 +814,9 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 					self::SCRIPTS_VERSION, // version
 					true // load in footer
 				);
+				
+				wp_localize_script( self::$name, 'i18n_mtli', $this->get_javascript_i18n() );
 			}
-
-			wp_localize_script( self::$name, 'i18n_mtli', $this->get_javascript_i18n() );
 		}
 
 
@@ -1085,12 +1080,11 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			$options['version']   = self::VERSION;
 			$options['upgrading'] = true; // indicator to save internal domains and not to multiply cache time
 
-			/* @api Internal use only: filter to validate the options after upgrade
-			   @api	array	$options	Options at the end of the upgrade routine */
-			$options = apply_filters( 'mimetypes_link_icons_save_option_on_upgrade', $options );
-
-			/* Update the settings and refresh our $settings property */
-			update_option( self::SETTINGS_OPTION, $options );
+			/* Validate and update the settings and refresh our $settings property */
+			/* We'll be saving our option during the upgrade routine *before* the setting
+			   is registered (and therefore the validation is registered), so make sure that the
+			   option is validated anyway. */
+			update_option( self::SETTINGS_OPTION, $this->validate_options( $options ) );
 
 			return;
 		}
@@ -1584,7 +1578,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 				// Bypass servers which refuse curl
 				curl_setopt( $this->curl, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)' );
 				// Set a time-out
-				curl_setopt( $this->curl, CURLOPT_CONNECTTIMEOUT, 30 );
+				curl_setopt( $this->curl, CURLOPT_CONNECTTIMEOUT, 15 );
+				curl_setopt( $this->curl, CURLOPT_TIMEOUT, 30 );
 				// Stop as soon as an error occurs
 				//curl_setopt( $this->curl, CURLOPT_FAILONERROR, true );
 			}

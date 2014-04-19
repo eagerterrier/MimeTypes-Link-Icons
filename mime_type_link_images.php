@@ -1173,6 +1173,10 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @return string
 		 */
 		public function mimetype_to_icon( $content ) {
+			
+			// Clear the styles array at the start to prevent styles being added erronously if the method
+			// is called several times
+			$this->filesize_styles = array();
 
 			if ( array() !== $this->active_mimetypes ) {
 				$mimetypes = array_map( 'preg_quote' , $this->active_mimetypes, array_fill( 0 , count( $this->active_mimetypes ) , '`' ) );

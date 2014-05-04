@@ -4,7 +4,7 @@ Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a
 Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, djvu, dmg, doc, docx, dwf, dwg, eps, epub, exe, flac, flv, gif, gz, ico, indd, iso, jpg, jpeg, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, msi, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, sql, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
 Requires at least: 3.5
 Tested up to: 3.9
-Stable tag: 3.2
+Stable tag: 3.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,7 +120,8 @@ Please help make this plugin available in more languages by translating it. The 
 
 = Requirements =
 
-Since version 3.0, the plugin now requires PHP5.2+ and WP 3.5+
+Since version 3.0, the plugin now requires PHP5.2+ and WP 3.5+.
+The PHP filter extension needs to be enabled as well.
 
 
 = Need more ? =
@@ -271,6 +272,13 @@ If you need more information, read this article on [how to translate using a .po
 
 First thing to check is whether you are using the latest version, if not, please upgrade and check again.
 
+If you are getting a blank screen when saving the settings, please check that the PHP filter extension is enabled - it is enabled by default in a normal PHP installation, though some disreputable webhosting companies seem to disable it. If that's the case, contact your webhost to get them to turn it on.
+
+You can check your server php configuration using the code snippet below:
+`<php
+phpinfo();`
+
+
 If the error persists, please report any errors you are getting in the [WP forum](http://wordpress.org/support/plugin/mimetypes-link-icons) or on [GitHub](https://github.com/eagerterrier/MimeTypes-Link-Icons). Error reporting is much appreciated as it will improve the plugin for everyone!
 
 We'll need at least the following information:
@@ -314,8 +322,11 @@ var $debug = false;
 
 == Changelog ==
 
-= Trunk =
-* Prevent double adding of styles if/when the main function is called several times
+= 3.2.1 =
+* [Bug fix] Prevent double adding of styles if/when the main function is called several times
+* Lower Curl connect time-out, so page loading will be faster if no connection can be made to retrieve the file size of a file.
+* Added note about filter extension requirement to this readme file.
+* Minor code tweaks
 
 = 3.2 =
 * [Bug fix] filters on plugins_url() could not be applied, fixed
@@ -520,6 +531,9 @@ Fixed an IE8 bug found by @quartney
 
 
 == Upgrade Notice ==
+
+= 3.2.1 =
+Minor fixes
 
 = 3.2.0 =
 Some bug fixes and WP best practices implementations + support for the following new file types: .cls, .f, .f77, .f90, .py, .rar, .sty

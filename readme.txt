@@ -324,7 +324,7 @@ var $debug = false;
 
 = 3.2.1 =
 * [Bug fix] Prevent double adding of styles if/when the main function is called several times
-* Lower Curl connect time-out, so page loading will be faster if no connection can be made to retrieve the file size of a file.
+* [Speed] Lower Curl connect time-out, so page loading will be faster if no connection can be made to retrieve the file size of a file.
 * Added note about filter extension requirement to this readme file.
 * Minor code tweaks
 

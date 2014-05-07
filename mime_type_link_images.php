@@ -60,7 +60,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 	/**
 	 * @package WordPress\Plugins\MimeTypes Link Icons
 	 * @version 3.2.1
-	 * @link http://wordpress.org/extend/plugins/mimetypes-link-icons/ MimeTypes Link Icons WordPress plugin
+	 * @link http://wordpress.org/plugins/mimetypes-link-icons/ MimeTypes Link Icons WordPress plugin
 	 * @link https://github.com/eagerterrier/MimeTypes-Link-Icons GitHub development of MimeTypes Link Icons WordPress plugin
 	 *
 	 * @copyright 2010 - 2013 Toby Cox, Juliette Reinders Folmer
@@ -952,7 +952,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		public function get_helptext( $screen, $tab ) {
 
 			$helptext[self::$name . '-main'] = '
-								<p>' . sprintf( __( 'The <em><a href="%s">MimeTypes Link Icons</a></em> plugin will automatically add an icon next to links of the activated file types. If you like, you can also let the plugin add the file size of the linked file to the page.', self::$name ), 'http://wordpress.org/extend/plugins/mimetypes-link-icons/" target="_blank" class="ext-link' ) . '</p>
+								<p>' . sprintf( __( 'The <em><a href="%s">MimeTypes Link Icons</a></em> plugin will automatically add an icon next to links of the activated file types. If you like, you can also let the plugin add the file size of the linked file to the page.', self::$name ), 'http://wordpress.org/plugins/mimetypes-link-icons/" target="_blank" class="ext-link' ) . '</p>
 								<p>' . __( 'On this settings page you can specify the icon size, icon type (white matte gif or transparent png), icon alignment. You can also select the file types for which this plugin will be enabled.', self::$name ) . '</p>';
 
 			$helptext[self::$name . '-advanced'] = '
@@ -963,7 +963,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			$helptext[self::$name . '-extras'] = '
 								<p>' . __( 'There is even some more advanced functionality available: for instance an <em>output filter</em> for the file size output and a way to add the plugin\'s functionality to widgets or other areas of your blog outside of the main content area.', self::$name ) . '</p>
 
-								<p>' . sprintf( __( 'For more information on these tasty extras, have a look at the <a href="%s">FAQ</a>', self::$name ), 'http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/" target="_blank" class="ext-link' ) . '</p>';
+								<p>' . sprintf( __( 'For more information on these tasty extras, have a look at the <a href="%s">FAQ</a>', self::$name ), 'http://wordpress.org/plugins/mimetypes-link-icons/faq/" target="_blank" class="ext-link' ) . '</p>';
 
 
 			echo $helptext[$tab['id']];
@@ -978,9 +978,9 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			return '
 				   <p><strong>' . /* TRANSLATORS: no need to translate - standard WP core translation will be used */ __( 'For more information:' ) . '</strong></p>
 				   <p>
-						<a href="http://wordpress.org/extend/plugins/mimetypes-link-icons/" target="_blank">' . __( 'Official plugin page', self::$name ) . '</a> |
-						<a href="http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/" target="_blank">' . __( 'FAQ', self::$name ) . '</a> |
-						<a href="http://wordpress.org/extend/plugins/mimetypes-link-icons/changelog/" target="_blank">' . __( 'Changelog', self::$name ) . '</a> |
+						<a href="http://wordpress.org/plugins/mimetypes-link-icons/" target="_blank">' . __( 'Official plugin page', self::$name ) . '</a> |
+						<a href="http://wordpress.org/plugins/mimetypes-link-icons/faq/" target="_blank">' . __( 'FAQ', self::$name ) . '</a> |
+						<a href="http://wordpress.org/plugins/mimetypes-link-icons/changelog/" target="_blank">' . __( 'Changelog', self::$name ) . '</a> |
 						<a href="http://wordpress.org/support/plugin/mimetypes-link-icons" target="_blank">' . __( 'Support&nbsp;Forum', self::$name ) . '</a>
 					</p>
 				   <p><a href="https://github.com/eagerterrier/MimeTypes-Link-Icons" target="_blank">' . __( 'Github repository', self::$name ) . '</a></p>

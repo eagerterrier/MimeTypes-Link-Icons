@@ -14,7 +14,7 @@ Adds icons automatically to any uploads and/or file links inserted into your blo
 
 MimeTypes Link Icons is a plugin that looks for links to files and uploads in your blogs posts and adds a nice icon next to it. Optionally add the file's file size next to the link.
 
-**Important note on v3.0 and up**: This version partially breaks backwards compatibility: the plugin now requires PHP5.1+ and WP 3.5+. Please have a look at the [changelog](http://wordpress.org/extend/plugins/mimetypes-link-icons/changelog/) for more information about the changes.
+**Important note on v3.0 and up**: This version partially breaks backwards compatibility: the plugin now requires PHP5.1+ and WP 3.5+. Please have a look at the [changelog](http://wordpress.org/plugins/mimetypes-link-icons/changelog/) for more information about the changes.
 
 The icons are configurable. You can choose to display a PNG with transparent background or GIF with white matte, display the icon to the left or the right of the link and choose the icon size.
 
@@ -115,7 +115,7 @@ Each icon is available in the following sizes:
 = Localization =
 * Dutch - [jrf](http://wordpress.org/support/profile/jrf)
 
-Please help make this plugin available in more languages by translating it. The translation files are included in the download. See the [FAQ](http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/) for more info.
+Please help make this plugin available in more languages by translating it. The translation files are included in the download. See the [FAQ](http://wordpress.org/plugins/mimetypes-link-icons/faq/) for more info.
 
 
 = Requirements =
@@ -376,8 +376,8 @@ And further:
 * [New feature] [Ability to disable this plugin for more than one classname](http://wordpress.org/support/topic/request-disable-for-multiple-classnames)
 * [New feature] Caching of the results of (slow) file size retrievals. This will make page loading a lot faster for pages with lots of file links. Will automatically be turned on, you can turn it off and/or fine tune the cache duration via the settings page. Default cache duration: 1 week.
 * [New feature] Set the [rounding precision]((http://wordpress.org/support/topic/thanks-and-a-simple-suggestion)) (number of digits after the decimal point) for file sizes, small files (b) will always round to 0 decimals.
-* [New feature] [Output filter for file size string](http://wordpress.org/support/topic/thanks-and-a-simple-suggestion) See the [FAQ](http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/) for more info.
-* [New feature] [Ability to have mimetype icons for content outside of the loop](http://wordpress.org/support/topic/using-mimetypes-link-icons-outside-loops) See the [FAQ](http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/) for info on how to use this.
+* [New feature] [Output filter for file size string](http://wordpress.org/support/topic/thanks-and-a-simple-suggestion) See the [FAQ](http://wordpress.org/plugins/mimetypes-link-icons/faq/) for more info.
+* [New feature] [Ability to have mimetype icons for content outside of the loop](http://wordpress.org/support/topic/using-mimetypes-link-icons-outside-loops) See the [FAQ](http://wordpress.org/plugins/mimetypes-link-icons/faq/) for info on how to use this.
 
 * [Usability] Added 'check all'/'uncheck all' togglers for the file types to the settings page
 * [Usability] Compacter options screen - file types now display in two columns
@@ -385,7 +385,7 @@ And further:
 * [Usability] Added proper settings link on plugins page, credits now link to the [GitHub repo](https://github.com/eagerterrier/MimeTypes-Link-Icons)
 * [Usability] Added clean uninstall routine
 
-* [Compatibility] Added pause_mtli() and unpause_mtli() functions for use by other plugins in case of (page specific) conflicts. See the [FAQ](http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/) for info on how to use this.
+* [Compatibility] Added pause_mtli() and unpause_mtli() functions for use by other plugins in case of (page specific) conflicts. See the [FAQ](http://wordpress.org/plugins/mimetypes-link-icons/faq/) for info on how to use this.
 
 * [Bug fix] Images didn't display if wp-content and/or the plugins directory was in a non-standard location.
 * [Bug fix] Added epub css styling
@@ -551,7 +551,7 @@ Bug fix and security measures
 New features for advanced users and some minor bug fixes.
 
 = 3.0 by jrf =
-Several new features, new file extensions, complete plugin rewrite to comply with the current WP standards. Upgrade highly recommended. Please refer to the [changelog](http://wordpress.org/extend/plugins/mimetypes-link-icons/changelog/) for detailed information on all the changes.
+Several new features, new file extensions, complete plugin rewrite to comply with the current WP standards. Upgrade highly recommended. Please refer to the [changelog](http://wordpress.org/plugins/mimetypes-link-icons/changelog/) for detailed information on all the changes.
 
 = 2.2.3 =
 Adding epub extension due to user request

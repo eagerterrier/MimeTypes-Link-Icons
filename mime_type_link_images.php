@@ -1,13 +1,13 @@
 <?php
 /**
  * @package MimeTypeLinkImages
- * @version 3.2
+ * @version 3.2.1
  */
 /*
 Plugin Name: MimeTypes Link Icons
 Plugin URI: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Description: This will add file type icons next to links automatically. Change options in the <a href="options-general.php?page=mimetypes-link-icons">settings page</a>
-Version: 3.2
+Version: 3.2.1
 Author: Toby Cox, Juliette Reinders Folmer
 Author URI: https://github.com/eagerterrier/MimeTypes-Link-Icons
 Author: Toby Cox
@@ -59,8 +59,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 	/**
 	 * @package WordPress\Plugins\MimeTypes Link Icons
-	 * @version 3.2
-	 * @link http://wordpress.org/extend/plugins/mimetypes-link-icons/ MimeTypes Link Icons WordPress plugin
+	 * @version 3.2.1
+	 * @link http://wordpress.org/plugins/mimetypes-link-icons/ MimeTypes Link Icons WordPress plugin
 	 * @link https://github.com/eagerterrier/MimeTypes-Link-Icons GitHub development of MimeTypes Link Icons WordPress plugin
 	 *
 	 * @copyright 2010 - 2013 Toby Cox, Juliette Reinders Folmer
@@ -75,7 +75,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @const string	Plugin version number
 		 * @usedby upgrade_options(), __construct()
 		 */
-		const VERSION = '3.2';
+		const VERSION = '3.2.1';
 
 		/**
 		 * @const string	Version in which the front-end styles where last changed
@@ -370,9 +370,6 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			/* Enrich the defaults */
 			$this->enrich_default_settings();
-			
-			/* Register our option (and it's validation) as early as possible */
-			add_action( 'admin_init', array( $this, 'register_setting' ), 1 );
 
 
 			/* Add filter which get applied to get_options() results */
@@ -388,19 +385,21 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			}
 			else {
 				// Abuse a filter for WP 3.7 where the update_option filter is placed in the wrong location
-				add_filter( 'pre_update_option_' . self::SETTINGS_OPTION, array( $this, 'pre_update_option' ) );
+				add_filter( 'pre_update_option_' . self::SETTINGS_OPTION, array( $this, 'wp37_add_default_filters' ) );
 			}
 
+
+			/* Make sure the option will always get validated, independently of register_setting()
+			   (which is only available on back-end) */
+			add_filter( 'sanitize_option_' . self::SETTINGS_OPTION, array( $this, 'validate_options' ) );
+
+			/* Register our option for the admin pages */
+			add_action( 'admin_init', array( $this, 'register_setting' ) );
 
 
 			/* Refresh the $settings property on option update */
 			add_action( 'add_option_' . self::SETTINGS_OPTION, array( $this, 'on_add_option' ), 10, 2 );
 			add_action( 'update_option_' . self::SETTINGS_OPTION, array( $this, 'on_update_option' ), 10, 2 );
-
-			/* Lastly, we'll be saving our option during the upgrade routine *before* the setting
-			   is registered (and therefore the validation is registered), so make sure that the
-			   option is validated anyway. */
-			add_filter( 'mimetypes_link_icons_save_option_on_upgrade', array( $this, 'validate_options' ) );
 
 			/* Initialize the $settings property */
 			$this->refresh_current();
@@ -428,11 +427,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @since 3.2 (moved from admin_init to separate method)
 		 */
 		public function register_setting() {
-			register_setting(
-				self::SETTINGS_OPTION . '-group',
-				self::SETTINGS_OPTION, // option name
-				array( $this, 'validate_options' ) // validation callback
-			);
+			register_setting( self::SETTINGS_OPTION . '-group', self::SETTINGS_OPTION );
 		}
 
 
@@ -447,8 +442,16 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			};
 		}
 		
-		/* Same as add_default_filter but for WP 3.7 (bug in version) */
-		public function pre_update_option( $new_value ) {
+		/**
+		 * Abusing a filter to re-add our default filters
+		 * WP 3.7 specific as update_option action hook was in the wrong place temporarily
+		 * @see http://core.trac.wordpress.org/ticket/25705
+		 *
+		 * @param   mixed $new_value
+		 *
+		 * @return  mixed   unchanged value
+		 */
+		public function wp37_add_default_filters( $new_value ) {
 			$this->add_default_filter();
 			return $new_value;
 		}
@@ -456,9 +459,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 		/**
 		 * Remove filtering of the option default values
-		 *
-		 * This is need to allow for inserting of option if it doesn't exist
-		 * Should be called from our validation routine
+		 * Called from the validate_options() method to prevent failure to add new options
 		 *
 		 * @since 3.2
 		 */
@@ -647,7 +648,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @return void
 		 */
 		public static function filter_statics() {
-			/* @api Allow filtering of the plugin name, Mainly useful for non-standard directory setups
+			/* Allow filtering of the plugin name, Mainly useful for non-standard directory setups
 			   @api	string	$plugin_name	plugin name */
 			self::$name = apply_filters( 'mimetype_link_icons_plugin_name', self::$name );
 		}
@@ -689,7 +690,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 */
 		public function init() {
 			/**
-			 * @api Filter hook for active mime types list
+			 * Filter hook for active mime types list
 			 * @api array	Allows a developer to filter (add/remove) mimetypes from the array of mimetypes
 			 *				for which the plugin should be active as selected by the admin on the settings
 			 *				page
@@ -819,9 +820,9 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 					self::SCRIPTS_VERSION, // version
 					true // load in footer
 				);
+				
+				wp_localize_script( self::$name, 'i18n_mtli', $this->get_javascript_i18n() );
 			}
-
-			wp_localize_script( self::$name, 'i18n_mtli', $this->get_javascript_i18n() );
 		}
 
 
@@ -951,7 +952,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		public function get_helptext( $screen, $tab ) {
 
 			$helptext[self::$name . '-main'] = '
-								<p>' . sprintf( __( 'The <em><a href="%s">MimeTypes Link Icons</a></em> plugin will automatically add an icon next to links of the activated file types. If you like, you can also let the plugin add the file size of the linked file to the page.', self::$name ), 'http://wordpress.org/extend/plugins/mimetypes-link-icons/" target="_blank" class="ext-link' ) . '</p>
+								<p>' . sprintf( __( 'The <em><a href="%s">MimeTypes Link Icons</a></em> plugin will automatically add an icon next to links of the activated file types. If you like, you can also let the plugin add the file size of the linked file to the page.', self::$name ), 'http://wordpress.org/plugins/mimetypes-link-icons/" target="_blank" class="ext-link' ) . '</p>
 								<p>' . __( 'On this settings page you can specify the icon size, icon type (white matte gif or transparent png), icon alignment. You can also select the file types for which this plugin will be enabled.', self::$name ) . '</p>';
 
 			$helptext[self::$name . '-advanced'] = '
@@ -962,7 +963,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			$helptext[self::$name . '-extras'] = '
 								<p>' . __( 'There is even some more advanced functionality available: for instance an <em>output filter</em> for the file size output and a way to add the plugin\'s functionality to widgets or other areas of your blog outside of the main content area.', self::$name ) . '</p>
 
-								<p>' . sprintf( __( 'For more information on these tasty extras, have a look at the <a href="%s">FAQ</a>', self::$name ), 'http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/" target="_blank" class="ext-link' ) . '</p>';
+								<p>' . sprintf( __( 'For more information on these tasty extras, have a look at the <a href="%s">FAQ</a>', self::$name ), 'http://wordpress.org/plugins/mimetypes-link-icons/faq/" target="_blank" class="ext-link' ) . '</p>';
 
 
 			echo $helptext[$tab['id']];
@@ -977,9 +978,9 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			return '
 				   <p><strong>' . /* TRANSLATORS: no need to translate - standard WP core translation will be used */ __( 'For more information:' ) . '</strong></p>
 				   <p>
-						<a href="http://wordpress.org/extend/plugins/mimetypes-link-icons/" target="_blank">' . __( 'Official plugin page', self::$name ) . '</a> |
-						<a href="http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/" target="_blank">' . __( 'FAQ', self::$name ) . '</a> |
-						<a href="http://wordpress.org/extend/plugins/mimetypes-link-icons/changelog/" target="_blank">' . __( 'Changelog', self::$name ) . '</a> |
+						<a href="http://wordpress.org/plugins/mimetypes-link-icons/" target="_blank">' . __( 'Official plugin page', self::$name ) . '</a> |
+						<a href="http://wordpress.org/plugins/mimetypes-link-icons/faq/" target="_blank">' . __( 'FAQ', self::$name ) . '</a> |
+						<a href="http://wordpress.org/plugins/mimetypes-link-icons/changelog/" target="_blank">' . __( 'Changelog', self::$name ) . '</a> |
 						<a href="http://wordpress.org/support/plugin/mimetypes-link-icons" target="_blank">' . __( 'Support&nbsp;Forum', self::$name ) . '</a>
 					</p>
 				   <p><a href="https://github.com/eagerterrier/MimeTypes-Link-Icons" target="_blank">' . __( 'Github repository', self::$name ) . '</a></p>
@@ -1085,11 +1086,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			$options['version']   = self::VERSION;
 			$options['upgrading'] = true; // indicator to save internal domains and not to multiply cache time
 
-			/* @api Internal use only: filter to validate the options after upgrade
-			   @api	array	$options	Options at the end of the upgrade routine */
-			$options = apply_filters( 'mimetypes_link_icons_save_option_on_upgrade', $options );
-
-			/* Update the settings and refresh our $settings property */
+			/* Validate and update the settings and refresh our $settings property */
 			update_option( self::SETTINGS_OPTION, $options );
 
 			return;
@@ -1179,6 +1176,10 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @return string
 		 */
 		public function mimetype_to_icon( $content ) {
+			
+			// Clear the styles array at the start to prevent styles being added erronously if the method
+			// is called several times
+			$this->filesize_styles = array();
 
 			if ( array() !== $this->active_mimetypes ) {
 				$mimetypes = array_map( 'preg_quote' , $this->active_mimetypes, array_fill( 0 , count( $this->active_mimetypes ) , '`' ) );
@@ -1584,7 +1585,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 				// Bypass servers which refuse curl
 				curl_setopt( $this->curl, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)' );
 				// Set a time-out
-				curl_setopt( $this->curl, CURLOPT_CONNECTTIMEOUT, 30 );
+				curl_setopt( $this->curl, CURLOPT_CONNECTTIMEOUT, 15 );
+				curl_setopt( $this->curl, CURLOPT_TIMEOUT, 30 );
 				// Stop as soon as an error occurs
 				//curl_setopt( $this->curl, CURLOPT_FAILONERROR, true );
 			}

@@ -3,8 +3,8 @@ Contributors: eagerterrier, jrf
 Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, djvu, dmg, doc, docx, dwf, dwg, eps, epub, exe, flac, flv, gif, gz, ico, indd, iso, jpg, jpeg, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, msi, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, sql, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
 Requires at least: 3.5
-Tested up to: 3.8
-Stable tag: 3.2
+Tested up to: 3.9
+Stable tag: 3.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Adds icons automatically to any uploads and/or file links inserted into your blo
 
 MimeTypes Link Icons is a plugin that looks for links to files and uploads in your blogs posts and adds a nice icon next to it. Optionally add the file's file size next to the link.
 
-**Important note on v3.0 and up**: This version partially breaks backwards compatibility: the plugin now requires PHP5.1+ and WP 3.5+. Please have a look at the [changelog](http://wordpress.org/extend/plugins/mimetypes-link-icons/changelog/) for more information about the changes.
+**Important note on v3.0 and up**: This version partially breaks backwards compatibility: the plugin now requires PHP5.1+ and WP 3.5+. Please have a look at the [changelog](http://wordpress.org/plugins/mimetypes-link-icons/changelog/) for more information about the changes.
 
 The icons are configurable. You can choose to display a PNG with transparent background or GIF with white matte, display the icon to the left or the right of the link and choose the icon size.
 
@@ -115,12 +115,13 @@ Each icon is available in the following sizes:
 = Localization =
 * Dutch - [jrf](http://wordpress.org/support/profile/jrf)
 
-Please help make this plugin available in more languages by translating it. The translation files are included in the download. See the [FAQ](http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/) for more info.
+Please help make this plugin available in more languages by translating it. The translation files are included in the download. See the [FAQ](http://wordpress.org/plugins/mimetypes-link-icons/faq/) for more info.
 
 
 = Requirements =
 
-Since version 3.0, the plugin now requires PHP5.2+ and WP 3.5+
+Since version 3.0, the plugin now requires PHP5.2+ and WP 3.5+.
+The PHP filter extension needs to be enabled as well.
 
 
 = Need more ? =
@@ -271,6 +272,13 @@ If you need more information, read this article on [how to translate using a .po
 
 First thing to check is whether you are using the latest version, if not, please upgrade and check again.
 
+If you are getting a blank screen when saving the settings, please check that the PHP filter extension is enabled - it is enabled by default in a normal PHP installation, though some disreputable webhosting companies seem to disable it. If that's the case, contact your webhost to get them to turn it on.
+
+You can check your server php configuration using the code snippet below:
+`<php
+phpinfo();`
+
+
 If the error persists, please report any errors you are getting in the [WP forum](http://wordpress.org/support/plugin/mimetypes-link-icons) or on [GitHub](https://github.com/eagerterrier/MimeTypes-Link-Icons). Error reporting is much appreciated as it will improve the plugin for everyone!
 
 We'll need at least the following information:
@@ -313,6 +321,12 @@ var $debug = false;
 
 
 == Changelog ==
+
+= 3.2.1 =
+* [Bug fix] Prevent double adding of styles if/when the main function is called several times
+* [Speed] Lower Curl connect time-out, so page loading will be faster if no connection can be made to retrieve the file size of a file.
+* Added note about filter extension requirement to this readme file.
+* Minor code tweaks
 
 = 3.2 =
 * [Bug fix] filters on plugins_url() could not be applied, fixed
@@ -362,8 +376,8 @@ And further:
 * [New feature] [Ability to disable this plugin for more than one classname](http://wordpress.org/support/topic/request-disable-for-multiple-classnames)
 * [New feature] Caching of the results of (slow) file size retrievals. This will make page loading a lot faster for pages with lots of file links. Will automatically be turned on, you can turn it off and/or fine tune the cache duration via the settings page. Default cache duration: 1 week.
 * [New feature] Set the [rounding precision]((http://wordpress.org/support/topic/thanks-and-a-simple-suggestion)) (number of digits after the decimal point) for file sizes, small files (b) will always round to 0 decimals.
-* [New feature] [Output filter for file size string](http://wordpress.org/support/topic/thanks-and-a-simple-suggestion) See the [FAQ](http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/) for more info.
-* [New feature] [Ability to have mimetype icons for content outside of the loop](http://wordpress.org/support/topic/using-mimetypes-link-icons-outside-loops) See the [FAQ](http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/) for info on how to use this.
+* [New feature] [Output filter for file size string](http://wordpress.org/support/topic/thanks-and-a-simple-suggestion) See the [FAQ](http://wordpress.org/plugins/mimetypes-link-icons/faq/) for more info.
+* [New feature] [Ability to have mimetype icons for content outside of the loop](http://wordpress.org/support/topic/using-mimetypes-link-icons-outside-loops) See the [FAQ](http://wordpress.org/plugins/mimetypes-link-icons/faq/) for info on how to use this.
 
 * [Usability] Added 'check all'/'uncheck all' togglers for the file types to the settings page
 * [Usability] Compacter options screen - file types now display in two columns
@@ -371,7 +385,7 @@ And further:
 * [Usability] Added proper settings link on plugins page, credits now link to the [GitHub repo](https://github.com/eagerterrier/MimeTypes-Link-Icons)
 * [Usability] Added clean uninstall routine
 
-* [Compatibility] Added pause_mtli() and unpause_mtli() functions for use by other plugins in case of (page specific) conflicts. See the [FAQ](http://wordpress.org/extend/plugins/mimetypes-link-icons/faq/) for info on how to use this.
+* [Compatibility] Added pause_mtli() and unpause_mtli() functions for use by other plugins in case of (page specific) conflicts. See the [FAQ](http://wordpress.org/plugins/mimetypes-link-icons/faq/) for info on how to use this.
 
 * [Bug fix] Images didn't display if wp-content and/or the plugins directory was in a non-standard location.
 * [Bug fix] Added epub css styling
@@ -518,6 +532,9 @@ Fixed an IE8 bug found by @quartney
 
 == Upgrade Notice ==
 
+= 3.2.1 =
+Minor fixes
+
 = 3.2.0 =
 Some bug fixes and WP best practices implementations + support for the following new file types: .cls, .f, .f77, .f90, .py, .rar, .sty
 
@@ -534,7 +551,7 @@ Bug fix and security measures
 New features for advanced users and some minor bug fixes.
 
 = 3.0 by jrf =
-Several new features, new file extensions, complete plugin rewrite to comply with the current WP standards. Upgrade highly recommended. Please refer to the [changelog](http://wordpress.org/extend/plugins/mimetypes-link-icons/changelog/) for detailed information on all the changes.
+Several new features, new file extensions, complete plugin rewrite to comply with the current WP standards. Upgrade highly recommended. Please refer to the [changelog](http://wordpress.org/plugins/mimetypes-link-icons/changelog/) for detailed information on all the changes.
 
 = 2.2.3 =
 Adding epub extension due to user request

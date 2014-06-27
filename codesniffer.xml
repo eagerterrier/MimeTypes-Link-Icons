@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ruleset name="Mimetype Link Icons">
+	<description>Mimetype Link Icons rules for PHP_CodeSniffer</description>
+
+	<exclude-pattern>tests/*</exclude-pattern>
+
+	<rule ref="WordPressVIP">
+		<exclude name="Generic.Files.LineEndings.InvalidEOLChar" />
+		<exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines" />
+		<exclude name="WordPress.Files.FileName" />
+
+		<!-- We should probably want to turn the below rules on, but these give issues with the current code base. -->
+		<exclude name="WordPress.XSS.EscapeOutput" /><!-- This sniff also has known & reported bugs -->
+
+		<!-- Turned off because of known & reported bugs in the Sniffs, should be turned on once the bugs are fixed. -->
+		<exclude name="WordPress.VIP.ValidatedSanitizedInput"/>
+	</rule>
+	<rule ref="WordPress.PHP.DiscouragedFunctions"/>
+</ruleset>

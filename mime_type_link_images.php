@@ -416,7 +416,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 */
 		private function enrich_default_settings() {
 			foreach ( $this->mime_types as $type ) {
-				$this->defaults['enable_' . $type]	= ( false === in_array( $type, $this->default_is_true ) ? false : true );
+				$this->defaults[ 'enable_' . $type ]	= ( false === in_array( $type, $this->default_is_true ) ? false : true );
 			}
 		}
 
@@ -512,7 +512,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			/* Update the active_mimetypes array */
 			$this->active_mimetypes = array();
 			foreach ( $this->mime_types as $mime_type ) {
-				if ( true === $this->settings['enable_' . $mime_type] ) {
+				if ( true === $this->settings[ 'enable_' . $mime_type ] ) {
 					$this->active_mimetypes[] = $mime_type;
 				}
 			}
@@ -600,7 +600,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			// Is this a complete or a one field update ?
 			if ( ! is_null( $key ) ) {
 				$new_cache = $this->cache;
-				$new_cache[$key] = array(
+				$new_cache[ $key ] = array(
 					'size'	=>	$update, // file size or false if size could not be determined
 					'time'	=>	time(),
 				);
@@ -951,22 +951,22 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 */
 		public function get_helptext( $screen, $tab ) {
 
-			$helptext[self::$name . '-main'] = '
+			$helptext[ self::$name . '-main' ] = '
 								<p>' . sprintf( __( 'The <em><a href="%s">MimeTypes Link Icons</a></em> plugin will automatically add an icon next to links of the activated file types. If you like, you can also let the plugin add the file size of the linked file to the page.', self::$name ), 'http://wordpress.org/plugins/mimetypes-link-icons/" target="_blank" class="ext-link' ) . '</p>
 								<p>' . esc_html__( 'On this settings page you can specify the icon size, icon type (white matte gif or transparent png), icon alignment. You can also select the file types for which this plugin will be enabled.', self::$name ) . '</p>';
 
-			$helptext[self::$name . '-advanced'] = '
+			$helptext[ self::$name . '-advanced' ] = '
 								<p>' . __( 'In the advanced settings, you can enable <em>"exclusion classnames"</em>, enable the display of the <em>file size</em> of a linked file and/or choose to use <em>asynchronous replacement</em>.', self::$name ) . '</p>
 								<p>' . __( '<strong>"Exclusion classnames"</strong> works as follows:', self::$name ) . '<br />
 								' . esc_html__( 'The plugin will look for the classname in your document and will remove the Mimetypes link icons (and file sizes) from all links wrapped within that class. You can add several classnames, just separate them with a comma.', self::$name ) . '</p>';
 
-			$helptext[self::$name . '-extras'] = '
+			$helptext[ self::$name . '-extras' ] = '
 								<p>' . __( 'There is even some more advanced functionality available: for instance an <em>output filter</em> for the file size output and a way to add the plugin\'s functionality to widgets or other areas of your blog outside of the main content area.', self::$name ) . '</p>
 
 								<p>' . sprintf( esc_html__( 'For more information on these tasty extras, have a look at the %sFAQ%s', self::$name ), '<a href="http://wordpress.org/plugins/mimetypes-link-icons/faq/" target="_blank" class="ext-link">', '</a>' ) . '</p>';
 
 
-			echo $helptext[$tab['id']];
+			echo $helptext[ $tab['id'] ];
 		}
 
 		/**
@@ -1110,10 +1110,10 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			foreach ( $defaults as $name => $default ) {
 				if ( array_key_exists( $name, $options ) ) {
-					$return[$name] = $options[$name];
+					$return[ $name ] = $options[ $name ];
 				}
 				else {
-					$return[$name] = $default;
+					$return[ $name ] = $default;
 				}
 			}
 			return $return;
@@ -1337,8 +1337,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			/* Maybe get the cached value if still within the cache time interval */
 			$cache_key = str_replace( '/', '__', $url );
 			$cache_key = sanitize_key( $cache_key );
-			if ( true === $this->settings['use_cache'] && ( isset( $this->cache[$cache_key] ) && $this->cache[$cache_key]['time'] > ( time() - $this->settings['cache_time'] ) ) ) {
-				$filesize = $this->cache[$cache_key]['size'];
+			if ( true === $this->settings['use_cache'] && ( isset( $this->cache[ $cache_key ] ) && $this->cache[ $cache_key ]['time'] > ( time() - $this->settings['cache_time'] ) ) ) {
+				$filesize = $this->cache[ $cache_key ]['size'];
 			}
 
 			/* Otherwise retrieve the filesize from the actual file */
@@ -1531,18 +1531,18 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		private function is_own_domain( $url ) {
 			static $results; // remember results for re-use
 
-			if ( isset( $results[$url] ) ) {
-				return $results[$url];
+			if ( isset( $results[ $url ] ) ) {
+				return $results[ $url ];
 			}
 
-			$results[$url] = false;
+			$results[ $url ] = false;
 
 			if ( is_array( $this->settings['internal_domains'] ) && array() !== $this->settings['internal_domains'] ) {
 				foreach ( $this->settings['internal_domains'] as $domain ) {
 					$pos = stripos( $url, $domain );
 					if ( false !== $pos ) {
-						$results[$url] = substr( $url, ( $pos + strlen( $domain ) ) );
-						return $results[$url];
+						$results[ $url ] = substr( $url, ( $pos + strlen( $domain ) ) );
+						return $results[ $url ];
 					}
 					unset( $pos );
 				}
@@ -1553,11 +1553,11 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			$domain = str_replace( 'www.', '', sanitize_text_field( $_SERVER['SERVER_NAME'] ) );
 			$pos    = stripos( $url, $domain );
 			if ( false !== $pos ) {
-				$results[$url] = substr( $url, ( $pos + strlen( $domain ) ) );
+				$results[ $url ] = substr( $url, ( $pos + strlen( $domain ) ) );
 			}
 			unset( $domain, $pos );
 
-			return $results[$url];
+			return $results[ $url ];
 		}
 
 
@@ -1664,7 +1664,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 						$filesize = (int) $head['content-length'];
 					}
 					else if ( isset( $head['content-length'] ) && is_array( $head['content-length'] ) ) {
-						$filesize = (int) $head['content-length'][( count( $head['content-length'] ) - 1 )];
+						$filesize = (int) $head['content-length'][ ( count( $head['content-length'] ) - 1 ) ];
 					}
 				}
 			}
@@ -1699,10 +1699,10 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 				// Return the formatted number with the appropriate suffix and required precision
 				if ( $i === 0 ) {
-					return number_format_i18n( $filesize, 0 ) . ' ' . $this->byte_suffixes[$i];
+					return number_format_i18n( $filesize, 0 ) . ' ' . $this->byte_suffixes[ $i ];
 				}
 				else {
-					return number_format_i18n( $filesize, $this->settings['precision'] ) . ' ' . $this->byte_suffixes[$i];
+					return number_format_i18n( $filesize, $this->settings['precision'] ) . ' ' . $this->byte_suffixes[ $i ];
 				}
 			}
 			else {
@@ -1746,21 +1746,21 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 				switch ( $switch_key ) {
 					/* Always set the version */
 					case 'version':
-						$clean[$key] = self::VERSION;
+						$clean[ $key ] = self::VERSION;
 						break;
 
 
 					case 'internal_domains':
 						// Only updated in upgrade/activation, otherwise leave as is
-						if ( isset( $received[$key] ) && true === $upgrading ) {
-							$clean[$key] = $received[$key];
+						if ( isset( $received[ $key ] ) && true === $upgrading ) {
+							$clean[ $key ] = $received[ $key ];
 						}
 						break;
 
 
 					case 'image_size':
-						if ( isset( $received[$key] ) && in_array( $received[$key], $this->sizes ) ) {
-							$clean[$key] = $received[$key];
+						if ( isset( $received[ $key ] ) && in_array( $received[ $key ], $this->sizes ) ) {
+							$clean[ $key ] = $received[ $key ];
 						}
 						else if ( function_exists( 'add_settings_error' ) ) {
 							// Edge case: should never happen
@@ -1770,8 +1770,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 
 					case 'image_type':
-						if ( isset( $received[$key] ) && in_array( $received[$key], $this->image_types ) ) {
-							$clean[$key] = $received[$key];
+						if ( isset( $received[ $key ] ) && in_array( $received[ $key ], $this->image_types ) ) {
+							$clean[ $key ] = $received[ $key ];
 						}
 						else if ( function_exists( 'add_settings_error' ) ) {
 							// Edge case: should never happen
@@ -1781,8 +1781,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 
 					case 'leftorright':
-						if ( isset( $received[$key] ) && isset( $this->alignments[$received[$key]] ) ) {
-							$clean[$key] = $received[$key];
+						if ( isset( $received[ $key ] ) && isset( $this->alignments[ $received[ $key ] ] ) ) {
+							$clean[ $key ] = $received[ $key ];
 						}
 						else if ( function_exists( 'add_settings_error' ) ) {
 							// Edge case: should never happen
@@ -1792,10 +1792,10 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 
 					case 'precision':
-						if ( isset( $received[$key] ) && '' !== trim( $received[$key] ) ) {
-							$int = $this->validate_int( $received[$key] );
+						if ( isset( $received[ $key ] ) && '' !== trim( $received[ $key ] ) ) {
+							$int = $this->validate_int( $received[ $key ] );
 							if ( false !== $int ) {
-								$clean[$key] = $int;
+								$clean[ $key ] = $int;
 							}
 							else if ( function_exists( 'add_settings_error' ) ) {
 								add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid rounding precision received', self::$name ) . ', ' . esc_html__( 'the setting has not been changed.', self::$name ), 'error' );
@@ -1804,26 +1804,26 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 						}
 						else {
 							// Empty field, let's assume the user meant no decimals
-							$clean[$key] = 0;
+							$clean[ $key ] = 0;
 						}
 						break;
 
 
 					case 'cache_time':
 						// Value received is hours, needs to be converted to seconds before save
-						if ( isset ( $received[$key] ) && ( is_string( $received[$key] ) && '' !== trim( $received[$key] ) ) ) {
-							$int = $this->validate_int( $received[$key] );
+						if ( isset ( $received[ $key ] ) && ( is_string( $received[ $key ] ) && '' !== trim( $received[ $key ] ) ) ) {
+							$int = $this->validate_int( $received[ $key ] );
 							if ( $int !== false ) {
-								$clean[$key] = ( (int) $int * 60 * 60 );
+								$clean[ $key ] = ( (int) $int * 60 * 60 );
 							}
 							else if ( function_exists( 'add_settings_error' ) ) {
 								add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid cache time received', self::$name ) . ', ' . esc_html__( 'the setting has not been changed.', self::$name ), 'error' );
 							}
 							unset( $int );
 						}
-						else if ( ( isset( $received[$key] ) && is_int( $received[$key] ) ) && $upgrading === true ) {
+						else if ( ( isset( $received[ $key ] ) && is_int( $received[ $key ] ) ) && $upgrading === true ) {
 							// Received an already validated & multiplied value from the upgrade routine
-							$clean[$key] = $received[$key];
+							$clean[ $key ] = $received[ $key ];
 						}
 						else if ( function_exists( 'add_settings_error' ) ) {
 							add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid cache time received', self::$name ) . ', ' . esc_html__( 'the setting has not been changed.', self::$name ), 'error' );
@@ -1833,14 +1833,14 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 
 					case 'hidden_classname':
-						if ( isset( $received[$key] ) ) {
-							if ( ( is_array( $received[$key] ) && $received[$key] !== array() ) || ( is_string( $received[$key] ) && '' !== trim( $received[$key] ) ) ) {
-								$classnames = $this->validate_classnames( $received[$key] );
+						if ( isset( $received[ $key ] ) ) {
+							if ( ( is_array( $received[ $key ] ) && $received[ $key ] !== array() ) || ( is_string( $received[ $key ] ) && '' !== trim( $received[ $key ] ) ) ) {
+								$classnames = $this->validate_classnames( $received[ $key ] );
 
 								if ( false !== $classnames ) {
-									$clean[$key] = $classnames;
+									$clean[ $key ] = $classnames;
 
-									if ( ( ! is_array( $received[$key] ) && ( $received[$key] !== implode( ',', $clean[$key] ) && $received[$key] !== implode( ', ', $clean[$key] ) ) ) && function_exists( 'add_settings_error' ) ) {
+									if ( ( ! is_array( $received[ $key ] ) && ( $received[ $key ] !== implode( ',', $clean[ $key ] ) && $received[ $key ] !== implode( ', ', $clean[ $key ] ) ) ) && function_exists( 'add_settings_error' ) ) {
 										add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'One or more invalid classname(s) received, the values have been cleaned - this may just be the removal of spaces -, please check.', self::$name ), 'updated' );
 									}
 								}
@@ -1851,7 +1851,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 							}
 							else {
 								// Empty field received, so clear out the setting
-								$clean[$key] = array();
+								$clean[ $key ] = array();
 							}
 						}
 						break;
@@ -1865,7 +1865,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 					case 'show_file_size':
 					case 'use_cache':
 					default:
-						$clean[$key] = ( isset( $received[$key] ) ? filter_var( $received[$key], FILTER_VALIDATE_BOOLEAN ) : false );
+						$clean[ $key ] = ( isset( $received[ $key ] ) ? filter_var( $received[ $key ], FILTER_VALIDATE_BOOLEAN ) : false );
 						break;
 				}
 			}
@@ -2013,15 +2013,15 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 					$index = ( ( $j * $rows ) + $i );
 
 					// Normal cell
-					if ( isset( $this->mime_types[$index] ) ) {
-						$mime_type = $this->mime_types[$index];
+					if ( isset( $this->mime_types[ $index ] ) ) {
+						$mime_type = $this->mime_types[ $index ];
 						echo '
 						<th nowrap valign="top" width="33%">
 							<label for="' . esc_attr( 'enable_' . $mime_type ) . '">' . sprintf( __( 'Add images to <strong>%s</strong> uploads/files', self::$name ), $mime_type ) . '</label>
 						</th>
 						<td style="width:24px;"><img src="' . esc_url( plugins_url( '/images/' . $mime_type . '-icon-24x24.png', __FILE__ ) ) . '" alt="' . esc_attr( sprintf( __( '%s icon', self::$name ), $mime_type ) ) . '" /></td>
 						<td>
-							<input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_' . $mime_type . ']' ) . '" id="' . esc_attr( 'enable_' . $mime_type ) . '" value="on" ' . checked( $this->settings['enable_' . $mime_type], true, false ) . ' />
+							<input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_' . $mime_type . ']' ) . '" id="' . esc_attr( 'enable_' . $mime_type ) . '" value="on" ' . checked( $this->settings[ 'enable_' . $mime_type ], true, false ) . ' />
 						</td>';
 						unset( $mime_type );
 					}
@@ -2134,7 +2134,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 				$option_label = apply_filters( 'mtli_setting_select_box_option_label_' . $field_id, $v );
 
 				echo '
-								<option value="' . esc_attr( $option_value ) . '" ' . selected( $this->settings[$field_id], $option_value, false ) . '>' . esc_html( $option_label ) . '</option>';
+								<option value="' . esc_attr( $option_value ) . '" ' . selected( $this->settings[ $field_id ], $option_value, false ) . '>' . esc_html( $option_label ) . '</option>';
 			}
 			unset( $v );
 

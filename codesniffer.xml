@@ -4,16 +4,20 @@
 
 	<exclude-pattern>tests/*</exclude-pattern>
 
-	<rule ref="WordPressVIP">
+	<rule ref="WordPress-Extra">
 		<exclude name="Generic.Files.LineEndings.InvalidEOLChar" />
 		<exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines" />
 		<exclude name="WordPress.Files.FileName" />
 
+		<!-- Demanding Yoda conditions is stupid. -->
+		<exclude name="WordPress.PHP.YodaConditions"/>
+
 		<!-- We should probably want to turn the below rules on, but these give issues with the current code base. -->
 		<exclude name="WordPress.XSS.EscapeOutput" /><!-- This sniff also has known & reported bugs -->
 
-		<!-- Turned off because of known & reported bugs in the Sniffs, should be turned on once the bugs are fixed. -->
-		<exclude name="WordPress.VIP.ValidatedSanitizedInput"/>
+		<!-- Turned off because of false positives. -->
+		<exclude name="PEAR.Functions.FunctionCallSignature.Indent"/>
 	</rule>
 	<rule ref="WordPress.PHP.DiscouragedFunctions"/>
+
 </ruleset>

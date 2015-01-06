@@ -3,6 +3,8 @@
 	<description>Mimetype Link Icons rules for PHP_CodeSniffer</description>
 
 	<exclude-pattern>tests/*</exclude-pattern>
+	<exclude-pattern>phpcs/*</exclude-pattern>
+	<exclude-pattern>wpcs/*</exclude-pattern>
 
 	<rule ref="WordPress-Extra">
 		<exclude name="Generic.Files.LineEndings.InvalidEOLChar" />

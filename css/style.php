@@ -12,7 +12,7 @@ unset( $getvars, $v );
 $mtli_height      = ( in_array( intval( $mtli_height ), array( 16, 24, 48, 64, 128 ) ) ? intval( $mtli_height ) : 16 );
 $mtli_leftorright = ( in_array( $mtli_leftorright, array( 'left', 'right' ) ) ? $mtli_leftorright : 'left' );
 $mtli_image_type  = ( in_array( $mtli_image_type, array( 'gif', 'png' ) ) ? $mtli_image_type : 'png' );
-
+$mtli_padding     = ( extension_loaded( 'bcmath' ) ? bcmul( $mtli_height, 1.2, 0 ) : ( $mtli_height * 1.2 ) );
 
 echo '
 .mtli_attachment {
@@ -22,7 +22,7 @@ echo '
 	background-position: top ' . $mtli_leftorright . ';
 	background-attachment: scroll;
 	background-repeat: no-repeat;
-	padding-' . $mtli_leftorright . ': ' . ( $mtli_height * 1.2 ) . 'px !important;
+	padding-' . $mtli_leftorright . ': ' . $mtli_padding . 'px !important;
 }';
 
 $mtli_available_mime_types = array(

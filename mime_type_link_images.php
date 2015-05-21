@@ -2214,7 +2214,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 */
 		function pause_mtli() {
 			if ( isset( $GLOBALS['mimetypes_link_icons'] ) && has_filter( 'the_content', array( $GLOBALS['mimetypes_link_icons'], 'mimetype_to_icon' ) ) ) {
-				remove_filter( 'the_content', array( $GLOBALS['mimetypes_link_icons'], 'mimetype_to_icon' ) );
+				remove_filter( 'the_content', array( $GLOBALS['mimetypes_link_icons'], 'mimetype_to_icon' ), 15 );
 			}
 		}
 	}
@@ -2232,7 +2232,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 */
 		function unpause_mtli() {
 			if ( isset( $GLOBALS['mimetypes_link_icons'] ) && ( ( false === $GLOBALS['mimetypes_link_icons']->settings['enable_async'] || true === $GLOBALS['mimetypes_link_icons']->settings['show_file_size'] ) && false === has_filter( 'the_content', array( $GLOBALS['mimetypes_link_icons'], 'mimetype_to_icon' ) ) ) ) {
-				add_filter( 'the_content', array( $GLOBALS['mimetypes_link_icons'], 'mimetype_to_icon' ) );
+				add_filter( 'the_content', array( $GLOBALS['mimetypes_link_icons'], 'mimetype_to_icon' ), 15 );
 			}
 		}
 	}

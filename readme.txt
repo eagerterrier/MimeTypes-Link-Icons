@@ -322,6 +322,13 @@ var $debug = false;
 
 == Changelog ==
 
+= 3.2.3 =
+* Minor tweak
+
+= 3.2.2 =
+* Added the priority of 15 to pause_mtli() and unpause_mtli() functions, to match the initial add_filter setup
+* Renamed folder after typo
+
 = 3.2.1 =
 * [Bug fix] Prevent double adding of styles if/when the main function is called several times
 * [Speed] Lower Curl connect time-out, so page loading will be faster if no connection can be made to retrieve the file size of a file.
@@ -531,6 +538,12 @@ Fixed an IE8 bug found by @quartney
 
 
 == Upgrade Notice ==
+
+= 3.2.3 =
+* Minor tweak
+
+= 3.2.2 =
+Minor fix
 
 = 3.2.1 =
 Minor fixes

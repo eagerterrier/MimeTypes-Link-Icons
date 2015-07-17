@@ -322,6 +322,9 @@ var $debug = false;
 
 == Changelog ==
 
+= 3.2.4 =
+* Code enhancements
+
 = 3.2.3 =
 * Minor tweak
 
@@ -538,6 +541,9 @@ Fixed an IE8 bug found by @quartney
 
 
 == Upgrade Notice ==
+
+= 3.2.4 =
+* Code enhancements
 
 = 3.2.3 =
 * Minor tweak

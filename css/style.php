@@ -36,6 +36,7 @@ $mtli_available_mime_types = array(
 			'gif', 'gz',
 			'ico', 'indd', 'iso',
 			'jpg', 'jpeg',
+			'key',
 			'log',
 			'm4a', 'm4v', 'midi', 'mkv', 'mov', 'mp3', 'mp4', 'mpeg', 'mpg', 'msi',
 			'odp', 'ods', 'odt', 'oga', 'ogg', 'ogv',

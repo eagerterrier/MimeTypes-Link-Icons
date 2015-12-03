@@ -1,0 +1,5 @@
+# Prevent the stylesheet from being blocking by parent .htaccess rules
+<Files style.php>
+Order Allow,Deny
+Allow from all
+</Files>

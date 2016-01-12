@@ -19,7 +19,7 @@ Contributor URI: http://infas.net/
 Contributor: Birgir Erlendsson
 Contributor URI: http://wordpress.stackexchange.com/users/26350/birgire
 Text Domain: mimetypes-link-icons
-Domain Path: /languages/
+Domain Path: /languages
 */
 
 /*
@@ -634,7 +634,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			self::filter_statics();
 
 			/* Load plugin text strings */
-			load_plugin_textdomain( self::$name, false, self::$name . '/languages/' );
+			load_plugin_textdomain( 'mimetypes-link-icons', false, self::$name . '/languages' );
 
 			/* Translate a number of strings */
 			$this->set_properties();
@@ -663,26 +663,26 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		private function set_properties() {
 
 			$this->alignments = array(
-				'left'	   => __( 'Left', self::$name ),
-				'right'    => __( 'Right', self::$name ),
+				'left'	   => __( 'Left', 'mimetypes-link-icons' ),
+				'right'    => __( 'Right', 'mimetypes-link-icons' ),
 			);
 
 			$this->form_sections = array(
-				'general'	=> __( 'General Settings', self::$name ),
-				'images'	=> __( 'Image Settings', self::$name ),
-				'advanced'	=> __( 'Advanced Settings', self::$name ),
+				'general'	=> __( 'General Settings', 'mimetypes-link-icons' ),
+				'images'	=> __( 'Image Settings', 'mimetypes-link-icons' ),
+				'advanced'	=> __( 'Advanced Settings', 'mimetypes-link-icons' ),
 			);
 
 			$this->byte_suffixes = array(
-				__( 'b', self::$name ),
-				__( 'kB', self::$name ),
-				__( 'MB', self::$name ),
-				__( 'GB', self::$name ),
-				__( 'TB', self::$name ),
-				__( 'PB', self::$name ),
-				__( 'EB', self::$name ),
-				__( 'ZB', self::$name ),
-				__( 'YB', self::$name ),
+				_x( 'b', 'Abbreviation of "byte"', 'mimetypes-link-icons' ),
+				__( 'kB', 'mimetypes-link-icons' ),
+				__( 'MB', 'mimetypes-link-icons' ),
+				__( 'GB', 'mimetypes-link-icons' ),
+				__( 'TB', 'mimetypes-link-icons' ),
+				__( 'PB', 'mimetypes-link-icons' ),
+				__( 'EB', 'mimetypes-link-icons' ),
+				__( 'ZB', 'mimetypes-link-icons' ),
+				__( 'YB', 'mimetypes-link-icons' ),
 			);
 		}
 
@@ -754,8 +754,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		public function add_options_page() {
 
 			$this->hook = add_options_page(
-				__( 'MimeType Link Icons', self::$name ), /* page title */
-				__( 'MimeType Icons', self::$name ), /* menu title */
+				__( 'MimeType Link Icons', 'mimetypes-link-icons' ), /* page title */
+				__( 'MimeType Icons', 'mimetypes-link-icons' ), /* menu title */
 				self::REQUIRED_CAP, /* capability */
 				self::$name, /* menu slug */
 				array( $this, 'display_options_page' ) /* function for subpanel */
@@ -774,7 +774,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 */
 		public function add_settings_link( $links, $file ) {
 			if ( self::$basename === $file && current_user_can( self::REQUIRED_CAP ) ) {
-				$links[] = '<a href="' . esc_url( $this->plugin_options_url() ) . '" alt="' . esc_attr__( 'MimeType Link Icons Settings', self::$name ) . '">' . esc_html__( 'Settings', self::$name ) . '</a>';
+				$links[] = '<a href="' . esc_url( $this->plugin_options_url() ) . '" alt="' . esc_attr__( 'MimeType Link Icons Settings', 'mimetypes-link-icons' ) . '">' . esc_html__( 'Settings', 'mimetypes-link-icons' ) . '</a>';
 			}
 			return $links;
 		}
@@ -898,7 +898,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 */
 		private function get_admin_javascript_i18n() {
 			$strings = array(
-				'togglebox'     => '<div class="check-images"><span class="check-all">' . esc_html__( 'Check All', self::$name ) . '</span>|<span class="uncheck-all">' . esc_html__( 'Uncheck All', self::$name ) . '</span></div>',
+				'togglebox'     => '<div class="check-images"><span class="check-all">' . esc_html__( 'Check All', 'mimetypes-link-icons' ) . '</span>|<span class="uncheck-all">' . esc_html__( 'Uncheck All', 'mimetypes-link-icons' ) . '</span></div>',
 			);
 			return $strings;
 		}
@@ -918,21 +918,21 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 				$screen->add_help_tab(
 					array(
 						'id'	  => self::$name . '-main', // This should be unique for the screen.
-						'title'   => __( 'MimeType Link Icons', self::$name ),
+						'title'   => __( 'MimeType Link Icons', 'mimetypes-link-icons' ),
 						'callback' => array( $this, 'get_helptext' ),
 					)
 				);
 				$screen->add_help_tab(
 					array(
 						'id'	  => self::$name . '-advanced', // This should be unique for the screen.
-						'title'   => __( 'Advanced Settings', self::$name ),
+						'title'   => __( 'Advanced Settings', 'mimetypes-link-icons' ),
 						'callback' => array( $this, 'get_helptext' ),
 					)
 				);
 				$screen->add_help_tab(
 					array(
 						'id'	  => self::$name . '-extras', // This should be unique for the screen.
-						'title'   => __( 'Extras', self::$name ),
+						'title'   => __( 'Extras', 'mimetypes-link-icons' ),
 						'callback' => array( $this, 'get_helptext' ),
 					)
 				);
@@ -954,18 +954,22 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		public function get_helptext( $screen, $tab ) {
 
 			$helptext[ self::$name . '-main' ] = '
-								<p>' . sprintf( __( 'The <em><a href="%s">MimeTypes Link Icons</a></em> plugin will automatically add an icon next to links of the activated file types. If you like, you can also let the plugin add the file size of the linked file to the page.', self::$name ), 'http://wordpress.org/plugins/mimetypes-link-icons/" target="_blank" class="ext-link' ) . '</p>
-								<p>' . esc_html__( 'On this settings page you can specify the icon size, icon type (white matte gif or transparent png), icon alignment. You can also select the file types for which this plugin will be enabled.', self::$name ) . '</p>';
+								<p>' .
+								/* Translators: %s = link target. */
+								sprintf( __( 'The <em><a href="%s">MimeTypes Link Icons</a></em> plugin will automatically add an icon next to links of the activated file types. If you like, you can also let the plugin add the file size of the linked file to the page.', 'mimetypes-link-icons' ), 'http://wordpress.org/plugins/mimetypes-link-icons/" target="_blank" class="ext-link' ) . '</p>
+								<p>' . esc_html__( 'On this settings page you can specify the icon size, icon type (white matte gif or transparent png), icon alignment. You can also select the file types for which this plugin will be enabled.', 'mimetypes-link-icons' ) . '</p>';
 
 			$helptext[ self::$name . '-advanced' ] = '
-								<p>' . __( 'In the advanced settings, you can enable <em>"exclusion classnames"</em>, enable the display of the <em>file size</em> of a linked file and/or choose to use <em>asynchronous replacement</em>.', self::$name ) . '</p>
-								<p>' . __( '<strong>"Exclusion classnames"</strong> works as follows:', self::$name ) . '<br />
-								' . esc_html__( 'The plugin will look for the classname in your document and will remove the Mimetypes link icons (and file sizes) from all links wrapped within that class. You can add several classnames, just separate them with a comma.', self::$name ) . '</p>';
+								<p>' . __( 'In the advanced settings, you can enable <em>"exclusion classnames"</em>, enable the display of the <em>file size</em> of a linked file and/or choose to use <em>asynchronous replacement</em>.', 'mimetypes-link-icons' ) . '</p>
+								<p>' . __( '<strong>"Exclusion classnames"</strong> works as follows:', 'mimetypes-link-icons' ) . '<br />
+								' . esc_html__( 'The plugin will look for the classname in your document and will remove the Mimetypes link icons (and file sizes) from all links wrapped within that class. You can add several classnames, just separate them with a comma.', 'mimetypes-link-icons' ) . '</p>';
 
 			$helptext[ self::$name . '-extras' ] = '
-								<p>' . __( 'There is even some more advanced functionality available: for instance an <em>output filter</em> for the file size output and a way to add the plugin\'s functionality to widgets or other areas of your blog outside of the main content area.', self::$name ) . '</p>
+								<p>' . __( 'There is even some more advanced functionality available: for instance an <em>output filter</em> for the file size output and a way to add the plugin\'s functionality to widgets or other areas of your blog outside of the main content area.', 'mimetypes-link-icons' ) . '</p>
 
-								<p>' . sprintf( esc_html__( 'For more information on these tasty extras, have a look at the %sFAQ%s', self::$name ), '<a href="http://wordpress.org/plugins/mimetypes-link-icons/faq/" target="_blank" class="ext-link">', '</a>' ) . '</p>';
+								<p>' .
+								/* Translators: %1$s = <a> tag, %2$s is closing</a> tag. */
+								sprintf( esc_html__( 'For more information on these tasty extras, have a look at the %1$sFAQ%2$s', 'mimetypes-link-icons' ), '<a href="http://wordpress.org/plugins/mimetypes-link-icons/faq/" target="_blank" class="ext-link">', '</a>' ) . '</p>';
 
 
 			echo $helptext[ $tab['id'] ];
@@ -978,15 +982,15 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 */
 		private function get_help_sidebar() {
 			return '
-				   <p><strong>' . /* TRANSLATORS: no need to translate - standard WP core translation will be used */ esc_html__( 'For more information:' ) . '</strong></p>
+				   <p><strong>' . esc_html__( 'For more information:', 'mimetypes-link-icons' ) . '</strong></p>
 				   <p>
-						<a href="http://wordpress.org/plugins/mimetypes-link-icons/" target="_blank">' . esc_html__( 'Official plugin page', self::$name ) . '</a> |
-						<a href="http://wordpress.org/plugins/mimetypes-link-icons/faq/" target="_blank">' . esc_html__( 'FAQ', self::$name ) . '</a> |
-						<a href="http://wordpress.org/plugins/mimetypes-link-icons/changelog/" target="_blank">' . esc_html__( 'Changelog', self::$name ) . '</a> |
-						<a href="http://wordpress.org/support/plugin/mimetypes-link-icons" target="_blank">' . esc_html__( 'Support&nbsp;Forum', self::$name ) . '</a>
+						<a href="http://wordpress.org/plugins/mimetypes-link-icons/" target="_blank">' . esc_html__( 'Official plugin page', 'mimetypes-link-icons' ) . '</a> |
+						<a href="http://wordpress.org/plugins/mimetypes-link-icons/faq/" target="_blank">' . esc_html__( 'FAQ', 'mimetypes-link-icons' ) . '</a> |
+						<a href="http://wordpress.org/plugins/mimetypes-link-icons/changelog/" target="_blank">' . esc_html__( 'Changelog', 'mimetypes-link-icons' ) . '</a> |
+						<a href="http://wordpress.org/support/plugin/mimetypes-link-icons" target="_blank">' . esc_html__( 'Support&nbsp;Forum', 'mimetypes-link-icons' ) . '</a>
 					</p>
-				   <p><a href="https://github.com/eagerterrier/MimeTypes-Link-Icons" target="_blank">' . esc_html__( 'Github repository', self::$name ) . '</a></p>
-				   <p><a href="http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/" target="_blank">' . esc_html__( 'Blog post about this plugin', self::$name ) . '</a></p>
+				   <p><a href="https://github.com/eagerterrier/MimeTypes-Link-Icons" target="_blank">' . esc_html__( 'Github repository', 'mimetypes-link-icons' ) . '</a></p>
+				   <p><a href="http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/" target="_blank">' . esc_html__( 'Blog post about this plugin', 'mimetypes-link-icons' ) . '</a></p>
 			';
 		}
 
@@ -1513,7 +1517,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 						// Can't seem to resolve this url
 						// -> show/log an error message for the web-savvy, silently fail for everyone else
 						// @todo Should we only log an error message for local files or for all files where we couldn't get the filesize ? Let's start with local and see the response
-						trigger_error( sprintf( __( 'MimeTypes Link Icons can\'t resolve the following url, please make sure the file referred to exists. URL: <strong>%s</strong>', self::$name ), esc_attr( $url ) ), E_USER_NOTICE );
+						/* Translators: %s is the url to the file which could not be found. */
+						trigger_error( sprintf( __( 'MimeTypes Link Icons can\'t resolve the following url, please make sure the file referred to exists. URL: %s', 'mimetypes-link-icons' ), esc_attr( $url ) ), E_USER_NOTICE );
 					}
 				}
 				return $filesize;
@@ -1766,7 +1771,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 						}
 						else if ( function_exists( 'add_settings_error' ) ) {
 							// Edge case: should never happen
-							add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid image size received', self::$name ) . ', ' . esc_html__( 'the setting has not been changed.', self::$name ), 'error' );
+							add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid image size received', 'mimetypes-link-icons' ) . ', ' . esc_html__( 'the setting has not been changed.', 'mimetypes-link-icons' ), 'error' );
 						}
 						break;
 
@@ -1777,7 +1782,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 						}
 						else if ( function_exists( 'add_settings_error' ) ) {
 							// Edge case: should never happen
-							add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid image type received', self::$name ) . ', ' . esc_html__( 'the setting has not been changed.', self::$name ), 'error' );
+							add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid image type received', 'mimetypes-link-icons' ) . ', ' . esc_html__( 'the setting has not been changed.', 'mimetypes-link-icons' ), 'error' );
 						}
 						break;
 
@@ -1788,7 +1793,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 						}
 						else if ( function_exists( 'add_settings_error' ) ) {
 							// Edge case: should never happen
-							add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid image placement received', self::$name ) . ', ' . esc_html__( 'the setting has not been changed.', self::$name ), 'error' );
+							add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid image placement received', 'mimetypes-link-icons' ) . ', ' . esc_html__( 'the setting has not been changed.', 'mimetypes-link-icons' ), 'error' );
 						}
 						break;
 
@@ -1800,7 +1805,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 								$clean[ $key ] = $int;
 							}
 							else if ( function_exists( 'add_settings_error' ) ) {
-								add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid rounding precision received', self::$name ) . ', ' . esc_html__( 'the setting has not been changed.', self::$name ), 'error' );
+								add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid rounding precision received', 'mimetypes-link-icons' ) . ', ' . esc_html__( 'the setting has not been changed.', 'mimetypes-link-icons' ), 'error' );
 							}
 							unset( $int );
 						}
@@ -1819,7 +1824,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 								$clean[ $key ] = ( (int) $int * 60 * 60 );
 							}
 							else if ( function_exists( 'add_settings_error' ) ) {
-								add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid cache time received', self::$name ) . ', ' . esc_html__( 'the setting has not been changed.', self::$name ), 'error' );
+								add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid cache time received', 'mimetypes-link-icons' ) . ', ' . esc_html__( 'the setting has not been changed.', 'mimetypes-link-icons' ), 'error' );
 							}
 							unset( $int );
 						}
@@ -1828,7 +1833,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 							$clean[ $key ] = $received[ $key ];
 						}
 						else if ( function_exists( 'add_settings_error' ) ) {
-							add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid cache time received', self::$name ) . ', ' . esc_html__( 'the setting has not been changed.', self::$name ), 'error' );
+							add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid cache time received', 'mimetypes-link-icons' ) . ', ' . esc_html__( 'the setting has not been changed.', 'mimetypes-link-icons' ), 'error' );
 						}
 
 						break;
@@ -1843,12 +1848,12 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 									$clean[ $key ] = $classnames;
 
 									if ( ( ! is_array( $received[ $key ] ) && ( $received[ $key ] !== implode( ',', $clean[ $key ] ) && $received[ $key ] !== implode( ', ', $clean[ $key ] ) ) ) && function_exists( 'add_settings_error' ) ) {
-										add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'One or more invalid classname(s) received, the values have been cleaned - this may just be the removal of spaces -, please check.', self::$name ), 'updated' );
+										add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'One or more invalid classname(s) received, the values have been cleaned - this may just be the removal of spaces -, please check.', 'mimetypes-link-icons' ), 'updated' );
 									}
 								}
 								else if ( function_exists( 'add_settings_error' ) ) {
 									// Edge case: should never happen
-									add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'No valid classname(s) received', self::$name ) . ', ' . esc_html__( 'the setting has not been changed.', self::$name ), 'error' );
+									add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'No valid classname(s) received', 'mimetypes-link-icons' ) . ', ' . esc_html__( 'the setting has not been changed.', 'mimetypes-link-icons' ), 'error' );
 								}
 							}
 							else {
@@ -1937,8 +1942,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		public function display_options_page() {
 
 			if ( ! current_user_can( self::REQUIRED_CAP ) ) {
-				/* TRANSLATORS: no need to translate - standard WP core translation will be used */
-				wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+				wp_die( __( 'You do not have sufficient permissions to access this page.', 'mimetypes-link-icons' ) );
 			}
 
 			echo '
@@ -1978,13 +1982,13 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			add_filter( 'mtli_setting_select_box_option_label_image_size', array( $this, 'image_size_option_label' ) );
 
-			$this->do_select_box_row( __( 'Image Size', self::$name ), 'image_size', $this->sizes );
+			$this->do_select_box_row( __( 'Image Size', 'mimetypes-link-icons' ), 'image_size', $this->sizes );
 
 			/* @todo maybe change this to radio buttons ? */
-			$this->do_select_box_row( __( 'Image Type', self::$name ), 'image_type', $this->image_types );
+			$this->do_select_box_row( __( 'Image Type', 'mimetypes-link-icons' ), 'image_type', $this->image_types );
 
 			/* @todo maybe change this to radio buttons ? */
-			$this->do_select_box_row( __( 'Display images on left or right', self::$name ), 'leftorright', $this->alignments );
+			$this->do_select_box_row( __( 'Display images on left or right', 'mimetypes-link-icons' ), 'leftorright', $this->alignments );
 
 			echo '
 				</table>
@@ -2019,9 +2023,13 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 						$mime_type = $this->mime_types[ $index ];
 						echo '
 						<th nowrap valign="top" width="33%">
-							<label for="' . esc_attr( 'enable_' . $mime_type ) . '">' . sprintf( __( 'Add images to <strong>%s</strong> uploads/files', self::$name ), $mime_type ) . '</label>
+							<label for="' . esc_attr( 'enable_' . $mime_type ) . '">' .
+							/* Translators: %s = file mime type. */
+							sprintf( __( 'Add images to <strong>%s</strong> uploads/files', 'mimetypes-link-icons' ), $mime_type ) . '</label>
 						</th>
-						<td style="width:24px;"><img src="' . esc_url( plugins_url( '/images/' . $mime_type . '-icon-24x24.png', __FILE__ ) ) . '" alt="' . esc_attr( sprintf( __( '%s icon', self::$name ), $mime_type ) ) . '" /></td>
+						<td style="width:24px;"><img src="' . esc_url( plugins_url( '/images/' . $mime_type . '-icon-24x24.png', __FILE__ ) ) . '" alt="' .
+						/* Translators: %s = file type. */
+						esc_attr( sprintf( __( '%s icon', 'mimetypes-link-icons' ), $mime_type ) ) . '" /></td>
 						<td>
 							<input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_' . $mime_type . ']' ) . '" id="' . esc_attr( 'enable_' . $mime_type ) . '" value="on" ' . checked( $this->settings[ 'enable_' . $mime_type ], true, false ) . ' />
 						</td>';
@@ -2057,13 +2065,13 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 			echo '
 			<fieldset class="options advanced-1" name="advanced-1">
-				<legend>' . esc_html__( 'Enable/Disable classnames?', self::$name ) . '</legend>
+				<legend>' . esc_html__( 'Enable/Disable classnames?', 'mimetypes-link-icons' ) . '</legend>
 				<table width="100%" cellspacing="2" cellpadding="5" class="editform form-table">
 					<tr>
-						<td><label for="enable_hidden_class"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_hidden_class]' ) . '" id="enable_hidden_class" value="on" ' . checked( $this->settings['enable_hidden_class'], true, false ) . ' /> ' . __( 'Tick this box to have one or more <em>classname(s)</em> that will disable the mime type links (ie: around an image or caption).', self::$name ) . '</label></td>
+						<td><label for="enable_hidden_class"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_hidden_class]' ) . '" id="enable_hidden_class" value="on" ' . checked( $this->settings['enable_hidden_class'], true, false ) . ' /> ' . __( 'Tick this box to have one or more <em>classname(s)</em> that will disable the mime type links (ie: around an image or caption).', 'mimetypes-link-icons' ) . '</label></td>
 					</tr>
 					<tr>
-						<td><label for="hidden_classname">' . esc_html__( 'You can change the classname(s) by editing the field below. If you want to exclude several classnames, separate them with a comma (,).', self::$name ) . '</label></td>
+						<td><label for="hidden_classname">' . esc_html__( 'You can change the classname(s) by editing the field below. If you want to exclude several classnames, separate them with a comma (,).', 'mimetypes-link-icons' ) . '</label></td>
 					</tr>
 					<tr>
 						<td><input type="text" name="' . esc_attr( self::SETTINGS_OPTION . '[hidden_classname]' ) . '" id="hidden_classname" value="' . esc_attr( implode( ', ', $this->settings['hidden_classname'] ) ) . '" /></td>
@@ -2072,38 +2080,38 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			</fieldset>
 
 			<fieldset class="options advanced-2" name="advanced-2">
-				<legend>' . esc_html__( 'Show File Size?', self::$name ) . '</legend>
+				<legend>' . esc_html__( 'Show File Size?', 'mimetypes-link-icons' ) . '</legend>
 				<table width="100%" cellspacing="2" cellpadding="5" class="editform form-table">
 					<tr>
-						<td><label for="show_file_size"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[show_file_size]' ) . '" id="show_file_size" value="on" ' . checked( $this->settings['show_file_size'], true, false ) . ' /> ' . __( 'Display the <em>file size</em> of the attachment/linked file.', self::$name ) . '</label></td>
+						<td><label for="show_file_size"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[show_file_size]' ) . '" id="show_file_size" value="on" ' . checked( $this->settings['show_file_size'], true, false ) . ' /> ' . __( 'Display the <em>file size</em> of the attachment/linked file.', 'mimetypes-link-icons' ) . '</label></td>
 						<td>
-							<label for="precision">' . esc_html__( 'File size rounding precision:', self::$name ) . '
-							<input type="text" name="' . esc_attr( self::SETTINGS_OPTION . '[precision]' ) . '" id="precision" value="' . esc_attr( $this->settings['precision'] ) . '" /> ' . esc_html__( 'decimals', self::$name ) . '</label><br />
-							<small><em>' . esc_html__( 'sizes less than 1kB will always have 0 decimals', self::$name ) . '</em></small>
+							<label for="precision">' . esc_html__( 'File size rounding precision:', 'mimetypes-link-icons' ) . '
+							<input type="text" name="' . esc_attr( self::SETTINGS_OPTION . '[precision]' ) . '" id="precision" value="' . esc_attr( $this->settings['precision'] ) . '" /> ' . esc_html__( 'decimals', 'mimetypes-link-icons' ) . '</label><br />
+							<small><em>' . esc_html__( 'sizes less than 1kB will always have 0 decimals', 'mimetypes-link-icons' ) . '</em></small>
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2">' . esc_html__( 'Retrieving the file sizes of (external) files can be slow. If the file sizes of the files you link to do not change very often, you may want to cache the results. This will result in faster page loading for most end-users of your website.', self::$name ) . '</td>
+						<td colspan="2">' . esc_html__( 'Retrieving the file sizes of (external) files can be slow. If the file sizes of the files you link to do not change very often, you may want to cache the results. This will result in faster page loading for most end-users of your website.', 'mimetypes-link-icons' ) . '</td>
 					</tr>
 					<tr>
-						<td><label for="use_cache"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[use_cache]' ) . '" id="use_cache" value="on" ' . checked( $this->settings['use_cache'], true, false ) . ' /> ' . esc_html__( 'Cache retrieved file sizes.', self::$name ) . '</label></td>
+						<td><label for="use_cache"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[use_cache]' ) . '" id="use_cache" value="on" ' . checked( $this->settings['use_cache'], true, false ) . ' /> ' . esc_html__( 'Cache retrieved file sizes.', 'mimetypes-link-icons' ) . '</label></td>
 						<td>
-							<label for="cache_time">' . esc_html__( 'Amount of time to cache retrieved file sizes:', self::$name ) . '
-							<input type="text" name="' . esc_attr( self::SETTINGS_OPTION . '[cache_time]' ) . '" id="cache_time" value="' . esc_attr( round( $this->settings['cache_time'] / ( 60 * 60 ), 0 ) ) . '" /> ' . esc_html__( 'hours', self::$name ) . '</label>
+							<label for="cache_time">' . esc_html__( 'Amount of time to cache retrieved file sizes:', 'mimetypes-link-icons' ) . '
+							<input type="text" name="' . esc_attr( self::SETTINGS_OPTION . '[cache_time]' ) . '" id="cache_time" value="' . esc_attr( round( $this->settings['cache_time'] / ( 60 * 60 ), 0 ) ) . '" /> ' . esc_html__( 'hours', 'mimetypes-link-icons' ) . '</label>
 						</td>
 					</tr>
 				</table>
 			</fieldset>
 
 			<fieldset class="options advanced-3" name="advanced-3">
-				<legend>' . esc_html__( 'Enable Asynchronous Replacement?', self::$name ) . '</legend>
+				<legend>' . esc_html__( 'Enable Asynchronous Replacement?', 'mimetypes-link-icons' ) . '</legend>
 				<table width="100%" cellspacing="2" cellpadding="5" class="editform form-table">
 					<tr>
-						<td colspan="2">' . esc_html__( 'Some themes or plugins may conflict with this plugin. If you find you are having trouble you can switch on asynchronous replacement which (instead of PHP) uses JavaScript to find your links.', self::$name ) . '</td>
+						<td colspan="2">' . esc_html__( 'Some themes or plugins may conflict with this plugin. If you find you are having trouble you can switch on asynchronous replacement which (instead of PHP) uses JavaScript to find your links.', 'mimetypes-link-icons' ) . '</td>
 					</tr>
 					<tr>
-						<td><label for="enable_async"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_async]' ) . '" id="enable_async" value="on" ' . checked( $this->settings['enable_async'], true, false ) . ' /> ' . __( 'Tick box to enable <em>asynchronous replacement</em>.', self::$name ) . '</label></td>
-						<td><label for="enable_async_debug"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_async_debug]' ) . '" id="enable_async_debug" value="on" ' . checked( $this->settings['enable_async_debug'], true, false ) . ' /> ' . __( 'Tick box to enable <em>asynchronous debug mode</em>.', self::$name ) . '</label></td>
+						<td><label for="enable_async"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_async]' ) . '" id="enable_async" value="on" ' . checked( $this->settings['enable_async'], true, false ) . ' /> ' . __( 'Tick box to enable <em>asynchronous replacement</em>.', 'mimetypes-link-icons' ) . '</label></td>
+						<td><label for="enable_async_debug"><input type="checkbox" name="' . esc_attr( self::SETTINGS_OPTION . '[enable_async_debug]' ) . '" id="enable_async_debug" value="on" ' . checked( $this->settings['enable_async_debug'], true, false ) . ' /> ' . __( 'Tick box to enable <em>asynchronous debug mode</em>.', 'mimetypes-link-icons' ) . '</label></td>
 					</tr>
 				</table>
 			</fieldset>';

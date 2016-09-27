@@ -4,7 +4,7 @@ header( 'Content-type: text/css' );
 $getvars = explode( '&', base64_decode( $_GET['cssvars'] ) );
 foreach ( $getvars as $v ) {
 	$data     = explode( '=', $v );
-	$$data[0] = $data[1];
+	${$data[0]} = $data[1];
 }
 unset( $getvars, $v );
 

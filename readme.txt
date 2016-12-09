@@ -4,7 +4,7 @@ Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a
 Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, djvu, dmg, doc, docx, dwf, dwg, eps, epub, exe, flac, flv, gif, gz, ico, indd, iso, jpg, jpeg, key, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, msi, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, sql, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
 Requires at least: 3.5
 Tested up to: 4.7
-Stable tag: 3.2.1
+Stable tag: 3.2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -549,6 +549,12 @@ Fixed an IE8 bug found by @quartney
 
 
 == Upgrade Notice ==
+
+= 3.2.6 =
+* Minor enhancements
+
+= 3.2.5 =
+* Support for additional file extension: .key
 
 = 3.2.4 =
 * Code enhancements

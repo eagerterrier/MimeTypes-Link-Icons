@@ -61,7 +61,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 	/**
 	 * @package WordPress\Plugins\MimeTypes Link Icons
-	 * @version 3.2.8
+	 * @version 3.2.9
 	 * @link http://wordpress.org/plugins/mimetypes-link-icons/ MimeTypes Link Icons WordPress plugin
 	 * @link https://github.com/eagerterrier/MimeTypes-Link-Icons GitHub development of MimeTypes Link Icons WordPress plugin
 	 *

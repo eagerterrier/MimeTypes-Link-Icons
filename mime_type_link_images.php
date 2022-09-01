@@ -306,6 +306,11 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		public $filesize_styles = array();
 
 		/**
+		 * @var    bool   Make sure the content returns one time.
+		 */
+		public $firstVisit = false;
+
+		/**
 		 * @var	resource 	Holds the curl resource if one exists
 		 */
 		public $curl;
@@ -1304,7 +1309,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			}
 
 			/* Add filesize CSS rules to the content if we have any */
-			if ( true === $this->settings['show_file_size'] && ( is_array( $this->filesize_styles ) && array() !== $this->filesize_styles ) ) {
+			if ( true === $this->settings['show_file_size'] && ( is_array( $this->filesize_styles ) && array() !== $this->filesize_styles && true == $this->firstVisit ) ) {
+				$this->firstVisit = true;
 				$styles  = array_unique( $this->filesize_styles );
 				$styles  = implode( '', $styles );
 				$content = $content . '<style type="text/css">' . $styles . '</style>';

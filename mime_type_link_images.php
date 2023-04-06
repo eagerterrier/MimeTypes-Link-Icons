@@ -1307,7 +1307,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			if ( true === $this->settings['show_file_size'] && ( is_array( $this->filesize_styles ) && array() !== $this->filesize_styles ) ) {
 				$styles  = array_unique( $this->filesize_styles );
 				$styles  = implode( '', $styles );
-				$content = $content . '<style type="text/css">' . $styles . '</style>';
+				//$content = $content . '<style type="text/css">' . $styles . '</style>';
+				echo '<style type="text/css">' . $styles . '</style>';
 				unset( $styles );
 			}
 

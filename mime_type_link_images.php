@@ -1,13 +1,13 @@
 <?php
 /**
  * @package MimeTypeLinkImages
- * @version 3.2.9
+ * @version 3.2.12
  */
 /*
 Plugin Name: MimeTypes Link Icons
 Plugin URI: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Description: This will add file type icons next to links automatically. Change options in the <a href="options-general.php?page=mimetypes-link-icons">settings page</a>
-Version: 3.2.9
+Version: 3.2.12
 Author: Toby Cox, Juliette Reinders Folmer
 Author URI: https://github.com/eagerterrier/MimeTypes-Link-Icons
 Author: Toby Cox
@@ -61,7 +61,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 	/**
 	 * @package WordPress\Plugins\MimeTypes Link Icons
-	 * @version 3.2.9
+	 * @version 3.2.12
 	 * @link http://wordpress.org/plugins/mimetypes-link-icons/ MimeTypes Link Icons WordPress plugin
 	 * @link https://github.com/eagerterrier/MimeTypes-Link-Icons GitHub development of MimeTypes Link Icons WordPress plugin
 	 *
@@ -77,7 +77,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @const string	Plugin version number
 		 * @usedby upgrade_options(), __construct()
 		 */
-		const VERSION = '3.2.9';
+		const VERSION = '3.2.12';
 
 		/**
 		 * @const string	Version in which the front-end styles where last changed
@@ -218,9 +218,9 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			'jpg', 'jpeg',
 			'key',
 			'log',
-			'm4a', 'm4v', 'midi', 'mkv', 'mov', 'mp3', 'mp4', 'mpeg', 'mpg', 'msi',
+			'm4a', 'm4v', 'midi', 'mkv', 'mov', 'mp3', 'mp4', 'mpeg', 'mpg', 'msi', 'msix',
 			'odp', 'ods', 'odt', 'oga', 'ogg', 'ogv',
-			'pdf', 'png', 'pps', 'ppsx', 'ppt', 'pptx', 'psd', 'pub', 'py',
+			'pdf', 'png', 'pps', 'ppsx', 'ppt', 'pptm', 'pptx', 'psd', 'pub', 'py',
 			'qt',
 			'ra', 'ram', 'rar', 'rm', 'rpm', 'rtf', 'rv',
 			'skp', 'spx', 'sql', 'sty',
@@ -806,7 +806,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 				self::$name, // id
 				add_query_arg(
 					'cssvars',
-					base64_encode( 'mtli_height=' . $this->settings['image_size'] . '&mtli_image_type=' . $this->settings['image_type'] . '&mtli_leftorright=' . $this->settings['leftorright'] ),
+					base64_encode( 'mtli_height=' . $this->settings['image_size'] . '&mtli_image_type=' . $this->settings['image_type'] . '&mtli_leftorright=' . $this->settings['leftorright'] . '&active_types=' . implode('|', $this->active_mimetypes) ),
 					plugins_url( 'css/style.php', __FILE__ )
 				), // url
 				array(), // not used
@@ -1243,7 +1243,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 							if ( false !== $filesize ) {
 								/* Add the rel attribute to the replacement anchor string */
-								$replace = str_replace( $match[3], $match[3] . ' rel="mtli_filesize' . str_replace( array( '.', ' ' ), '', $filesize ) . '"', $replace );
+								$replace = str_replace( $match[3], $match[3] . ' data-mtli="mtli_filesize' . str_replace( array( '.', ' ' ), '', $filesize ) . '"', $replace );
 
 								// @api	string	$filesize	Allows filtering of the file size string
 								$css_filesize_string = apply_filters( 'mtli_filesize', '(' . $filesize . ')' );
@@ -1251,7 +1251,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 								$css_filesize_string = sanitize_text_field( $css_filesize_string );
 
 								/* Add the css rule */
-								$this->filesize_styles[] = 'a[rel~="mtli_filesize' . str_replace( array( '.', ' ' ), '', $filesize ) . '"]:after {content:" ' . $css_filesize_string . '"}';
+								$this->filesize_styles[] = 'a[data-mtli~="mtli_filesize' . str_replace( array( '.', ' ' ), '', $filesize ) . '"]:after {content:" ' . $css_filesize_string . '"}';
 							}
 							unset( $filesize, $css_filesize_string );
 						}
@@ -1307,7 +1307,8 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			if ( true === $this->settings['show_file_size'] && ( is_array( $this->filesize_styles ) && array() !== $this->filesize_styles ) ) {
 				$styles  = array_unique( $this->filesize_styles );
 				$styles  = implode( '', $styles );
-				$content = $content . '<style type="text/css">' . $styles . '</style>';
+				//$content = $content . '<style type="text/css">' . $styles . '</style>';
+				echo '<style type="text/css">' . $styles . '</style>';
 				unset( $styles );
 			}
 

@@ -1,10 +1,10 @@
 === MimeTypes Link Icons ===
 Contributors: eagerterrier, jrf
 Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
-Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, djvu, dmg, doc, docx, dwf, dwg, eps, epub, exe, flac, flv, gif, gz, ico, indd, iso, jpg, jpeg, key, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, msi, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, sql, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
+Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, djvu, dmg, doc, docx, dwf, dwg, eps, epub, exe, flac, flv, gif, gz, ico, indd, iso, jpg, jpeg, key, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, msi, msix, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, sql, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
 Requires at least: 3.5
 Tested up to: 5.9.0
-Stable tag: 3.2.9
+Stable tag: 3.2.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,7 @@ Each icon is available in the following sizes:
 * .mpeg
 * .mpg
 * .msi
+* .msix
 * .odp
 * .ods
 * .odt
@@ -81,6 +82,7 @@ Each icon is available in the following sizes:
 * .pps
 * .ppsx
 * .ppt
+* .pptm
 * .pptx
 * .psd
 * .pub
@@ -322,6 +324,23 @@ var $debug = false;
 
 
 == Changelog ==
+
+= 3.2.12 =
+* Missing mime icons
+
+= 3.2.11 =
+* [New file extension] Added support for additional file extension: .pptm
+* Performance on CSS - only load what we need
+* [Bug fix] plugins that used `rel` for other uses conflicted with mtli. Swapped for `data-mtli`
+
+= 3.2.10 =
+* [New file extension] Added support for additional file extension: .msix
+
+= 3.2.9 =
+* WP compatibility update
+
+= 3.2.7 =
+* ¯(°_o)/¯
 
 = 3.2.7 =
 * Added support for ACF plugin

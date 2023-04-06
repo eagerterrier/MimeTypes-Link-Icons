@@ -25,31 +25,7 @@ echo '
 	padding-' . $mtli_leftorright . ': ' . $mtli_padding . 'px !important;
 }';
 
-$mtli_available_mime_types = array(
-			'3g2', '3gp',
-			'ai', 'air', 'asf', 'avi',
-			'bib',
-			'cls', 'csv',
-			'deb', 'djvu', 'dmg', 'doc', 'docx', 'dwf', 'dwg',
-			'eps', 'epub', 'exe',
-			'f', 'f77', 'f90', 'flac', 'flv',
-			'gif', 'gz',
-			'ico', 'indd', 'iso',
-			'jpg', 'jpeg',
-			'key',
-			'log',
-			'm4a', 'm4v', 'midi', 'mkv', 'mov', 'mp3', 'mp4', 'mpeg', 'mpg', 'msi',
-			'odp', 'ods', 'odt', 'oga', 'ogg', 'ogv',
-			'pdf', 'png', 'pps', 'ppsx', 'ppt', 'pptx', 'psd', 'pub', 'py',
-			'qt',
-			'ra', 'ram', 'rar', 'rm', 'rpm', 'rtf', 'rv',
-			'skp', 'spx', 'sql', 'sty',
-			'tar', 'tex', 'tgz', 'tiff', 'ttf', 'txt',
-			'vob',
-			'wav', 'wmv',
-			'xls', 'xlsx', 'xml', 'xpi',
-			'zip',
-);
+$mtli_available_mime_types = explode('|', $active_types);
 
 // @todo Only generate for the enabled mime-types ?
 foreach ( $mtli_available_mime_types as $type ) {

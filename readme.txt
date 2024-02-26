@@ -34,6 +34,7 @@ Each icon is available in the following sizes:
 * .asf
 * .avi
 * .bib
+* .capx
 * .cls
 * .csv
 * .deb

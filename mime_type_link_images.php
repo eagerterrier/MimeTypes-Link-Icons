@@ -209,7 +209,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			'3g2', '3gp',
 			'ai', 'air', 'asf', 'avi',
 			'bib',
-			'cls', 'csv',
+			'capx', 'cls', 'csv',
 			'deb', 'djvu', 'dmg', 'doc', 'docx', 'dwf', 'dwg',
 			'eps', 'epub', 'exe',
 			'f', 'f77', 'f90', 'flac', 'flv',

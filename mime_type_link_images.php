@@ -18,6 +18,8 @@ Contributor: Keith Parker
 Contributor URI: http://infas.net/
 Contributor: Birgir Erlendsson
 Contributor URI: http://wordpress.stackexchange.com/users/26350/birgire
+Contributor: x06designs
+Contributor URI: https://github.com/x06designs
 Text Domain: mimetypes-link-icons
 Domain Path: /languages
 */

@@ -1,10 +1,10 @@
 === MimeTypes Link Icons ===
 Contributors: eagerterrier, jrf
 Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
-Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, djvu, dmg, doc, docx, dwf, dwg, eps, epub, exe, flac, flv, gif, gz, ico, indd, iso, jpg, jpeg, key, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, msi, msix, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, sql, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
+Tags: mime-type, icons, file icons, mime type
 Requires at least: 3.5
 Tested up to: 6.4.3 
-Stable tag: 3.2.14
+Stable tag: 3.2.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,7 @@ Each icon is available in the following sizes:
 * .oga
 * .ogg
 * .ogv
+* .pages
 * .pdf
 * .png
 * .pps
@@ -325,6 +326,9 @@ var $debug = false;
 
 == Changelog ==
 
+= 3.2.15 =
+* Add .pages extension
+
 = 3.2.14 =
 * Add ability to only show file sizes for files over a certain Kb threshold
 
@@ -459,7 +463,7 @@ And further:
 
 == Upgrade Notice ==
 
-= 3.2.14 =
+= 3.2.15 =
 * Updates to latest WP version and new features
 
 = 3.2.8 =

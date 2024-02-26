@@ -257,6 +257,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			'enable_hidden_class'	=> true,
 			'hidden_classname'		=> array( 'wp-caption', ),
 			'version'				=> null,
+			'show_file_size_over'	=> 0,
 			//'upgrading'			=> false, // will never change, not saved to db, only used to distinguish a call from the upgrade method
 		);
 
@@ -1700,7 +1701,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 				$count = count( $this->byte_suffixes );
 			}
 
-			if ( is_int( $filesize ) && 0 < $filesize ) {
+			if ( is_int( $filesize ) && ( $this->settings['show_file_size_over'] * 1024 ) < $filesize ) {
 				// Get the figure to use in the string
 				for ( $i = 0; ( $i < $count && 1024 <= $filesize ); $i++ ) {
 					$filesize = $filesize / 1024;
@@ -1796,6 +1797,24 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 						else if ( function_exists( 'add_settings_error' ) ) {
 							// Edge case: should never happen
 							add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid image placement received', 'mimetypes-link-icons' ) . ', ' . esc_html__( 'the setting has not been changed.', 'mimetypes-link-icons' ), 'error' );
+						}
+						break;
+
+
+					case 'show_file_size_over':
+						if ( isset( $received[ $key ] ) && '' !== trim( $received[ $key ] ) ) {
+							$int = $this->validate_int( $received[ $key ] );
+							if ( false !== $int ) {
+								$clean[ $key ] = $int;
+							}
+							else if ( function_exists( 'add_settings_error' ) ) {
+								add_settings_error( self::SETTINGS_OPTION, $key, esc_html__( 'Invalid show file size over received', 'mimetypes-link-icons' ) . ', ' . esc_html__( 'the setting has not been changed.', 'mimetypes-link-icons' ), 'error' );
+							}
+							unset( $int );
+						}
+						else {
+							// Empty field, let's assume the user meant no decimals
+							$clean[ $key ] = 0;
 						}
 						break;
 
@@ -2090,6 +2109,12 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 							<label for="precision">' . esc_html__( 'File size rounding precision:', 'mimetypes-link-icons' ) . '
 							<input type="text" name="' . esc_attr( self::SETTINGS_OPTION . '[precision]' ) . '" id="precision" value="' . esc_attr( $this->settings['precision'] ) . '" /> ' . esc_html__( 'decimals', 'mimetypes-link-icons' ) . '</label><br />
 							<small><em>' . esc_html__( 'sizes less than 1kB will always have 0 decimals', 'mimetypes-link-icons' ) . '</em></small>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<label for="show_file_size_over">' . esc_html__( 'Only show file sizes for files over :', 'mimetypes-link-icons' ) . '
+							<input type="text" name="' . esc_attr( self::SETTINGS_OPTION . '[show_file_size_over]' ) . '" id="show_file_size_over" value="' . esc_attr( $this->settings['show_file_size_over'] ) . '" /> ' . esc_html__( 'Kb', 'mimetypes-link-icons' ) . '</label><br />
 						</td>
 					</tr>
 					<tr>

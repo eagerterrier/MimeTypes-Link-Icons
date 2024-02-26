@@ -51,6 +51,10 @@
 	width: 40px;
 }
 
+.settings_page_mimetypes-link-icons #show_file_size_over {
+	width: 60px;
+}
+
 .settings_page_mimetypes-link-icons #hidden_classname {
 	width: 500px;
 }

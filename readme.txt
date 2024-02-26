@@ -1,10 +1,10 @@
 === MimeTypes Link Icons ===
 Contributors: eagerterrier, jrf
 Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
-Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, djvu, dmg, doc, docx, dwf, dwg, eps, epub, exe, flac, flv, gif, gz, ico, indd, iso, jpg, jpeg, key, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, msi, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, sql, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
+Tags: mime-type, icons, file icons, 3g2, 3gp, ai, air, asf, avi, bib, csv, deb, djvu, dmg, doc, docx, dwf, dwg, eps, epub, exe, flac, flv, gif, gz, ico, indd, iso, jpg, jpeg, key, log, m4a, m4v, midi, mkv, mov, mp3, mp4, mpeg, mpg, msi, msix, odp, ods, odt, oga, ogg, ogv, pdf, png, pps, ppsx, ppt, pptx, psd, pub, qt, ra, ram, rm, rpm, rtf, rv, skp, spx, sql, tar, tex, tgz, tiff, ttf, txt, vob, wav, wmv, xls, xlsx, xml, xpi, zip.
 Requires at least: 3.5
-Tested up to: 6.4.3
-Stable tag: 3.2.9
+Tested up to: 6.4.3 
+Stable tag: 3.2.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,7 @@ Each icon is available in the following sizes:
 * .mpeg
 * .mpg
 * .msi
+* .msix
 * .odp
 * .ods
 * .odt
@@ -81,6 +82,7 @@ Each icon is available in the following sizes:
 * .pps
 * .ppsx
 * .ppt
+* .pptm
 * .pptx
 * .psd
 * .pub
@@ -323,6 +325,26 @@ var $debug = false;
 
 == Changelog ==
 
+= 3.2.13 =
+* Update to testing version 6.4.3 
+
+= 3.2.12 =
+* Missing mime icons
+
+= 3.2.11 =
+* [New file extension] Added support for additional file extension: .pptm
+* Performance on CSS - only load what we need
+* [Bug fix] plugins that used `rel` for other uses conflicted with mtli. Swapped for `data-mtli`
+
+= 3.2.10 =
+* [New file extension] Added support for additional file extension: .msix
+
+= 3.2.9 =
+* WP compatibility update
+
+= 3.2.7 =
+* ¯(°_o)/¯
+
 = 3.2.7 =
 * Added support for ACF plugin
 
@@ -367,7 +389,6 @@ And further:
 * Small improvements in validation
 * Removed auto-deactivation if run on old versions (was buggy)
 * Various small code tweaks
-
 
 = 3.1.3 =
 * [Bug fix] typo in code introduced in 3.1.1, thanks [Nnet and boca jo for reporting](http://wordpress.org/support/topic/2-errors-for-each-link-after-upgrading-to-312)
@@ -433,125 +454,10 @@ And further:
 * [Misc] Added GPL license information
 
 
-= 2.2.3 =
-Adding epub due to user request
-
-= 2.2.2.1 =
-Further fixes suggested by @jrf
-
-= 2.2.2 =
-Fixes suggested by @jrf
-
-= 2.2.1 =
-Admin CSS fix for some users
-
-= 2.2.0 =
-Fix for some users who had issues with $_GET vars on style.php
-
-= 2.1.9 =
-Changes were made by mistake in v 2.1.8 that weren't completed.
-
-= 2.1.8 =
-Fixed a typo found by @pdecaux
-
-= 2.1.7 =
-Fixed an IE8 bug found by @quartney
-
-= 2.1.6 =
-* Added eleven new mime types: deb, flac, midi, mkv, mp3, oga, ogg, ogv, spx, xml, xpi.
-* New option to have icon display on left or right (defaults to left)
-* Alphabetized file types
-* Changed default image size to "16" (better default because it is closer to text size and does not overwhelm the page with large icons)
-* Changed default image type to "png" (better image)
-* Reworded text and streamlined display format for Enable/Disable classname override, Show File Size, and Asynchronous Replacement.
-* Removed duplicate "png" option from options/default options array
-
-= 2.1.5 =
-* Adding DJVU icon
-* Typo in the code that in some circumstances leads to plugin 2.1.4 ceasing to function
-
-= 2.1.4 =
-* Some bug fixes and plugin conflict fixes. The exclude class name can now be used on parents and the link itself
-
-= 2.1.3 =
-* Removing a couple of short php open tags
-
-= 2.1.2 =
-* Adding 3 new mime types (openoffice)
-
-= 2.1.1 =
-* Adding 14 new mime types (mostly video)
-
-= 2.1.0 =
-* File size was being overwritten by JS. Fixed.
-
-= 2.0.9b =
-* Bug fix for IE7 users
-
-= 2.0.9 =
-* Bug fix for asynchronous users. 
-
-= 2.0.8 =
-* Bug fix for asynchronous users. Bug fix for new icon types
-
-= 2.0.7 =
-* Adding 14 more icon types - jpg, tar, txt, gif, png, tgz, psd, ai, indd, iso, gz, dmg, bib, & tex
-
-= 2.0.6 =
-* 2.0.5 is not showing in the repository. 2.0.6 is a *bump* for 2.0.5
-
-= 2.0.5 =
-* Fixing an issue that effect asynchronous users only. http://wordpress.org/support/topic/plugin-mimetypes-link-icons-plugin-conflict-or-bug?replies=12#post-2349689
-
-= 2.0.4 =
-* Shifting the CSS to the head to stop CSS code being truncated and displaying on search results etc in the_excerpt
-
-= 2.0.3 =
-* Fixing bug that picked up .xlsx files when only .xls files were selected
-* Fixing bug that caused problems if the user modified the plugin to run off the extract
-* Adding optional field that will skip adding the icon in a parent div of the site owner's choosing
-
-= 2.0.2 =
-* Adding smaller 16x16 images at request of user
-
-= 2.0.1 =
-* Fixing bug with asynchronous mode
-
-= 2.0.0 =
-* Adding option for displaying filesize. Uses :after pseudo element with CSS. Therefore, will not work on IE6.
-
-= 1.1.0 =
-* Enhancements
-
-= 1.0.9 =
-* Minor Bug fix. Preparing for 2.0
-
-= 1.0.8 =
-* Adding pptx format
-
-= 1.0.7 =
-* Adding ability for users to use anchor tags in the PDF URL - ie http://example.com/wp-content/uploads/myfile.pdf#page9
-
-= 1.0.6 =
-* Turns out some themes don't use get_header OR get_footer. Had to put the hook into the_content instead.
-
-= 1.0.5 =
-* Adding optional asynchronous method for users with conflicting plugins (for example the infocus theme's fancy_box)
-
-= 1.0.4 =
-* Bug fix on the preg_replace replace syntax
-
-= 1.0.3 =
-* Added new file type icons at request of benlikespizza - ppt, skp, dwg, dwf, jpg
-
-= 1.0.2 =
-* Fixed Bug that caused icons not to appear when some conflicting plugins were installed
-
-= 1.0.1 =
-* Typo in CSS caused some images not to show
-
-
 == Upgrade Notice ==
+
+= 3.2.8 =
+* [Chore] Update to testing version 6.4.3 
 
 = 3.2.7 =
 * Added support for ACF plugin

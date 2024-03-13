@@ -1,13 +1,13 @@
 <?php
 /**
  * @package MimeTypeLinkImages
- * @version 3.2.18
+ * @version 3.2.19
  */
 /*
 Plugin Name: MimeTypes Link Icons
 Plugin URI: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Description: This will add file type icons next to links automatically. Change options in the <a href="options-general.php?page=mimetypes-link-icons">settings page</a>
-Version: 3.2.18
+Version: 3.2.19
 Author: Toby Cox, Juliette Reinders Folmer
 Author URI: https://github.com/eagerterrier/MimeTypes-Link-Icons
 Author: Toby Cox
@@ -63,7 +63,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 	/**
 	 * @package WordPress\Plugins\MimeTypes Link Icons
-	 * @version 3.2.18
+	 * @version 3.2.19
 	 * @link http://wordpress.org/plugins/mimetypes-link-icons/ MimeTypes Link Icons WordPress plugin
 	 * @link https://github.com/eagerterrier/MimeTypes-Link-Icons GitHub development of MimeTypes Link Icons WordPress plugin
 	 *
@@ -79,7 +79,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @const string	Plugin version number
 		 * @usedby upgrade_options(), __construct()
 		 */
-		const VERSION = '3.2.18';
+		const VERSION = '3.2.19';
 
 		/**
 		 * @const string	Version in which the front-end styles where last changed
@@ -709,7 +709,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			$this->active_mimetypes = preg_grep( '`^[a-z0-9]{2,8}$`', $this->active_mimetypes );
 
 			// Don't do anything if no active_mimetypes or if we're not on the frontend
-			if ( false === is_admin() && array() !== $this->active_mimetypes ) {
+			if ( false === is_admin() && !wp_is_json_request() && array() !== $this->active_mimetypes ) {
 				/* Register the_content filter */
 				if ( false === $this->settings['enable_async'] || true === $this->settings['show_file_size'] ) {
 					add_filter( 'the_content', array( $this, 'mimetype_to_icon' ), 15 );

@@ -3,8 +3,8 @@ Contributors: eagerterrier, jrf
 Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Tags: mime-type, icons, file icons, mime type
 Requires at least: 3.5
-Tested up to: 6.4.3 
-Stable tag: 3.2.19
+Tested up to: 6.7.1 
+Stable tag: 3.2.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

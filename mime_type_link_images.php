@@ -1,13 +1,13 @@
 <?php
 /**
  * @package MimeTypeLinkImages
- * @version 3.2.20
+ * @version 3.3.2
  */
 /*
 Plugin Name: MimeTypes Link Icons
 Plugin URI: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Description: This will add file type icons next to links automatically. Change options in the <a href="options-general.php?page=mimetypes-link-icons">settings page</a>
-Version: 3.2.20
+Version: 3.3.2
 Author: Toby Cox, Juliette Reinders Folmer
 Author URI: https://github.com/eagerterrier/MimeTypes-Link-Icons
 Author: Toby Cox
@@ -63,7 +63,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 	/**
 	 * @package WordPress\Plugins\MimeTypes Link Icons
-	 * @version 3.2.20
+	 * @version 3.3.2
 	 * @link http://wordpress.org/plugins/mimetypes-link-icons/ MimeTypes Link Icons WordPress plugin
 	 * @link https://github.com/eagerterrier/MimeTypes-Link-Icons GitHub development of MimeTypes Link Icons WordPress plugin
 	 *
@@ -79,7 +79,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @const string	Plugin version number
 		 * @usedby upgrade_options(), __construct()
 		 */
-		const VERSION = '3.2.20';
+		const VERSION = '3.3.2';
 
 		/**
 		 * @const string	Version in which the front-end styles where last changed
@@ -220,7 +220,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			'jpg', 'jpeg',
 			'key',
 			'log',
-			'm4a', 'm4v', 'midi', 'mkv', 'mov', 'mp3', 'mp4', 'mpeg', 'mpg', 'msi', 'msix',
+			'm4a', 'm4v', 'midi', 'mkv', 'mobi', 'mov', 'mp3', 'mp4', 'mpeg', 'mpg', 'msi', 'msix',
 			'odp', 'ods', 'odt', 'oga', 'ogg', 'ogv',
 			'pages', 'pdf', 'png', 'pps', 'ppsx', 'ppt', 'pptm', 'pptx', 'psd', 'pub', 'py',
 			'qt',
@@ -307,11 +307,6 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @var array	Array holding the rel / filesize CSS styles to be added to the page
 		 */
 		public $filesize_styles = array();
-
-		/**
-		 * @var	resource 	Holds the curl resource if one exists
-		 */
-		public $curl;
 
 		/**
 		 * @var	bool	Debug setting to enable extra debugging for the plugin
@@ -1315,12 +1310,6 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			}
 
 
-			/* Close curl resource if one has been opened */
-			if ( is_resource( $this->curl ) ) {
-				curl_close( $this->curl );
-			}
-
-
 			return $content;
 		}
 
@@ -1460,7 +1449,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 				$local = true;
 			}
 			else {
-				if ( 0 === strpos( $url, 'http://' ) ) {
+				if ( 0 === strpos( $url, 'http://' ) || 0 === strpos( $url, 'https://' ) ) {
 					$remote = true;
 				}
 				/* Most likely external url, but could in rare situations be local: think 'favicon.ico' */
@@ -1471,7 +1460,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 					}
 					$local = true;
 
-					$url    = 'http://' . $url;
+					$url    = 'http://' . ltrim( $url, '/' );
 					$remote = true;
 				}
 			}
@@ -1514,17 +1503,12 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 			// Still here, so this is definitely not a local file
 			/* Try and get the filesize for a remote file */
 			if ( true === $remote ) {
-				$filesize = $this->get_remote_filesize_via_curl( $url );
-				if ( false === $filesize ) {
-					// redundancy in case curl fails or gets blocked
-					$filesize = $this->get_remote_filesize_via_headers( $url );
-					if ( false === $filesize && true === $local ) {
-						// Can't seem to resolve this url
-						// -> show/log an error message for the web-savvy, silently fail for everyone else
-						// @todo Should we only log an error message for local files or for all files where we couldn't get the filesize ? Let's start with local and see the response
-						/* Translators: %s is the url to the file which could not be found. */
-						trigger_error( sprintf( __( 'MimeTypes Link Icons can\'t resolve the following url, please make sure the file referred to exists. URL: %s', 'mimetypes-link-icons' ), esc_attr( $url ) ), E_USER_NOTICE );
-					}
+				$filesize = $this->get_remote_filesize( $url );
+				if ( false === $filesize && true === $local ) {
+					// Can't seem to resolve this url
+					// -> show/log an error message for the web-savvy, silently fail for everyone else
+					/* Translators: %s is the url to the file which could not be found. */
+					trigger_error( sprintf( __( 'MimeTypes Link Icons can\'t resolve the following url, please make sure the file referred to exists. URL: %s', 'mimetypes-link-icons' ), esc_attr( $url ) ), E_USER_NOTICE );
 				}
 				return $filesize;
 			}
@@ -1574,116 +1558,35 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 
 
 		/**
-		 * Get filesize of a remote file via a curl connection
+		 * Get filesize of a remote file via WordPress HTTP API
 		 *
-		 * @param $url
-		 * @return bool|int|mixed
+		 * @param string $url
+		 * @return bool|int filesize or false
 		 */
-		private function get_remote_filesize_via_curl( $url ) {
+		private function get_remote_filesize( $url ) {
 
-			/* Efficiency - only initialize once and keep the resource for re-use */
-			if ( false === is_resource( $this->curl ) ) {
-				$this->curl = curl_init();
-
-				// Issue a HEAD request
-				curl_setopt( $this->curl, CURLOPT_RETURNTRANSFER, true );
-				curl_setopt( $this->curl, CURLOPT_HEADER, true );
-				curl_setopt( $this->curl, CURLOPT_NOBODY, true );
-				// Follow any redirects
-				$open_basedir = ini_get( 'open_basedir' );
-				if ( false === $this->ini_get_bool( 'safe_mode' ) && ( ( is_null( $open_basedir ) || empty( $open_basedir ) ) || $open_basedir == 'none' ) ) {
-					curl_setopt( $this->curl, CURLOPT_FOLLOWLOCATION, true );
-					curl_setopt( $this->curl, CURLOPT_MAXREDIRS, 5 );
-				}
-				unset( $open_basedir );
-				// Bypass servers which refuse curl
-				curl_setopt( $this->curl, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)' );
-				// Set a time-out
-				curl_setopt( $this->curl, CURLOPT_CONNECTTIMEOUT, 15 );
-				curl_setopt( $this->curl, CURLOPT_TIMEOUT, 30 );
-				// Stop as soon as an error occurs
-				//curl_setopt( $this->curl, CURLOPT_FAILONERROR, true );
+			// Basic sanity check to ensure it's a valid URL format before sending
+			if ( empty( $url ) || ! wp_http_validate_url( $url ) ) {
+				return false;
 			}
 
-			$filesize = false;
+			// Use WordPress safe HTTP APIs which natively handle TOCTOU and block private IPs
+			$response = wp_safe_remote_head( $url, array(
+				'timeout'     => 15,
+				'redirection' => 5,
+				'user-agent'  => 'WordPress/' . get_bloginfo( 'version' ) . '; ' . home_url(),
+				'sslverify'   => true
+			) );
 
-			/* Get the http headers for the given url */
-			curl_setopt( $this->curl, CURLOPT_URL, $url );
-			$header = curl_exec( $this->curl );
-
-			/* If we didn't get an error, interpret the headers */
-			if ( ( false !== $header && ! empty( $header ) ) && ( 0 === curl_errno( $this->curl ) ) ) {
-				/* Get the http status */
-				$statuscode = curl_getinfo( $this->curl, CURLINFO_HTTP_CODE );
-				if ( false === $statuscode && preg_match( '/^HTTP\/1\.[01] (\d\d\d)/', $header, $matches ) ) {
-					$statuscode = (int) $matches[1];
-				}
-
-				/* Only get the filesize if we didn't get an http error response */
-				if ( 400 > $statuscode ) {
-					$filesize = (int) curl_getinfo( $this->curl, CURLINFO_CONTENT_LENGTH_DOWNLOAD );
-					/* Redundancy if curl_getinfo() fails */
-					if ( ( false === $filesize || -1 === $filesize ) && preg_match( '/Content-Length: (\d+)/i', $header, $matches ) ) {
-						$filesize = (int) $matches[1];
-					}
-				}
-				unset( $statuscode );
+			if ( is_wp_error( $response ) ) {
+				return false;
 			}
-			unset( $header );
 
-			//curl_close( $this->curl ); -> will be done from main function so we can re-use the connection
+			$headers = wp_remote_retrieve_headers( $response );
+			$filesize = isset( $headers['content-length'] ) ? (int) $headers['content-length'] : false;
+
 			return $filesize;
 		}
-
-
-		/*
-		@todo maybe change the stream context ? if so, add new property $stream_default with null value, set
-		the $default from the function and reverse at the end of $this->mimetype_to_icon(), just like curl resource closing
-
-		// By default get_headers uses a GET request to fetch the headers. If you
-		// want to send a HEAD request instead, you can do so using a stream context:
-		$default = stream_context_get_default($default_opts);
-		stream_context_get_default(
-			array(
-				'http' => array(
-					'method' => 'HEAD'
-				)
-			)
-		);
-		$headers = get_headers('http://example.com');
-		stream_context_get_default($default); // return to original
-
-		//stream_context_set_default should be used, but is only PHP5.3+
-		*/
-		/**
-		 * Get filesize of a remote file via a header request
-		 *
-		 * @param $url
-		 * @return bool
-		 */
-		private function get_remote_filesize_via_headers( $url ) {
-
-			$filesize = false;
-			$head     = @get_headers( $url, true );
-
-			if ( false !== $head && is_array( $head ) ) {
-				$head = array_change_key_case( $head );
-
-				// Disregard files which return an error status
-				if ( 400 > intval( substr( $head[0], 9, 3 ) ) ) {
-					// Deal with redirected urls (where get_headers() will return an array for redundant headers)
-					if ( isset( $head['content-length'] ) && is_string( $head['content-length'] ) ) {
-						$filesize = (int) $head['content-length'];
-					}
-					else if ( isset( $head['content-length'] ) && is_array( $head['content-length'] ) ) {
-						$filesize = (int) $head['content-length'][ ( count( $head['content-length'] ) - 1 ) ];
-					}
-				}
-			}
-			unset( $head );
-			return $filesize;
-		}
-
 
 
 		/**
@@ -1693,7 +1596,7 @@ if ( ! class_exists( 'Mime_Types_Link_Icons' ) ) {
 		 * @uses 	$this->byte_suffixes		for the byte suffixes
 		 * @param	int				$filesize	filesize in bytes
 		 * @return	string|bool 	human readable filesize string
-		 * 							or false if the passed variable was not an integer
+		 * or false if the passed variable was not an integer
 		 **/
 		public function human_readable_filesize( $filesize ) {
 			static $count;

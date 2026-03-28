@@ -1,0 +1,1 @@
+for i in *.png; do sips -s format gif $i --out ./converted/$i.gif;done

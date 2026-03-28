@@ -2,9 +2,9 @@
 Contributors: eagerterrier, jrf
 Donate link: http://blog.eagerterrier.co.uk/2010/10/holy-cow-ive-gone-and-made-a-mime-type-wordpress-plugin/
 Tags: mime-type, icons, file icons, mime type
-Requires at least: 3.5
+Requires at least: 3.6
 Tested up to: 6.7.1 
-Stable tag: 3.2.20
+Stable tag: 3.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -326,6 +326,12 @@ var $debug = false;
 
 
 == Changelog ==
+
+= 3.3.2 =
+* Added support for mobil file type
+
+= 3.3.1 =
+* Fix security issue
 
 = 3.2.15 =
 * Add .pages extension
